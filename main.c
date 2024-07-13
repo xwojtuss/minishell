@@ -38,8 +38,8 @@ int main(void)
 
     initialize_readline();
 
-    // Main loop to read input from the user
-    while (1) {
+    // Main loop to read input from the user 
+    while (true) {
         // Display the prompt and read input
         char *input = readline("my_shell> ");
 
@@ -48,6 +48,7 @@ int main(void)
 
         // Free the input buffer
         free(input);
+        // testowanie
     }
     // rl_clear_history();
     return 0;
