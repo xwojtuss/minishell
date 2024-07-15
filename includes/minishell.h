@@ -8,6 +8,10 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <stdbool.h>
 
 typedef struct s_cmd
 {
@@ -19,6 +23,12 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
+typedef struct s_shell
+{
+	t_cmd	*cmd;
+	char	**env;
+}			t_shell;
+
 extern int			g_signum;
 
 void				sig_handler(int num);
@@ -27,7 +37,8 @@ int					pipe_exec(char **cmd1, char **cmd2);
 char	**create_array(char *input);
 void	free_cmd(t_cmd *cmd);
 void	free_array(char **array);
-void	throw_error(char *input, char **array, t_cmd *cmd);
+void	throw_error_exit(char *input, char **array, t_cmd *cmd);
+bool	check_redirects(char **array);
 
 //TO DELETE:
 void	print_array(char **array);
