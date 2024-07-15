@@ -6,7 +6,7 @@ LIBS = -L${LIBFT_FOLDER} -lft -lreadline
 
 NAME = minishell
 
-SRCS = main.c signals.c pipe.c debug.c alloc.c free.c errors.c init.c
+SRCS = main.c signals.c pipe.c debug.c alloc.c free.c errors.c init.c check_args.c
 
 SRCS_FOLDER = ${addprefix srcs/,${SRCS}}
 

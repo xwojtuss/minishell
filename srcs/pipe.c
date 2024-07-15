@@ -6,12 +6,16 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:51:07 by wkornato          #+#    #+#             */
-/*   Updated: 2024/07/13 14:30:44 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/07/15 19:15:38 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+--TESTING--
+a test of a one-pipe functionality
+*/
 int	pipe_exec(char **cmd1, char **cmd2)
 {
 	int		fd[2];
