@@ -2,15 +2,22 @@
 
 int	g_signum = 0;
 
-void	handle_input(const char *input)
+void	handle_input(char *input)
 {
+	// t_cmd	*cmd;
+	char	**array;
+
 	if (input == NULL)
 	{
 		rl_clear_history();
 		exit(EXIT_SUCCESS);
 	}
-	add_history(input);
-	printf("You entered: %s\n", input);
+	add_history((const char *)input);
+	array = create_array(input);
+	if (!array)
+		throw_error(input, NULL, NULL);
+	print_array(array);
+	free(array);
 }
 
 int	main(void)
