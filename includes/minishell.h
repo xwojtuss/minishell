@@ -1,5 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# define EXIT_SIGINT 130
 
 # include "libft.h"
 # include <curses.h>
@@ -15,6 +16,9 @@
 # include <term.h>
 # include <unistd.h>
 
+/*
+A linked list of commands to execute
+*/
 typedef struct s_cmd
 {
 	char			*cmd;
@@ -25,6 +29,10 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
+/*
+Stores the environment variables and the pointer to the command linked list
+will be used in export, unset, env, but also to replace the variable with its value in the command
+*/
 typedef struct s_shell
 {
 	t_cmd			*cmd;
@@ -42,6 +50,7 @@ void				free_array(char **array);
 void				throw_error_exit(char *input, char **array, t_cmd *cmd);
 bool				check_redirects(char **array);
 void				wait_for_input(void);
+// void				sigint_exit(int num);
 
 // TO DELETE:
 void				print_array(char **array);
