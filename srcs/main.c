@@ -3,7 +3,7 @@
 int	g_signum = -42;
 
 /*
-Mostly handles signals
+Mostly handles signals, creates a child to read stdin
 */
 int	main(void)
 {

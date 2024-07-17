@@ -11,3 +11,11 @@ void sig_handler(int num)
 		printf("signal received\n");	
 	}
 }
+
+/* void	sigint_exit(int num)
+{
+	if (num == SIGINT)
+	{
+		exit(EXIT_SUCCESS);
+	}
+} */
