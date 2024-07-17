@@ -32,6 +32,7 @@ void	wait_for_input(void)
 	char	*cwd;
 	char	*prompt;
 
+	rl_clear_history();
 	while (1)
 	{
 		cwd = getcwd(NULL, 0);
