@@ -3,48 +3,57 @@
 /*
 Prepares the input for execution, prelimenary checks are called from here
 */
-void	handle_input(char *input)
+void	handle_input(char *input, t_shell *shell)
 {
 	char	**array;
 
 	if (input == NULL)
 	{
 		rl_clear_history();
+		free_var(shell->var);
 		exit(EXIT_SUCCESS);
 	}
 	if (!*input)
-		return ;
+		return (free(input));
 	add_history((const char *)input);
-	array = create_array(input);
+	array = create_array(input, shell->var);
+	print_array(array);
 	if (!array)
-		throw_error_exit(input, NULL, NULL);
-	// init_env();
+		throw_error_exit(NULL, NULL, NULL, shell->var);
 	if (!check_redirects(array))
 		return ;
+	if (!init_cmd(array, shell))
+		throw_error_exit(NULL, array, shell->cmd, shell->var);
+	// set_cmd(array);
 	// execute()
-	print_array(array);
-	free(array);
+	free_cmd(shell->cmd);
+	free_array(array);
 }
 
-void	wait_for_input(void)
+void	wait_for_input(char **envp)
 {
 	char	*input;
 	char	*cwd;
 	char	*prompt;
+	t_shell	shell;
 
 	rl_clear_history();
 	// signal(SIGINT, sigint_exit);
+	if (!init_env(envp, &shell))
+		throw_error_exit(NULL, NULL, NULL, shell.var);
 	while (1)
 	{
 		cwd = getcwd(NULL, 0);
 		if (!cwd)
-			throw_error_exit(NULL, NULL, NULL);
+			throw_error_exit(NULL, NULL, NULL, shell.var);
 		prompt = ft_strjoin(cwd, "$ ");
 		free(cwd);
 		if (!prompt)
-			throw_error_exit(NULL, NULL, NULL);
+			throw_error_exit(NULL, NULL, NULL, shell.var);
 		input = readline(prompt);
-		handle_input(input);
-		free(input);
+		free(prompt);
+		handle_input(input, &shell);
 	}
+	free(prompt);
+	free_var((&shell)->var);
 }

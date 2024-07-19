@@ -30,26 +30,45 @@ typedef struct s_cmd
 }					t_cmd;
 
 /*
+Stores the name and value of an environment variable
+*/
+typedef struct s_var
+{
+	char			*name;
+	char			*value;
+	struct s_var	*next;
+}					t_var;
+
+/*
 Stores the environment variables and the pointer to the command linked list
-will be used in export, unset, env, but also to replace the variable with its value in the command
+will be used in export, unset, env,
+	but also to replace the variable with its value in the command
 */
 typedef struct s_shell
 {
 	t_cmd			*cmd;
-	char			**env;
+	t_var			*var;
 }					t_shell;
 
 extern int			g_signum;
 
 void				sig_handler(int num);
-void				handle_input(char *input);
+void				handle_input(char *input, t_shell *shell);
 int					pipe_exec(char **cmd1, char **cmd2);
-char				**create_array(char *input);
+char				**create_array(char *input, t_var *var);
 void				free_cmd(t_cmd *cmd);
 void				free_array(char **array);
-void				throw_error_exit(char *input, char **array, t_cmd *cmd);
+void				throw_error_exit(char *input, char **array, t_cmd *cmd,
+						t_var *var);
 bool				check_redirects(char **array);
-void				wait_for_input(void);
+void				wait_for_input(char **envp);
+void				env(t_var *var);
+void				export(t_var *var, t_cmd *cmd);
+void				unset(t_var *var, t_cmd *cmd);
+void				print_variables(t_var *var);
+int					init_env(char **envp, t_shell *shell);
+int					init_cmd(char **array, t_shell *shell);
+void				free_var(t_var *var);
 // void				sigint_exit(int num);
 
 // TO DELETE:

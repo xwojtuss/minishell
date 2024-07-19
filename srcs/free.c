@@ -17,6 +17,25 @@ void	free_array(char **array)
 }
 
 /*
+Free the var linked list
+*/
+void	free_var(t_var *var)
+{
+	t_var *tmp;
+
+	while (var)
+	{
+		tmp = var->next;
+		if (var->name)
+			free(var->name);
+		if (var->value)
+			free(var->value);
+		free(var);
+		var = tmp;
+	}
+}
+
+/*
 Free the cmd linked list
 */
 void	free_cmd(t_cmd *cmd)
@@ -26,8 +45,10 @@ void	free_cmd(t_cmd *cmd)
 	while (cmd)
 	{
 		tmp = cmd->next;
-		free(cmd->cmd);
-		free_array(cmd->args);
+		if (cmd->cmd)
+			free(cmd->cmd);
+		if (cmd->args)
+			free_array(cmd->args);
 		free(cmd);
 		cmd = tmp;
 	}
