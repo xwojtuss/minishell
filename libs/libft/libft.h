@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:52:16 by wkornato          #+#    #+#             */
-/*   Updated: 2024/06/10 19:47:02 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/07/19 21:15:17 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int					ft_isdigit(int c);
 int					ft_tolower(int ch);
 int					ft_isalnum(int c);
 char				*ft_strchr(const char *str, int c);
+char				*ft_strchrs(const char *str, const char *c);
 int					ft_isascii(int c);
 char				*ft_strrchr(const char *str, int ch);
 int					ft_isprint(int c);
@@ -53,6 +54,7 @@ size_t				ft_strlcpy(char *dst, const char *src, size_t size);
 size_t				ft_strlcat(char *dest, const char *src, unsigned int size);
 void				*ft_calloc(size_t nmemb, size_t size);
 char				*ft_strdup(const char *s);
+char				*ft_strndup(const char *s, int length);
 
 char				*ft_strcpy(char *dest, char *src);
 char				*ft_strcat(char *dest, char *src);

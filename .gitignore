@@ -42,6 +42,7 @@ minishell
 *.su
 *.idb
 *.pdb
+valgrind.log
 
 # Kernel Module Compile Results
 *.mod*
