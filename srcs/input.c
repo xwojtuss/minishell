@@ -6,6 +6,7 @@ Prepares the input for execution, prelimenary checks are called from here
 void	handle_input(char *input, t_shell *shell)
 {
 	char	**array;
+	t_cmd	*cmd;
 
 	shell->cmd = NULL;
 	shell->files = NULL;
@@ -19,17 +20,23 @@ void	handle_input(char *input, t_shell *shell)
 		return (free(input));
 	add_history((const char *)input);
 	array = create_array(input, shell->var);//if there are quotes - we need to not split at space!!!
-	print_array(array);
+	// print_array(array);
 	if (!array)
 		throw_error_exit(NULL, NULL, NULL, shell->var);
 	if (!check_redirects(array))
 		return ;
 	/* if (!init_cmd(array, shell))
 		throw_error_exit(NULL, array, shell->cmd, shell->var); */
+	// Initialize the t_cmd structure Bartek
+	cmd = Bartek_init_cmd(array);
+	if (!cmd)
+		throw_error_exit(NULL, array, shell->cmd, shell->var);
 	printf("%s\n", get_absolute_path(array[0]));
 	// execute()
+	Bartek_execute(cmd);
 	free_cmd(shell->cmd);
 	free_array(array);
+	free(cmd);
 }
 
 void	wait_for_input(char **envp)
