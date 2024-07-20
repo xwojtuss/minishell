@@ -13,20 +13,21 @@ void	handle_input(char *input, t_shell *shell)
 	{
 		rl_clear_history();
 		free_var(shell->var);
+		free_files(shell->files);
 		exit(EXIT_SUCCESS);
 	}
 	if (!*input)
 		return (free(input));
 	add_history((const char *)input);
 	array = create_array(input, shell->var);//if there are quotes - we need to not split at space!!!
-	print_array(array);
 	if (!array)
 		throw_error_exit(NULL, NULL, NULL, shell->var);
+	print_array(array);
 	if (!check_redirects(array))
 		return ;
 	/* if (!init_cmd(array, shell))
 		throw_error_exit(NULL, array, shell->cmd, shell->var); */
-	printf("%s\n", get_absolute_path(array[0]));
+	printf("%s\n", get_absolute_path(array[0]));//this command on its own will cause leaks
 	// execute()
 	free_cmd(shell->cmd);
 	free_array(array);
@@ -58,4 +59,5 @@ void	wait_for_input(char **envp)
 	}
 	free(prompt);
 	free_var((&shell)->var);
+	free_files((&shell)->files);
 }

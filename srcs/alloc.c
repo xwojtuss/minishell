@@ -4,7 +4,7 @@ char	*get_var_name(char *input, int *i)
 {
 	char *name;
 
-	name = ft_strndup(input + *i, ft_strchrs(input + *i, " \"\'") - (input + *i));
+	name = ft_strndup(input + *i, ft_strchrs_mf(input + *i, " \"\'") - (input + *i));
 	if (!name)
 		return (NULL);
 	*i += ft_strlen(name);
