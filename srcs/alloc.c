@@ -138,7 +138,7 @@ char	**create_array(char *input, t_var *var)
 	free(input);
 	if (!input_replaced)
 		return (NULL);
-	result = ft_split(input_replaced, ' ');
+	result = split_args(input_replaced);
 	free(input_replaced);
 	return (result);
 }

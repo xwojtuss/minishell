@@ -1,4 +1,4 @@
-COMPILER = cc
+COMPILER = clang # TO CHANGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 CFLAGS = -Wall -Wextra -Werror
 LIBFT_FOLDER = libs/libft
 INCLUDES = -Iincludes -I${LIBFT_FOLDER}
@@ -6,7 +6,7 @@ LIBS = -L${LIBFT_FOLDER} -lft -lreadline -ltinfo
 
 NAME = minishell
 
-SRCS = main.c signals.c pipe.c debug.c alloc.c free.c errors.c init.c check_args.c input.c env.c
+SRCS = main.c signals.c pipe.c debug.c alloc.c free.c errors.c init.c check_args.c input.c env.c split.c
 
 SRCS_FOLDER = ${addprefix srcs/,${SRCS}}
 

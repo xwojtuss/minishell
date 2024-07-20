@@ -7,6 +7,8 @@ void	handle_input(char *input, t_shell *shell)
 {
 	char	**array;
 
+	shell->cmd = NULL;
+	shell->files = NULL;
 	if (input == NULL)
 	{
 		rl_clear_history();
@@ -24,6 +26,7 @@ void	handle_input(char *input, t_shell *shell)
 		return ;
 	/* if (!init_cmd(array, shell))
 		throw_error_exit(NULL, array, shell->cmd, shell->var); */
+	printf("%s\n", get_absolute_path(array[0]));
 	// execute()
 	free_cmd(shell->cmd);
 	free_array(array);
