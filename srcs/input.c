@@ -16,15 +16,14 @@ void	handle_input(char *input, t_shell *shell)
 	if (!*input)
 		return (free(input));
 	add_history((const char *)input);
-	array = create_array(input, shell->var);
+	array = create_array(input, shell->var);//if there are quotes - we need to not split at space!!!
 	print_array(array);
 	if (!array)
 		throw_error_exit(NULL, NULL, NULL, shell->var);
 	if (!check_redirects(array))
 		return ;
-	if (!init_cmd(array, shell))
-		throw_error_exit(NULL, array, shell->cmd, shell->var);
-	// set_cmd(array);
+	/* if (!init_cmd(array, shell))
+		throw_error_exit(NULL, array, shell->cmd, shell->var); */
 	// execute()
 	free_cmd(shell->cmd);
 	free_array(array);

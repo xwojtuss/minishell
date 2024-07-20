@@ -39,7 +39,7 @@ int	count_length(char *input, t_var *var)
 	{
 		if (input[i] == '\'')
 			is_in_quotes = !is_in_quotes;
-		else if (input[i] == '$' && !is_in_quotes && input[i + 1] != ' ' && input[i + 1] != '\0')
+		if (input[i] == '$' && !is_in_quotes && input[i + 1] != ' ' && input[i + 1] != '\0')
 		{
 			i++;
 			name = get_var_name(input, &i);
@@ -50,6 +50,10 @@ int	count_length(char *input, t_var *var)
 		}
 		else
 		{
+			if (i > 0 && input[i] == '|' && input[i - 1] != ' ' && !is_in_quotes)
+				length++;
+			if (input[i] == '|' && input[i + 1] != ' ' && input[i + 1] != '\0' && !is_in_quotes)
+				length++;
 			length++;
 			i++;
 		}
@@ -62,6 +66,7 @@ int	replace_var_loop(char *input, t_var *var, char *result)
 	int		i;
 	int		j;
 	bool	is_in_quotes;
+	bool	is_in_db_quotes;
 	char	*name;
 
 	i = 0;
@@ -71,7 +76,9 @@ int	replace_var_loop(char *input, t_var *var, char *result)
 	{
 		if (input[i] == '\'')
 			is_in_quotes = !is_in_quotes;
-		else if (input[i] == '$' && !is_in_quotes && input[i + 1] != ' ' && input[i + 1] != '\0')
+		else if (input[i] == '\"')
+			is_in_db_quotes = !is_in_db_quotes;
+		if (input[i] == '$' && !is_in_quotes && input[i + 1] != ' ' && input[i + 1] != '\0')
 		{
 			i++;
 			name = get_var_name(input, &i);
@@ -83,7 +90,19 @@ int	replace_var_loop(char *input, t_var *var, char *result)
 		}
 		else
 		{
+			if (i > 0 && input[i] == '|' && input[i - 1] != ' ' && !is_in_quotes && !is_in_db_quotes)
+				result[j++] = ' ';
+			else if (i > 0 && input[i] == '<' && input[i - 1] != ' ' && input[i - 1] != '<' && !is_in_quotes && !is_in_db_quotes)
+				result[j++] = ' ';
+			else if (i > 0 && input[i] == '>' && input[i - 1] != ' ' && input[i - 1] != '>' && !is_in_quotes && !is_in_db_quotes)
+				result[j++] = ' ';
 			result[j] = input[i];
+			if (input[i] == '|' && input[i + 1] != ' ' && input[i + 1] != '\0' && !is_in_quotes && !is_in_db_quotes)
+				result[++j] = ' ';
+			else if (input[i] == '<' && input[i + 1] != ' ' && input[i + 1] != '<' && input[i + 1] != '\0' && !is_in_quotes && !is_in_db_quotes)
+				result[++j] = ' ';
+			else if (input[i] == '>' && input[i + 1] != ' ' && input[i + 1] != '>' && input[i + 1] != '\0' && !is_in_quotes && !is_in_db_quotes)
+				result[++j] = ' ';
 			j++;
 			i++;
 		}
