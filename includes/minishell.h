@@ -89,6 +89,11 @@ char				**split_args(char const *s);
 char				*get_absolute_path(char *path);
 // void				sigint_exit(int num);
 
+// Bartkowe funkcje czyli gowno ale moze jakos dziala
+t_cmd				*Bartek_init_cmd(char **array);
+void				Bartek_execute(t_cmd *cmd);
+void				Bartek_echo(t_cmd *cmd);
+
 // TO DELETE:
 void				print_array(char **array);
 
