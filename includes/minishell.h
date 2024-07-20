@@ -8,6 +8,8 @@
 
 # include "libft.h"
 # include <curses.h>
+# include <fcntl.h>
+# include <linux/limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -25,17 +27,17 @@ Holds the opened files, the path needs to be absolute
 */
 typedef struct s_files
 {
-	char	*path;
-	int		fd;
+	char			*path;
+	int				fd;
 	struct s_files	*next;
-}				t_files;
+}					t_files;
 
 /*
 A linked list of commands to execute
 */
 typedef struct s_cmd
 {
-	char			*cmd;// to delete, it has to be argv
+	char *cmd; // to delete, it has to be argv
 	char			**args;
 	int				read_fd;
 	int				write_fd;
@@ -45,11 +47,11 @@ typedef struct s_cmd
 /*
 Stores the name and value of an environment variable
 */
-typedef struct s_var//to delete, it has to be a array of strings
+typedef struct s_var // to delete, it has to be a array of strings
 {
-	char			*name;
-	char			*value;
-	struct s_var	*next;
+	char *name;
+	char *value;
+	struct s_var *next;
 }					t_var;
 
 /*
@@ -83,6 +85,8 @@ void				print_variables(t_var *var);
 int					init_env(char **envp, t_shell *shell);
 int					init_cmd(char **array, t_shell *shell);
 void				free_var(t_var *var);
+char				**split_args(char const *s);
+char				*get_absolute_path(char *path);
 // void				sigint_exit(int num);
 
 // TO DELETE:
