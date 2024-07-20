@@ -2,6 +2,10 @@
 # define MINISHELL_H
 # define EXIT_SIGINT 130
 
+# define NOT_SET -42
+
+# define FD_PIPE -21
+
 # include "libft.h"
 # include <curses.h>
 # include <readline/history.h>
@@ -17,22 +21,31 @@
 # include <unistd.h>
 
 /*
+Holds the opened files, the path needs to be absolute
+*/
+typedef struct s_files
+{
+	char	*path;
+	int		fd;
+	struct s_files	*next;
+}				t_files;
+
+/*
 A linked list of commands to execute
 */
 typedef struct s_cmd
 {
-	char			*cmd;
+	char			*cmd;// to delete, it has to be argv
 	char			**args;
 	int				read_fd;
 	int				write_fd;
-	// bonus-int for checking the previous exit status
 	struct s_cmd	*next;
 }					t_cmd;
 
 /*
 Stores the name and value of an environment variable
 */
-typedef struct s_var
+typedef struct s_var//to delete, it has to be a array of strings
 {
 	char			*name;
 	char			*value;
@@ -46,6 +59,7 @@ will be used in export, unset, env,
 */
 typedef struct s_shell
 {
+	t_files			*files;
 	t_cmd			*cmd;
 	t_var			*var;
 }					t_shell;
