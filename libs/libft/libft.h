@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:52:16 by wkornato          #+#    #+#             */
-/*   Updated: 2024/07/19 21:15:17 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/07/21 01:19:35 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int					ft_tolower(int ch);
 int					ft_isalnum(int c);
 char				*ft_strchr(const char *str, int c);
 char				*ft_strchrs(const char *str, const char *c);
+char				*ft_strchrs_mf(const char *str, const char *c);
 int					ft_isascii(int c);
 char				*ft_strrchr(const char *str, int ch);
 int					ft_isprint(int c);
