@@ -15,4 +15,9 @@ void	Bartek_execute(t_cmd *cmd)
 		Bartek_pwd(cmd);
 		return ;
 	}
+	else if (ft_strcmp(cmd->args[0], "cd") == 0)
+	{
+		Bartek_cd(cmd);
+		return ;
+	}
 }
