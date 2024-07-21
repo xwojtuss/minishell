@@ -93,6 +93,8 @@ char				*get_absolute_path(char *path);
 t_cmd				*Bartek_init_cmd(char **array);
 void				Bartek_execute(t_cmd *cmd);
 void				Bartek_echo(t_cmd *cmd);
+void				Bartek_handle_error_pwd(const char *message_to_print);
+void				Bartek_pwd(t_cmd *cmd);
 
 // TO DELETE:
 void				print_array(char **array);

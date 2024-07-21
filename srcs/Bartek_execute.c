@@ -10,4 +10,9 @@ void	Bartek_execute(t_cmd *cmd)
 		Bartek_echo(cmd);
 		return ;
 	}
+	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
+	{
+		Bartek_pwd(cmd);
+		return ;
+	}
 }
