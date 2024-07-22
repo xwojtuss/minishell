@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:52:16 by wkornato          #+#    #+#             */
-/*   Updated: 2024/07/21 01:19:35 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/07/22 13:21:55 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ char				*ft_strchrs(const char *str, const char *c);
 char				*ft_strchrs_mf(const char *str, const char *c);
 int					ft_isascii(int c);
 char				*ft_strrchr(const char *str, int ch);
+size_t				ft_strspn(const char *str1, const char *str2);
+size_t				ft_strcspn(const char *str1, const char *str2);
+char				*ft_strtok_r(char *str, const char *delim, char **saveptr);
 int					ft_isprint(int c);
 int					ft_strncmp(const char *str1, const char *str2, size_t num);
 int					ft_strcmp(char *s1, char *s2);
