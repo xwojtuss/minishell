@@ -1,9 +1,12 @@
-1. finish function to init the t_cmd struct,
-2. write function to execute the processes (they need to pipe infinitely using the fd's provided in t_cmd,
-3. add exit, unset, finish export,
-4. test builtins,
-5. write the function handling the redirect functionality,
-6. make sure to handle signals when different processes are running,
-7. make the file structure make sense,
-8. clean up the .h file,
-9. Norm fixes,
+echo cat > file | echo test > file
+finish function to init the t_cmd struct,
+write function to execute the processes (they need to pipe infinitely using the fd's provided in t_cmd),
+add exit, unset, finish export,
+test builtins,
+make it so that the executable is searched in the $PATH dirs if the path looks relative
+write the function handling the redirect functionality,
+make sure to handle signals when different processes are running,
+make sure that the $? is being set everywhere it needs to
+make the file structure make sense,
+clean up the .h file,
+Norm fixes,

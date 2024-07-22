@@ -20,8 +20,7 @@ void	handle_input(char *input, t_shell *shell)
 	if (!*input)
 		return (free(input));
 	add_history((const char *)input);
-	array = create_array(input, shell->var);//if there are quotes - we need to not split at space!!!
-	// print_array(array);
+	array = create_array(input, shell->var);
 	if (!array)
 		throw_error_exit(NULL, NULL, NULL, shell->var);
 	print_array(array);
@@ -49,7 +48,6 @@ void	wait_for_input(char **envp)
 	t_shell	shell;
 
 	rl_clear_history();
-	// signal(SIGINT, sigint_exit);
 	if (!init_env(envp, &shell))
 		throw_error_exit(NULL, NULL, NULL, shell.var);
 	while (1)
