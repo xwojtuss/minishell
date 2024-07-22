@@ -49,7 +49,7 @@ void	export(t_var *var, t_cmd *cmd)
 	else
 	{
 		//this is wrong, it works with multiple arguments, it has to use all args
-		args = cmd->args[0];//or maybe strdup, depending on the implementation (it might be wise to check if args[0] is NULL -> free(args))
+		args = ft_strdup(cmd->args[0]);//or maybe strdup, depending on the implementation (it might be wise to check if args[0] is NULL -> free(args))
 		//execute with the args
 	}
 	if (is_empty(args))

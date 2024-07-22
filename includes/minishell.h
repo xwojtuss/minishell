@@ -88,6 +88,21 @@ void				free_var(t_var *var);
 char				**split_args(char const *s);
 char				*get_absolute_path(char *path);
 void				free_files(t_files *files);
+int					redirect(char *type, char *path, t_cmd *cmd, t_shell *shell);
+bool					is_redirect(char *str);
+int					count_length(char *input, t_var *var);
+int					replace_var_loop(char *input, t_var *var, char *result);
+char				*replace_var(char *input, t_var *var);
+void				handle_input(char *input, t_shell *shell);
+void				wait_for_input(char **envp);
+void				sigint_exit(int num);
+int					redir_input(int fd, t_cmd *cmd, t_shell *shell);
+int					redir_append(int fd, t_cmd *cmd, t_shell *shell);
+int					redir_output(int fd, t_cmd *cmd, t_shell *shell);
+int					redir_delimiter(int fd, t_cmd *cmd, t_shell *shell);
+int					get_fd(char *path, t_files *files);
+t_files				*add_file(char *path, int fd, t_files *files);
+
 // void				sigint_exit(int num);
 
 // Bartkowe funkcje czyli gowno ale moze jakos dziala
