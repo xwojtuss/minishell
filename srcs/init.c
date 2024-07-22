@@ -22,7 +22,7 @@ size_t	ft_strcspn(const char *str1, const char *str2)
 		while (str2[j])
 		{
 			if (str1[i] == str2[j])
-				break ;
+				return (i);
 			j++;
 		}
 		i++;

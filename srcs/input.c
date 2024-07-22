@@ -14,6 +14,7 @@ void	handle_input(char *input, t_shell *shell)
 	{
 		rl_clear_history();
 		free_var(shell->var);
+		free_files(shell->files);
 		exit(EXIT_SUCCESS);
 	}
 	if (!*input)
@@ -23,6 +24,7 @@ void	handle_input(char *input, t_shell *shell)
 	// print_array(array);
 	if (!array)
 		throw_error_exit(NULL, NULL, NULL, shell->var);
+	print_array(array);
 	if (!check_redirects(array))
 		return ;
 	/* if (!init_cmd(array, shell))
@@ -65,4 +67,5 @@ void	wait_for_input(char **envp)
 	}
 	free(prompt);
 	free_var((&shell)->var);
+	free_files((&shell)->files);
 }

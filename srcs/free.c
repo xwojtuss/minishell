@@ -1,6 +1,25 @@
 #include "minishell.h"
 
 /*
+Frees and closes the files
+*/
+void	free_files(t_files *files)
+{
+	t_files *tmp;
+
+	while (files)
+	{
+		tmp = files->next;
+		if (files->path)
+			free(files->path);
+		if (files->fd != -1)
+			close(files->fd);
+		free(files);
+		files = tmp;
+	}
+}
+
+/*
 Frees the array of strings, the array must be NULL terminated
 */
 void	free_array(char **array)

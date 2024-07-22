@@ -87,6 +87,7 @@ int					init_cmd(char **array, t_shell *shell);
 void				free_var(t_var *var);
 char				**split_args(char const *s);
 char				*get_absolute_path(char *path);
+void				free_files(t_files *files);
 // void				sigint_exit(int num);
 
 // Bartkowe funkcje czyli gowno ale moze jakos dziala
