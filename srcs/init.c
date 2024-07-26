@@ -1,9 +1,12 @@
 #include "minishell.h"
 
+/*
+redirect will happen right before we fork, we will open and close the file before and after the fork
+
+if the stdout of a previous command is a file then we execute the next command without piping the output of the previous command
+*/
 int	redirect(char *str, char *file, t_cmd *cmd, t_shell *shell)
 {
-	int		fd;
-	char	*abs_path;
 	int		status;
 
 	if (file == NULL)
@@ -12,27 +15,14 @@ int	redirect(char *str, char *file, t_cmd *cmd, t_shell *shell)
 				STDERR_FILENO); //$? = 2
 		return (0);
 	}
-	abs_path = get_absolute_path(file);
-	if (!abs_path)
-		return (0);
-	fd = get_fd(abs_path, shell->files);
-	if (fd == NOT_SET)
-	{
-		fd = open(abs_path, O_RDWR | O_CREAT, 0644);
-		if (fd == -1)
-			return (0);
-		shell->files = add_file(abs_path, fd, shell->files);
-	}
-	if (!shell->files)
-		return (0);
 	if (ft_strcmp(str, ">"))
-		status = redir_input(fd, cmd, shell);
+		status = redir_input(file, cmd, shell);
 	else if (ft_strcmp(str, ">>"))
-		status = redir_append(fd, cmd, shell);
+		status = redir_append(file, cmd, shell);
 	else if (ft_strcmp(str, "<"))
-		status = redir_output(fd, cmd, shell);
+		status = redir_output(file, cmd, shell);
 	else
-		status = redir_delimiter(fd, cmd, shell);
+		status = redir_delimiter(file, cmd, shell);
 	if (!status)
 		return (0);
 	return (1);
@@ -46,8 +36,8 @@ t_cmd	*alloc_cmd(int *i, int *argc, int *command)
 	if (!new)
 		return (NULL);
 	new->args = NULL;
-	new->read_fd = STDIN_FILENO;
-	new->write_fd = STDOUT_FILENO;
+	new->read_path = NULL;
+	new->write_path = NULL;
 	new->next = NULL;
 	*command = *i;
 	*argc = 1;
@@ -69,7 +59,10 @@ int	init_cmd(char **array, t_shell *shell)
 	we alloc another t_cmd and repeat
 	if its the first command then the read fd is stdin
 	if its the last command then we write to stdout
-	the args will always go to the command at the start or before the pipe */
+	the args will always go to the command at the start or before the pipe
+	
+	<< w | cat !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	*/
 	i = 0;
 	curr = NULL;
 	while (array[i])
@@ -77,27 +70,28 @@ int	init_cmd(char **array, t_shell *shell)
 		new = alloc_cmd(&i, &argc, &command);
 		if (!new)
 			return (0);
-		curr->next = new;
 		if (i == 0)
 			shell->cmd = new;
+		else
+			curr->next = new;
 		curr = new;
 		i++;
 		while (array[i] && !ft_strcmp(array[i], "|"))
 		{
 			if (is_redirect(array[i]))
 			{
-				if (!redirect(array[i], array[i + 1], new, shell))
-					return (0);
+				/* if (!redirect(array[i], array[i + 1], new, shell))
+					return (0); */
 				i += 2;
 			}
 			else
 				argc++;
 			i++;
 		}
-		new->args = (char **)malloc(sizeof(char *) * (argc + 1));
+		new->args = (char **)malloc(sizeof(char *) * (argc + 2));
 		if (!new->args)
 			return (0);
-		new->args[argc] = NULL;
+		new->args[argc + 1] = NULL;
 		while (argc >= 0)
 		{
 			if (!is_redirect(array[i]))
@@ -112,6 +106,13 @@ int	init_cmd(char **array, t_shell *shell)
 			argc -= 2;
 			command += 2;
 		}
+	}
+
+	t_cmd *cmd = shell->cmd;
+	while (cmd)
+	{
+		printf("cmd->args[0]: %s\n", cmd->args[0]);
+		cmd = cmd->next;
 	}
 	return (1);
 }
