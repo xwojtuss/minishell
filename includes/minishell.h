@@ -41,6 +41,8 @@ typedef struct s_cmd
 	char			**args;
 	int				read_fd;
 	int				write_fd;
+	char			*read_path;
+	char			*write_path;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -96,10 +98,10 @@ char				*replace_var(char *input, t_var *var);
 void				handle_input(char *input, t_shell *shell);
 void				wait_for_input(char **envp);
 void				sigint_exit(int num);
-int					redir_input(int fd, t_cmd *cmd, t_shell *shell);
-int					redir_append(int fd, t_cmd *cmd, t_shell *shell);
-int					redir_output(int fd, t_cmd *cmd, t_shell *shell);
-int					redir_delimiter(int fd, t_cmd *cmd, t_shell *shell);
+int					redir_input(char *file, t_cmd *cmd, t_shell *shell);
+int					redir_append(char *file, t_cmd *cmd, t_shell *shell);
+int					redir_output(char *file, t_cmd *cmd, t_shell *shell);
+int					redir_delimiter(char *delim, t_cmd *cmd, t_shell *shell);
 int					get_fd(char *path, t_files *files);
 t_files				*add_file(char *path, int fd, t_files *files);
 
