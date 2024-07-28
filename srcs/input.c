@@ -34,7 +34,7 @@ void	handle_input(char *input, t_shell *shell)
 		throw_error_exit(NULL, array, shell->cmd, shell->var);
 	printf("%s\n", get_absolute_path(array[0]));
 	// execute()
-	Bartek_execute(cmd);
+	Bartek_execute(cmd, shell);
 	free_cmd(shell->cmd);
 	free_array(array);
 	free(cmd);
