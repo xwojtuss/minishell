@@ -54,6 +54,8 @@ int	redir_append(char *file, t_cmd *cmd, t_shell *shell)
 int	redir_delimiter(char *delim, t_cmd *cmd, t_shell *shell)
 {
 	(void)shell;
+	(void)cmd;
+	(void)shell;
 	char	buffer[BUFFER_SIZE + 1];
 	int	bytes;
 	while (true)

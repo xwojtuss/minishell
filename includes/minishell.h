@@ -109,11 +109,14 @@ t_files				*add_file(char *path, int fd, t_files *files);
 
 // Bartkowe funkcje czyli gowno ale moze jakos dziala
 t_cmd				*Bartek_init_cmd(char **array);
-void				Bartek_execute(t_cmd *cmd);
+void				Bartek_execute(t_cmd *cmd, t_shell *shell);
 void				Bartek_echo(t_cmd *cmd);
 void				Bartek_handle_error(const char *message_to_print);
 void				Bartek_pwd(t_cmd *cmd);
 void				Bartek_cd(t_cmd *cmd);
+int					is_num(const char *str);
+void				Bartek_exit(t_cmd *cmd);
+void				Bartek_unset(t_cmd *cmd, t_shell *shell);
 
 // TO DELETE:
 void				print_array(char **array);
