@@ -7,8 +7,8 @@ LIBS = -L${LIBFT_FOLDER} -lft -lreadline -ltinfo
 NAME = minishell
 
 SRCS = main.c signals.c pipe.c debug.c alloc.c free.c errors.c init.c check_args.c input.c env.c split.c \
-	Bartek_cmd_init.c Bartek_echo.c Bartek_execute.c Bartek_pwd.c Bartek_handle_error.c Bartek_cd.c Bartek_exit.c Bartek_unset.c Bartek_export.c \
-	redir.c files.c
+	redir.c files.c \
+	# Bartek_cmd_init.c Bartek_echo.c Bartek_execute.c Bartek_pwd.c Bartek_handle_error.c Bartek_cd.c Bartek_exit.c Bartek_unset.c Bartek_export.c \
 
 SRCS_FOLDER = ${addprefix srcs/,${SRCS}}
 

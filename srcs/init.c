@@ -28,20 +28,59 @@ int	redirect(char *str, char *file, t_cmd *cmd, t_shell *shell)
 	return (1);
 }
 
-t_cmd	*alloc_cmd(int *i, int *argc, int *command)
+t_cmd	*alloc_cmd(int *i, int *command)
 {
 	t_cmd	*new;
 
 	new = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!new)
 		return (NULL);
-	new->args = NULL;
+	new->argv = NULL;
 	new->read_path = NULL;
 	new->write_path = NULL;
 	new->next = NULL;
 	*command = *i;
-	*argc = 1;
+	new->argc = 0;
 	return (new);
+}
+
+int	assign_argv(char **array, t_cmd *new, int command)
+{
+	int	i;
+	int	j;
+
+	i = command;
+	j = 0;
+	while (array[i] && ft_strcmp(array[i], "|"))
+	{
+		if (is_redirect(array[i]))
+		{
+			set_redirect(array[i], new, array[i + 1]);
+			i++;
+		}
+		else
+			new->argc++;
+		i++;
+	}
+	new->argv = (char **)ft_calloc(new->argc + 1, sizeof(char *));
+	if (!new->argv)
+		return (0);
+	new->argv[new->argc] = NULL;
+	i = command;
+	while (array[i] && ft_strcmp(array[i], "|"))
+	{
+		if (is_redirect(array[i]))
+			i++;
+		else
+		{
+			new->argv[j] = ft_strdup(array[i]);
+			if (!new->argv[j])
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
 }
 
 int	init_cmd(char **array, t_shell *shell)
@@ -49,70 +88,26 @@ int	init_cmd(char **array, t_shell *shell)
 	t_cmd	*new;
 	t_cmd	*curr;
 	int		i;
-	int		argc;
 	int		command;
 
-	/* the first is always the command (exept for a case where the < appears)
-	then we take the arguments
-	when we reach | or redirects we stop
-	if we've reached a redirect we change the read/write fd and open the file if needed
-	we alloc another t_cmd and repeat
-	if its the first command then the read fd is stdin
-	if its the last command then we write to stdout
-	the args will always go to the command at the start or before the pipe
-	
-	<< w | cat !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	*/
 	i = 0;
 	curr = NULL;
 	while (array[i])
 	{
-		new = alloc_cmd(&i, &argc, &command);
+		new = alloc_cmd(&i, &command);
 		if (!new)
 			return (0);
-		if (i == 0)
+		if (!assign_argv(array, new, command))
+			return (0);
+		if (!curr)
 			shell->cmd = new;
 		else
 			curr->next = new;
 		curr = new;
-		i++;
-		while (array[i] && !ft_strcmp(array[i], "|"))
-		{
-			if (is_redirect(array[i]))
-			{
-				/* if (!redirect(array[i], array[i + 1], new, shell))
-					return (0); */
-				i += 2;
-			}
-			else
-				argc++;
+		while (array[i] && ft_strcmp(array[i], "|"))
 			i++;
-		}
-		new->args = (char **)malloc(sizeof(char *) * (argc + 2));
-		if (!new->args)
-			return (0);
-		new->args[argc + 1] = NULL;
-		while (argc >= 0)
-		{
-			if (!is_redirect(array[i]))
-			{
-				new->args[argc] = ft_strdup(array[command]);
-				if (!new->args[argc])
-					return (0);
-				argc--;
-				command++;
-				continue ;
-			}
-			argc -= 2;
-			command += 2;
-		}
-	}
-
-	t_cmd *cmd = shell->cmd;
-	while (cmd)
-	{
-		printf("cmd->args[0]: %s\n", cmd->args[0]);
-		cmd = cmd->next;
+		if (array[i])
+			i++;
 	}
 	return (1);
 }
