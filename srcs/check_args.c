@@ -23,6 +23,13 @@ bool	check_redirects(char **array)
 	int	i;
 
 	i = 0;
+	if (!ft_strcmp(array[0], "|"))//this will not be enough, we need to check if all pipes have something before them
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", STDERR_FILENO);
+		// set the $? to STDERR_FILENO
+		free_array(array);
+		return (false);
+	}
 	while (array[i])
 	{
 		if (ft_strcmp(array[i], "<") == 0 || ft_strcmp(array[i], ">") == 0 || ft_strcmp(array[i], ">>") == 0)

@@ -1,29 +1,47 @@
-==8753== Memcheck, a memory error detector
-==8753== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==8753== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
-==8753== Command: ./minishell
-==8753== Parent PID: 3138
-==8753== 
-==8757== 
-==8757== HEAP SUMMARY:
-==8757==     in use at exit: 228,853 bytes in 233 blocks
-==8757==   total heap usage: 650 allocs, 417 frees, 259,499 bytes allocated
-==8757== 
-==8757== LEAK SUMMARY:
-==8757==    definitely lost: 0 bytes in 0 blocks
-==8757==    indirectly lost: 0 bytes in 0 blocks
-==8757==      possibly lost: 0 bytes in 0 blocks
-==8757==    still reachable: 0 bytes in 0 blocks
-==8757==         suppressed: 228,853 bytes in 233 blocks
-==8757== 
-==8757== For lists of detected and suppressed errors, rerun with: -s
-==8757== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==8753== 
-==8753== HEAP SUMMARY:
-==8753==     in use at exit: 0 bytes in 0 blocks
-==8753==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
-==8753== 
-==8753== All heap blocks were freed -- no leaks are possible
-==8753== 
-==8753== For lists of detected and suppressed errors, rerun with: -s
-==8753== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==29857== Memcheck, a memory error detector
+==29857== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==29857== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==29857== Command: ./minishell
+==29857== Parent PID: 21440
+==29857== 
+==29858== Conditional jump or move depends on uninitialised value(s)
+==29858==    at 0x109B5B: replace_var_loop (in /home/wkornato/Documents/minishell/minishell)
+==29858==    by 0x109D46: replace_var (in /home/wkornato/Documents/minishell/minishell)
+==29858==    by 0x109D9C: create_array (in /home/wkornato/Documents/minishell/minishell)
+==29858==    by 0x10AA0C: handle_input (in /home/wkornato/Documents/minishell/minishell)
+==29858==    by 0x10ABDA: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==29858==    by 0x1092F3: main (in /home/wkornato/Documents/minishell/minishell)
+==29858==  Uninitialised value was created by a stack allocation
+==29858==    at 0x109800: replace_var_loop (in /home/wkornato/Documents/minishell/minishell)
+==29858== 
+==29858== 
+==29858== HEAP SUMMARY:
+==29858==     in use at exit: 232,869 bytes in 234 blocks
+==29858==   total heap usage: 679 allocs, 445 frees, 270,144 bytes allocated
+==29858== 
+==29858== 4,016 bytes in 1 blocks are still reachable in loss record 46 of 74
+==29858==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29858==    by 0x48A80EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==29858==    by 0x48A161F: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==29858==    by 0x10A9FB: handle_input (in /home/wkornato/Documents/minishell/minishell)
+==29858==    by 0x10ABDA: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==29858==    by 0x1092F3: main (in /home/wkornato/Documents/minishell/minishell)
+==29858== 
+==29858== LEAK SUMMARY:
+==29858==    definitely lost: 0 bytes in 0 blocks
+==29858==    indirectly lost: 0 bytes in 0 blocks
+==29858==      possibly lost: 0 bytes in 0 blocks
+==29858==    still reachable: 4,016 bytes in 1 blocks
+==29858==         suppressed: 228,853 bytes in 233 blocks
+==29858== 
+==29858== For lists of detected and suppressed errors, rerun with: -s
+==29858== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==29857== 
+==29857== HEAP SUMMARY:
+==29857==     in use at exit: 0 bytes in 0 blocks
+==29857==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==29857== 
+==29857== All heap blocks were freed -- no leaks are possible
+==29857== 
+==29857== For lists of detected and suppressed errors, rerun with: -s
+==29857== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

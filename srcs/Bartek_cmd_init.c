@@ -8,7 +8,7 @@ t_cmd	*Bartek_init_cmd(char **array)
 	if (!cmd)
 		return NULL;
 
-	cmd->args = array;
+	cmd->argv = array;
 	cmd->read_fd = STDIN_FILENO;  // Default to standard input
 	cmd->write_fd = STDOUT_FILENO; // Default to standard output
 	cmd->next = NULL;

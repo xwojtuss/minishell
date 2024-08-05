@@ -64,10 +64,8 @@ void	free_cmd(t_cmd *cmd)
 	while (cmd)
 	{
 		tmp = cmd->next;
-		if (cmd->cmd)
-			free(cmd->cmd);
-		if (cmd->args)
-			free_array(cmd->args);
+		if (cmd->argv)
+			free_array(cmd->argv);
 		free(cmd);
 		cmd = tmp;
 	}

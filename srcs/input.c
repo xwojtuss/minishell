@@ -1,12 +1,51 @@
 #include "minishell.h"
 
+char	*check_pipes(char **input)
+{
+	char 	*temp;
+	char	*last;
+	char	*stdin_line;
+
+	while (true)
+	{
+		temp = *input;
+		last = ft_strrchr(*input, '|');
+		if (!last)
+			break ;
+		last++;
+		while (*last && ft_iswhite(*last))
+			last++;
+		if (*last)
+			break ;
+		else
+		{
+			write(STDOUT_FILENO, "> ", 2);
+			stdin_line = get_next_line(0);
+			if (!stdin_line)
+				return (NULL);
+			if (ft_strlen(stdin_line) == 0)
+			{
+				free(stdin_line);
+				continue ;
+			}
+			if (stdin_line[ft_strlen(stdin_line) - 1] == '\n')
+				stdin_line[ft_strlen(stdin_line) - 1] = '\0';
+			*input = ft_strjoin(temp, stdin_line);
+			free(temp);
+			free(stdin_line);
+			if (!*input)
+				return (NULL);
+		}
+	}
+	return (*input);
+}
+
 /*
 Prepares the input for execution, prelimenary checks are called from here
 */
 void	handle_input(char *input, t_shell *shell)
 {
 	char	**array;
-	t_cmd	*cmd;
 
 	shell->cmd = NULL;
 	shell->files = NULL;
@@ -19,25 +58,43 @@ void	handle_input(char *input, t_shell *shell)
 	}
 	if (!*input)
 		return (free(input));
+	if (!check_pipes(&input))
+		return (free(input));
 	add_history((const char *)input);
 	array = create_array(input, shell->var);
 	if (!array)
 		throw_error_exit(NULL, NULL, NULL, shell->var);
-	print_array(array);
+	// print_array(array);
 	if (!check_redirects(array))
 		return ;
 	/* if (!init_cmd(array, shell))
 		throw_error_exit(NULL, array, shell->cmd, shell->var); */
 	// Initialize the t_cmd structure Bartek
-	cmd = Bartek_init_cmd(array);
+	/* cmd = Bartek_init_cmd(array);
 	if (!cmd)
 		throw_error_exit(NULL, array, shell->cmd, shell->var);
-	printf("%s\n", get_absolute_path(array[0]));
+	printf("%s\n", get_absolute_path(array[0])); */
 	// execute()
-	Bartek_execute(cmd, shell);
+	/* Bartek_execute(cmd, shell); */
+	if (!init_cmd(array, shell))
+		throw_error_exit(NULL, array, shell->cmd, shell->var);
+	free_array(array);
+	int i = 0;
+	t_cmd *tmp = shell->cmd;
+	while (tmp)
+	{
+		i = 0;
+		while (i < tmp->argc)
+		{
+			printf("cmd->argv[%d]: %s\n", i, tmp->argv[i]);
+			i++;
+		}
+		tmp = tmp->next;
+	}
+	/* if (!execute())
+		throw_error_exit(NULL, NULL, shell->cmd, shell->var); */
 	free_cmd(shell->cmd);
 	free_array(array);
-	free(cmd);
 }
 
 void	wait_for_input(char **envp)

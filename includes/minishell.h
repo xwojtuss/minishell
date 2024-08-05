@@ -4,6 +4,9 @@
 
 # define NOT_SET -42
 
+# define MODE_WRITE 16
+# define MODE_APPEND 24
+
 # define FD_PIPE -21
 
 # include "libft.h"
@@ -25,22 +28,23 @@
 /*
 Holds the opened files, the path needs to be absolute
 */
-typedef struct s_files
+/* typedef struct s_files
 {
 	char			*path;
 	int				fd;
 	struct s_files	*next;
-}					t_files;
+}					t_files; */
 
 /*
 A linked list of commands to execute
 */
 typedef struct s_cmd
 {
-	char *cmd; // to delete, it has to be argv
-	char			**args;
+	int				argc;
+	char			**argv;
 	int				read_fd;
 	int				write_fd;
+	int				write_mode;
 	char			*read_path;
 	char			*write_path;
 	struct s_cmd	*next;
