@@ -1,5 +1,14 @@
 #include "minishell.h"
 
+bool	is_empty_or_pipe(char *str)
+{
+	if (!str)
+		return (true);
+	if (!*str || !ft_strcmp(str, "|"))
+		return (true);
+	return (false);
+}
+
 /*
 A function to deal with the redirections
 Things to look out for:
@@ -23,15 +32,15 @@ bool	check_redirects(char **array)
 	int	i;
 
 	i = 0;
-	if (!ft_strcmp(array[0], "|"))//this will not be enough, we need to check if all pipes have something before them
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", STDERR_FILENO);
-		// set the $? to STDERR_FILENO
-		free_array(array);
-		return (false);
-	}
 	while (array[i])
 	{
+		if (!ft_strcmp(array[i], "|") && (i == 0 || is_empty_or_pipe(array[i - 1])))
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", STDERR_FILENO);
+			// set the $? to STDERR_FILENO
+			free_array(array);
+			return (false);
+		}
 		if (ft_strcmp(array[i], "<") == 0 || ft_strcmp(array[i], ">") == 0 || ft_strcmp(array[i], ">>") == 0)
 		{
 			if (!array[i + 1])

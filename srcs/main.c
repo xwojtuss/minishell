@@ -12,6 +12,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	rl_clear_history();
 	while (1)
 	{
 		status = 0;

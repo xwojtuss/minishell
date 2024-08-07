@@ -10,3 +10,6 @@ make sure that the $? is being set everywhere it needs to
 make the file structure make sense,
 clean up the .h file,
 Norm fixes,
+
+
+In the split do not get rid of any quotes, make sure that the array consists of the words and quotes, we will differentiate between the words and the words in quotes when we do the init cmd!!!

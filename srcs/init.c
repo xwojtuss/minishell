@@ -32,19 +32,121 @@ t_cmd	*alloc_cmd(int *i, int *command)
 {
 	t_cmd	*new;
 
-	new = (t_cmd *)malloc(sizeof(t_cmd));
+	new = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
 	if (!new)
 		return (NULL);
 	new->argv = NULL;
 	new->read_path = NULL;
+	new->write_mode = NOT_SET;
 	new->write_path = NULL;
 	new->next = NULL;
-	*command = *i;
+	if (i && command)
+		*command = *i;
 	new->argc = 0;
 	return (new);
 }
 
-int	assign_argv(char **array, t_cmd *new, int command)
+t_cmd	*read_stdin_delim(char *delim)
+{
+	t_cmd	*new;
+	char	*stdin_line;
+	char	*temp;
+
+	new = alloc_cmd(NULL, NULL);
+	if (!new)
+		return (0);
+	new->argv = (char **)ft_calloc(3, sizeof(char *));
+	if (!(new->argv))
+		return (0);
+	new->argv[0] = ft_strdup("echo");
+	if (!new->argv[0])
+		return (0);
+	new->argv[1] = ft_strdup("");
+	if (!(new->argv[1]))
+		return (0);
+	new->argc = 2;
+	while (true)
+	{
+		write(STDOUT_FILENO, "> ", 2);
+		stdin_line = get_next_line(0);
+		if (!stdin_line)
+			return (0);
+		if (ft_strlen(stdin_line) == 0)
+		{
+			free(stdin_line);
+			continue ;
+		}
+		if (!ft_strncmp(stdin_line, delim, ft_max(ft_strlen(delim), ft_strlen(stdin_line) - 1)))
+			break ;
+		temp = new->argv[1];
+		new->argv[1] = ft_strjoin(temp, stdin_line);
+		free(temp);
+		free(stdin_line);
+		if (!(new->argv[1]))
+			return (0);
+	}
+	free(stdin_line);
+	new->argv[2] = NULL;
+	return (new);
+}
+
+int	set_redirect(char *str, t_cmd **cmd, char *file)
+{
+	t_cmd	*new;
+
+	if (!ft_strcmp(str, ">"))
+	{
+		(*cmd)->write_mode = MODE_WRITE;
+		(*cmd)->write_path = get_absolute_path(file);
+	}
+	else if (!ft_strcmp(str, ">>"))
+	{
+		(*cmd)->write_mode = MODE_APPEND;
+		(*cmd)->write_path = get_absolute_path(file);
+	}
+	else if (!ft_strcmp(str, "<"))
+		(*cmd)->read_path = get_absolute_path(file);
+	else if (!ft_strcmp(str, "<<"))
+	{
+		new = read_stdin_delim(file);
+		if (!new)
+			return (0);
+		new->next = *cmd;
+		*cmd = new;
+	}
+	return (1);
+}
+
+char	*copy_without_quotes(char *s)
+{
+	char	*result;
+	int		wait_for;
+	int		i;
+
+	result = (char *)ft_calloc(ft_strlen(s) + 1, sizeof(char));
+	if (!result)
+		return (NULL);
+	wait_for = NOT_SET;
+	i = 0;
+	while (*s)
+	{
+		if (*s == '\'' && wait_for == NOT_SET)
+			wait_for = '\'';
+		else if (*s == '\"' && wait_for == NOT_SET)
+			wait_for = '\"';
+		else if (*s == wait_for)
+			wait_for = NOT_SET;
+		else
+		{
+			result[i] = *s;
+			i++;
+		}
+		s++;
+	}
+	return (result);
+}
+
+int	assign_argv(char **array, t_cmd **new, int command)
 {
 	int	i;
 	int	j;
@@ -54,27 +156,28 @@ int	assign_argv(char **array, t_cmd *new, int command)
 	while (array[i] && ft_strcmp(array[i], "|"))
 	{
 		if (is_redirect(array[i]))
-		{
-			set_redirect(array[i], new, array[i + 1]);
 			i++;
-		}
 		else
-			new->argc++;
+			(*new)->argc++;
 		i++;
 	}
-	new->argv = (char **)ft_calloc(new->argc + 1, sizeof(char *));
-	if (!new->argv)
+	(*new)->argv = (char **)ft_calloc((*new)->argc + 1, sizeof(char *));
+	if (!((*new)->argv))
 		return (0);
-	new->argv[new->argc] = NULL;
+	(*new)->argv[(*new)->argc] = NULL;
 	i = command;
 	while (array[i] && ft_strcmp(array[i], "|"))
 	{
 		if (is_redirect(array[i]))
+		{
+			if (!set_redirect(array[i], new, array[i + 1]))
+				return (0);
 			i++;
+		}
 		else
 		{
-			new->argv[j] = ft_strdup(array[i]);
-			if (!new->argv[j])
+			(*new)->argv[j] = copy_without_quotes(array[i]);
+			if (!((*new)->argv[j]))
 				return (0);
 			j++;
 		}
@@ -97,13 +200,16 @@ int	init_cmd(char **array, t_shell *shell)
 		new = alloc_cmd(&i, &command);
 		if (!new)
 			return (0);
-		if (!assign_argv(array, new, command))
+		if (!assign_argv(array, &new, command))
 			return (0);
 		if (!curr)
 			shell->cmd = new;
 		else
 			curr->next = new;
-		curr = new;
+		if (new->next)
+			curr = new->next;
+		else
+			curr = new;
 		while (array[i] && ft_strcmp(array[i], "|"))
 			i++;
 		if (array[i])

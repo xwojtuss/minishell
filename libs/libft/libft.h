@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:52:16 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/03 21:15:38 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/07 17:25:49 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+int					ft_min(int x, int y);
+int					ft_max(int x, int y);
+int					ft_abs(int n);
 int					ft_isalpha(int c);
 int					ft_toupper(int ch);
 int					ft_isdigit(int c);
