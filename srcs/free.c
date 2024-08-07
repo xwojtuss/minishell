@@ -66,6 +66,10 @@ void	free_cmd(t_cmd *cmd)
 		tmp = cmd->next;
 		if (cmd->argv)
 			free_array(cmd->argv);
+		if (cmd->read_path)
+			free(cmd->read_path);
+		if (cmd->write_path)
+			free(cmd->write_path);
 		free(cmd);
 		cmd = tmp;
 	}

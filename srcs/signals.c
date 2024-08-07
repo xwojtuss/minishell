@@ -7,9 +7,13 @@ void sig_handler(int num)
 {
 	if (num == SIGINT || num == SIGQUIT)
 	{
-		g_signum = num;
-		printf("signal received\n");	
+		g_signum = num;	
 	}
+}
+
+void sig_do_nothing(int num)
+{
+	(void)num;
 }
 
 /* void	sigint_exit(int num)

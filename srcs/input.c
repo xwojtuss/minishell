@@ -60,41 +60,21 @@ void	handle_input(char *input, t_shell *shell)
 		return (free(input));
 	if (!check_pipes(&input))
 		return (free(input));
+	printf("input: %s\n", input);
 	add_history((const char *)input);
 	array = create_array(input, shell->var);
 	if (!array)
 		throw_error_exit(NULL, NULL, NULL, shell->var);
-	// print_array(array);
+	print_array(array);
 	if (!check_redirects(array))
 		return ;
-	/* if (!init_cmd(array, shell))
-		throw_error_exit(NULL, array, shell->cmd, shell->var); */
-	// Initialize the t_cmd structure Bartek
-	/* cmd = Bartek_init_cmd(array);
-	if (!cmd)
-		throw_error_exit(NULL, array, shell->cmd, shell->var);
-	printf("%s\n", get_absolute_path(array[0])); */
-	// execute()
-	/* Bartek_execute(cmd, shell); */
 	if (!init_cmd(array, shell))
 		throw_error_exit(NULL, array, shell->cmd, shell->var);
+	print_cmd(shell->cmd);
 	free_array(array);
-	int i = 0;
-	t_cmd *tmp = shell->cmd;
-	while (tmp)
-	{
-		i = 0;
-		while (i < tmp->argc)
-		{
-			printf("cmd->argv[%d]: %s\n", i, tmp->argv[i]);
-			i++;
-		}
-		tmp = tmp->next;
-	}
 	/* if (!execute())
 		throw_error_exit(NULL, NULL, shell->cmd, shell->var); */
 	free_cmd(shell->cmd);
-	free_array(array);
 }
 
 void	wait_for_input(char **envp)
@@ -104,7 +84,6 @@ void	wait_for_input(char **envp)
 	char	*prompt;
 	t_shell	shell;
 
-	rl_clear_history();
 	if (!init_env(envp, &shell))
 		throw_error_exit(NULL, NULL, NULL, shell.var);
 	while (1)

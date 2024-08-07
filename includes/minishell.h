@@ -28,12 +28,12 @@
 /*
 Holds the opened files, the path needs to be absolute
 */
-/* typedef struct s_files
+typedef struct s_files
 {
 	char			*path;
 	int				fd;
 	struct s_files	*next;
-}					t_files; */
+}					t_files;
 
 /*
 A linked list of commands to execute
@@ -94,20 +94,23 @@ void				free_var(t_var *var);
 char				**split_args(char const *s);
 char				*get_absolute_path(char *path);
 void				free_files(t_files *files);
-int					redirect(char *type, char *path, t_cmd *cmd, t_shell *shell);
-bool					is_redirect(char *str);
+int					redirect(char *type, char *path, t_cmd *cmd,
+						t_shell *shell);
+bool				is_redirect(char *str);
 int					count_length(char *input, t_var *var);
 int					replace_var_loop(char *input, t_var *var, char *result);
 char				*replace_var(char *input, t_var *var);
 void				handle_input(char *input, t_shell *shell);
 void				wait_for_input(char **envp);
 void				sigint_exit(int num);
+void				sig_do_nothing(int num);
 int					redir_input(char *file, t_cmd *cmd, t_shell *shell);
 int					redir_append(char *file, t_cmd *cmd, t_shell *shell);
 int					redir_output(char *file, t_cmd *cmd, t_shell *shell);
 int					redir_delimiter(char *delim, t_cmd *cmd, t_shell *shell);
 int					get_fd(char *path, t_files *files);
 t_files				*add_file(char *path, int fd, t_files *files);
+void				print_cmd(t_cmd *cmd);
 
 // void				sigint_exit(int num);
 

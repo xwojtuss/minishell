@@ -2,33 +2,38 @@
 
 static int	count_words(char const *s)
 {
-	int		i;
-	int		count;
-	bool	is_in_quotes;
+	int count;
+	int quote;
 
-	i = 0;
-	count = 0;
-	is_in_quotes = false;
-	while (s[i])
+	while (*s == ' ')
+		s++;
+	if (*s == '\0')
+		return (0);
+	count = 1;
+	quote = NOT_SET;
+	while (*s)
 	{
-		if (s[i] == '\"' || s[i] == '\'')
-			is_in_quotes = !is_in_quotes;
-		if (s[i] != ' ' || is_in_quotes)
+		while (*s && *s != ' ' && *s != '\'' && *s != '\"')
+			s++;
+		if (*s == ' ' && quote == NOT_SET)
 		{
 			count++;
-			while (s[i] && s[i] != ' ')
-			{
-				if (s[i] == '\"' || s[i] == '\'')
-				{
-					i++;
-					while (s[i] && s[i] != '\"' && s[i] != '\'')
-						i++;
-				}
-				i++;
-			}
+			while (*s == ' ')
+				s++;
 		}
-		while (s[i] && s[i] == ' ')
-			i++;
+		else if (*s == '\'' || *s == '\"')
+		{
+			quote = *s;
+			s++;
+			while (*s && *s != quote)
+				s++;
+			if (!*s)
+				break ;
+			s++;
+			quote = NOT_SET;
+		}
+		else if (*s)
+			s++;
 	}
 	return (count);
 }
@@ -44,23 +49,27 @@ int	add_string(char ****array, int *size, const char *str)
 
 static int	copy_data(const char *str, char ***result, char *buffer, int buf_index)
 {
-	bool	in_quotes;
+	int		wait_for;
 	int		size;
 
 	size = 0;
-	in_quotes = false;
+	wait_for = NOT_SET;
 	while (*str)
 	{
-		if (*str == '"')
-			in_quotes = !in_quotes;
-		else if (*str == ' ' && !in_quotes && buf_index > 0)
+		if (*str == '\"' && wait_for == NOT_SET)
+			wait_for = '\"';
+		else if (*str == '\'' && wait_for == NOT_SET)
+			wait_for = '\'';
+		else if (*str == wait_for)
+			wait_for = NOT_SET;
+		if (*str == ' ' && wait_for == NOT_SET && buf_index > 0)
 		{
 			buffer[buf_index] = '\0';
 			if (!add_string(&result, &size, buffer))
 				return (0);
 			buf_index = 0;
 		}
-		else if (!(*str == ' ' && !in_quotes))
+		else if (*str && !(*str == ' ' && wait_for == NOT_SET))
 			buffer[buf_index++] = *str;
 		str++;
 	}
