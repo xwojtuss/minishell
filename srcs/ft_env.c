@@ -3,16 +3,18 @@
 /*
 Prints the environment variables
 */
-void	env(t_var *var)
+int	ft_env(int argc, char **argv, t_shell *shell)
 {
 	t_var	*curr;
 
-	//start printing without the $? variable
-	curr = var->next;
+	(void)argc;
+	(void)argv;
+	curr = shell->var->next;
 	while (curr)
 	{
 		if (curr->name && curr->value)
 			printf("%s=%s\n", curr->name, curr->value);
 		curr = curr->next;
 	}
+	return (EXIT_SUCCESS);
 }

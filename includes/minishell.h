@@ -2,6 +2,17 @@
 # define MINISHELL_H
 # define EXIT_SIGINT 130
 
+# define RED_COLOR "\033[0;31m"
+# define GREEN_COLOR "\033[0;32m"
+# define YELLOW_COLOR "\033[0;33m"
+# define BLUE_COLOR "\033[0;34m"
+# define MAGENTA_COLOR "\033[0;35m"
+# define DEFAULT_COLOR "\033[0m"
+# define BOLD_TEXT "\033[1m"
+# define UNDERLINED_TEXT "\033[4m"
+# define BLINKING_TEXT "\033[5m"
+# define NORMAL_TEXT "\033[0m"
+
 # define NOT_SET -42
 
 # define MODE_WRITE 16
@@ -11,6 +22,8 @@
 
 # include "libft.h"
 # include <curses.h>
+# include <dirent.h>
+# include <errno.h>
 # include <fcntl.h>
 # include <linux/limits.h>
 # include <readline/history.h>
@@ -111,8 +124,17 @@ int					redir_delimiter(char *delim, t_cmd *cmd, t_shell *shell);
 int					get_fd(char *path, t_files *files);
 t_files				*add_file(char *path, int fd, t_files *files);
 void				print_cmd(t_cmd *cmd);
-
+char				*get_var_value(t_var *var, char *name);
+int					execute(t_shell *shell);
 // void				sigint_exit(int num);
+
+int					ft_echo(int argc, char **argv);
+int					ft_cd(int argc, char **argv);
+int					ft_pwd(int argc, char **argv);
+int					ft_export(int argc, char **argv, t_shell *shell);
+int					ft_unset(int argc, char **argv, t_shell *shell);
+int					ft_env(int argc, char **argv, t_shell *shell);
+int					ft_exit(int argc, char **argv);
 
 // Bartkowe funkcje czyli gowno ale moze jakos dziala
 t_cmd				*Bartek_init_cmd(char **array);
