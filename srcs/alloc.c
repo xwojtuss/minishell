@@ -11,6 +11,9 @@ char	*get_var_name(char *input, int *i)
 	return (name);
 }
 
+/*
+This returns the value of a variable given its name, the return value is not a duplicate of the value, so it should not be freed
+*/
 char	*get_var_value(t_var *var, char *name)
 {
 	t_var	*tmp;
