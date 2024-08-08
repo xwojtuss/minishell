@@ -55,6 +55,7 @@ char	*locate_file(char *command, char *path)
 {
 	char	**dirs;
 	char	*result;
+	char	*temp;
 	int		i;
 
 	dirs = ft_split(path, ':');
@@ -63,12 +64,18 @@ char	*locate_file(char *command, char *path)
 	i = 0;
 	while (dirs[i])
 	{
-		if (check_path_for_file(dirs[i++], command))
+		if (check_path_for_file(dirs[i], command))
 			break ;
+		i++;
 	}
 	if (!dirs[i])
 		return (free_array(dirs), NULL);
-	result = ft_strjoin(dirs[i], command);
+	result = ft_strjoin(dirs[i], "/");
+	if(!result)
+		return (free_array(dirs), NULL);
+	temp = result;
+	result = ft_strjoin(temp, command);
+	free(temp);
 	free_array(dirs);
 	return (result);
 }
@@ -91,6 +98,7 @@ size_t	count_env_vars(t_var *var)
 char	**get_env(t_shell *shell)
 {
 	char	**env;
+	char	*temp;
 	t_var	*tmp;
 	int 	i;
 
@@ -106,7 +114,9 @@ char	**get_env(t_shell *shell)
 			return (NULL);
 		if (tmp->value && tmp->value[0] != '\0')
 		{
-			env[i] = ft_strjoin(env[i], tmp->value);
+			temp = env[i];
+			env[i] = ft_strjoin(temp, tmp->value);
+			free(temp);
 			if (!env[i])
 				return (NULL);
 		}
@@ -130,64 +140,14 @@ int	execute_external(t_cmd *cmd, t_shell *shell)
 	if (!path)
 		return (EXIT_FAILURE);
 	env = get_env(shell);
-	execve(path, cmd->argv, env);
-	free(path);
-	free_array(env);
+	printf("executing %s\n", path);
+	if (execve(path, cmd->argv, env) == -1)
+	{
+		safely_exit(NOT_SET, shell, env, path);
+		return (EXIT_FAILURE);
+	}
+	safely_exit(NOT_SET, shell, env, path);
 	return (EXIT_FAILURE);
-}  
-
-int	create_child(t_cmd *curr, t_shell *shell, int pipe_fd[2])
-{
-	pid_t	pid;
-	int		pipe_prev[2];
-	
-	pid = fork();
-	if (pid == -1)
-		return (0);
-	if (pid == 0)
-	{
-		if (shell->cmd != curr)
-		{
-			if (curr->read_fd != NOT_SET)
-				dup2(curr->read_fd, STDIN_FILENO);
-			else
-				dup2(pipe_prev[0], STDIN_FILENO);
-			close(pipe_prev[0]);
-			close(pipe_prev[1]);
-		}
-		if (curr->next)
-		{
-			if (curr->write_fd != NOT_SET)
-				dup2(curr->write_fd, STDOUT_FILENO);
-			else
-				dup2(pipe_fd[1], STDOUT_FILENO);
-			close(pipe_fd[0]);
-			close(pipe_fd[1]);
-		}
-		if (is_builtin(curr->argv[0]))
-			exit(execute_builtin(curr, shell));
-		else
-			exit(execute_external(curr, shell));
-	}
-	else
-	{
-		if (shell->cmd != curr)
-		{
-			close(pipe_prev[0]);
-			close(pipe_prev[1]);
-		}
-		if (curr->next)
-		{
-			pipe_prev[0] = pipe_fd[0];
-			pipe_prev[1] = pipe_fd[1];
-		}
-	}
-	if (!curr->next && shell->cmd != curr)
-	{
-		close(pipe_prev[0]);
-		close(pipe_prev[1]);
-	}
-	return (1);
 }
 
 int	open_redirs(t_cmd *cmd)
@@ -244,25 +204,69 @@ void	close_files(t_cmd *cmd)
 	}
 }
 
+pid_t	create_child(t_shell *shell, t_cmd *cmd, int pipes[2], int prev_pipes[2])
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		close(pipes[0]);
+		close(pipes[1]);
+		close(prev_pipes[0]);
+		close(prev_pipes[1]);
+		return (-1);
+	}
+	if (pid == 0)
+	{
+		if (prev_pipes[0] != STDIN_FILENO)
+		{
+			dup2(prev_pipes[0], STDIN_FILENO);
+			close(prev_pipes[0]);
+			close(prev_pipes[1]);
+		}
+		if (pipes[1] != STDOUT_FILENO)
+		{
+			dup2(pipes[1], STDOUT_FILENO);
+			close(pipes[0]);
+			close(pipes[1]);
+		}
+		if (is_builtin(cmd->argv[0]))
+			exit(execute_builtin(cmd, shell));
+		else
+			exit(execute_external(cmd, shell));
+	}
+	close(prev_pipes[0]);
+	close(prev_pipes[1]);
+	return (pid);
+}
+
 int	execute(t_shell *shell)
 {
 	t_cmd	*curr;
+	pid_t	last_pid;
+	int		status;
 	int		pipes[2];
+	int		prev_pipe[2];
 
+	pipes[0] = STDIN_FILENO;
+	pipes[1] = STDOUT_FILENO;
+	prev_pipe[0] = STDIN_FILENO;
+	prev_pipe[1] = STDOUT_FILENO;
 	curr = shell->cmd;
 	if (!create_pipes(shell, pipes))
 		return (0);
 	while (curr)
 	{
-		if (!create_child(curr, shell, pipes))
+		last_pid = create_child(shell, curr, pipes, prev_pipe);
+		if (last_pid == -1)
 			return (0);
 		curr = curr->next;
 	}
-	while (curr)
-	{
-		wait(NULL);
-		curr = curr->next;
-	}
+	status = 0;
+	waitpid(last_pid, &status, 0);
+	printf("exit status: %d\n", WEXITSTATUS(status));
+	while (wait(NULL) > 0);
 	close_files(shell->cmd);
 	return (1);
 }

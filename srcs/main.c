@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **envp)
 			signal(SIGINT, sig_handler);
 			signal(SIGQUIT, sig_handler);
 			waitpid(pid, &status, 0);
+			printf("main: exit status: %d\n", WEXITSTATUS(status));
 			if (WIFEXITED(status))
 				exit(WEXITSTATUS(status));
 		}

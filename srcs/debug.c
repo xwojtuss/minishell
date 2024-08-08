@@ -17,22 +17,21 @@ void	print_array(char **array)
 
 void	print_cmd(t_cmd *cmd)
 {
+	t_cmd *tmp;
 	int		i;
 
 	i = 0;
-	while (cmd)
+	tmp = cmd;
+	while (tmp)
 	{
-		i = 0;
-		if (!cmd->argv)
-		{
-			cmd = cmd->next;
-			continue ;
-		}
-		while (i < cmd->argc && cmd->argv[i])
-		{
-			printf("cmd->argv[%d]: |%s|\n", i, cmd->argv[i]);
-			i++;
-		}
-		cmd = cmd->next;
+		printf("cmd %d\n", i++);
+		printf("argc: %d\n", tmp->argc);
+		printf("read_fd: %d\n", tmp->read_fd);
+		printf("write_fd: %d\n", tmp->write_fd);
+		printf("write_mode: %d\n", tmp->write_mode);
+		printf("read_path: %s\n", tmp->read_path);
+		printf("write_path: %s\n", tmp->write_path);
+		print_array(tmp->argv);
+		tmp = tmp->next;
 	}
 }
