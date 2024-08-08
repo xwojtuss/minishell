@@ -9,8 +9,6 @@
 # define MAGENTA_COLOR "\033[0;35m"
 # define DEFAULT_COLOR "\033[0m"
 # define BOLD_TEXT "\033[1m"
-# define UNDERLINED_TEXT "\033[4m"
-# define BLINKING_TEXT "\033[5m"
 # define NORMAL_TEXT "\033[0m"
 
 # define NOT_SET -42
@@ -37,16 +35,6 @@
 # include <sys/wait.h>
 # include <term.h>
 # include <unistd.h>
-
-/*
-Holds the opened files, the path needs to be absolute
-*/
-typedef struct s_files
-{
-	char			*path;
-	int				fd;
-	struct s_files	*next;
-}					t_files;
 
 /*
 A linked list of commands to execute
@@ -80,13 +68,14 @@ will be used in export, unset, env,
 */
 typedef struct s_shell
 {
-	t_files			*files;
 	t_cmd			*cmd;
 	t_var			*var;
 }					t_shell;
 
 extern int			g_signum;
 
+void				safely_exit(int exit_code, t_shell *shell, char **array,
+						char *input);
 void				sig_handler(int num);
 void				handle_input(char *input, t_shell *shell);
 int					pipe_exec(char **cmd1, char **cmd2);
@@ -106,7 +95,6 @@ int					init_cmd(char **array, t_shell *shell);
 void				free_var(t_var *var);
 char				**split_args(char const *s);
 char				*get_absolute_path(char *path);
-void				free_files(t_files *files);
 int					redirect(char *type, char *path, t_cmd *cmd,
 						t_shell *shell);
 bool				is_redirect(char *str);
@@ -121,8 +109,6 @@ int					redir_input(char *file, t_cmd *cmd, t_shell *shell);
 int					redir_append(char *file, t_cmd *cmd, t_shell *shell);
 int					redir_output(char *file, t_cmd *cmd, t_shell *shell);
 int					redir_delimiter(char *delim, t_cmd *cmd, t_shell *shell);
-int					get_fd(char *path, t_files *files);
-t_files				*add_file(char *path, int fd, t_files *files);
 void				print_cmd(t_cmd *cmd);
 char				*get_var_value(t_var *var, char *name);
 int					execute(t_shell *shell);

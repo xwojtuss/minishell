@@ -1,22 +1,22 @@
 #include "minishell.h"
 
 /*
-Frees and closes the files
+A safe way to exit the program, freeing all the allocated memory
+If the exit code is NOT_SET, it will not exit
 */
-void	free_files(t_files *files)
+void	safely_exit(int exit_code, t_shell *shell, char **array, char *input)
 {
-	t_files *tmp;
-
-	while (files)
-	{
-		tmp = files->next;
-		if (files->path)
-			free(files->path);
-		if (files->fd != -1)
-			close(files->fd);
-		free(files);
-		files = tmp;
-	}
+	rl_clear_history();
+	if (shell && shell->var)
+		free_var(shell->var);
+	if (shell && shell->cmd)
+		free_cmd(shell->cmd);
+	if (array)
+		free_array(array);
+	if (input)
+		free(input);
+	if (exit_code != NOT_SET)
+		exit(exit_code);
 }
 
 /*

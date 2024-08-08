@@ -18,9 +18,13 @@ char	*get_var_value(t_var *var, char *name)
 {
 	t_var	*tmp;
 
+	if (!name || !var)
+		return (NULL);
 	tmp = var;
 	while (tmp)
 	{
+		if (!tmp->name)
+			return (NULL);
 		if (!ft_strcmp(tmp->name, name))
 			return (tmp->value);
 		tmp = tmp->next;

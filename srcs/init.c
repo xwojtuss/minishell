@@ -229,7 +229,11 @@ int	init_env(char **envp, t_shell *shell)
 	if (!curr)
 		return (0);
 	curr->name = ft_strdup("?");
+	if (!curr->name)
+		return (0);
 	curr->value = ft_strdup("0");
+	if (!curr->value)
+		return (0);
 	curr->next = NULL;
 	shell->var = curr;
 	while (envp[i])
@@ -238,7 +242,11 @@ int	init_env(char **envp, t_shell *shell)
 		if (!new)
 			return (0);
 		new->name = ft_strndup(envp[i], ft_strchr(envp[i], '=') - envp[i]);
+		if (!new->name)
+			return (0);
 		new->value = ft_strdup(ft_strchr(envp[i], '=') + 1); // to change
+		if (!new->value)
+			return (0);
 		new->next = NULL;
 		curr->next = new;
 		curr = new;

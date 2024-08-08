@@ -48,7 +48,6 @@ void	handle_input(char *input, t_shell *shell)
 	char	**array;
 
 	shell->cmd = NULL;
-	shell->files = NULL;
 	if (input == NULL)
 	{
 		rl_clear_history();
@@ -59,7 +58,6 @@ void	handle_input(char *input, t_shell *shell)
 		return (free(input));
 	if (!check_pipes(&input))
 		return (free(input));
-	printf("input: %s\n", input);
 	add_history((const char *)input);
 	array = create_array(input, shell->var);
 	if (!array)
@@ -69,10 +67,10 @@ void	handle_input(char *input, t_shell *shell)
 		return ;
 	if (!init_cmd(array, shell))
 		throw_error_exit(NULL, array, shell->cmd, shell->var);
-	print_cmd(shell->cmd);
 	free_array(array);
 	if (!execute(shell))
 		throw_error_exit(NULL, NULL, shell->cmd, shell->var);
+	printf("executed\n");
 	free_cmd(shell->cmd);
 }
 
@@ -117,7 +115,8 @@ char	*construct_prompt(char *cwd, t_var *var)//only a preview, there is a way mo
 	prompt_array[12] = NORMAL_TEXT;
 	prompt_array[13] = "$ ";
 	prompt = ft_strjoin_array(prompt_array);
-	free(prompt_array[10]);
+	if (ft_strcmp(prompt_array[10], cwd) != 0)
+		free(prompt_array[10]);
 	free(prompt_array);
 	return (prompt);
 }
@@ -129,10 +128,12 @@ void	wait_for_input(char **envp)
 	char	*prompt;
 	t_shell	shell;
 
+	print_array(envp);
 	if (!init_env(envp, &shell))
 		throw_error_exit(NULL, NULL, NULL, shell.var);
 	while (1)
 	{
+		printf("loop\n");
 		cwd = getcwd(NULL, 0);
 		if (!cwd)
 			throw_error_exit(NULL, NULL, NULL, shell.var);
@@ -140,7 +141,9 @@ void	wait_for_input(char **envp)
 		free(cwd);
 		if (!prompt)
 			throw_error_exit(NULL, NULL, NULL, shell.var);
+		printf("about to read\n");
 		input = readline(prompt);
+		printf("read\n");
 		free(prompt);
 		handle_input(input, &shell);
 	}
