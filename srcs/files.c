@@ -59,29 +59,3 @@ char	*get_absolute_path(char *path)
 	free(result);
 	return (final);
 }
-
-t_files	*add_file(char *file, int fd, t_files *files)
-{
-	t_files	*new;
-
-	new = (t_files *)malloc(sizeof(t_files));
-	if (!new)
-		return (NULL);
-	new->path = get_absolute_path(file);
-	if (!new->path)
-		return (NULL);
-	new->fd = fd;
-	new->next = files;
-	return (new);
-}
-
-int	get_fd(char *file, t_files *files)
-{
-	while (files)
-	{
-		if (!ft_strcmp(files->path, file))
-			return (files->fd);
-		files = files->next;
-	}
-	return (NOT_SET);
-}

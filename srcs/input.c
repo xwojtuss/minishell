@@ -68,8 +68,8 @@ void	handle_input(char *input, t_shell *shell)
 	if (!init_cmd(array, shell))
 		throw_error_exit(NULL, array, shell->cmd, shell->var);
 	free_array(array);
-	if (!execute(shell))
-		throw_error_exit(NULL, NULL, shell->cmd, shell->var);
+	/* if (!execute(shell))
+		throw_error_exit(NULL, NULL, shell->cmd, shell->var); */
 	printf("executed\n");
 	free_cmd(shell->cmd);
 }
