@@ -37,6 +37,8 @@ t_cmd	*alloc_cmd(int *i, int *command)
 		return (NULL);
 	new->argv = NULL;
 	new->read_path = NULL;
+	new->read_fd = NOT_SET;
+	new->write_fd = NOT_SET;
 	new->write_mode = NOT_SET;
 	new->write_path = NULL;
 	new->next = NULL;
