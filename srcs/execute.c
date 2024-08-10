@@ -186,20 +186,31 @@ size_t	count_cmds(t_cmd *cmd)
 int **create_pipes(t_shell *shell)
 {
 	int	**pipes;
+	int i;
 	t_cmd	*temp;
 
 	temp = shell->cmd;
+	if (!temp)
+		return (NULL);
 	pipes = (int **)ft_calloc(count_cmds(shell->cmd), sizeof(int *));
 	if (!pipes)
 		return (NULL);
+	i = 0;
 	while (temp)
 	{
-		pipes[temp->argc] = (int *)ft_calloc(2, sizeof(int));
-		if (!pipes[temp->argc])
+		pipes[i] = (int[2]){NOT_SET, NOT_SET};
+		if (pipe(pipes[i]) == -1)
 			return (NULL);
-		if (pipe(pipes[temp->argc]) == -1)
-			return (NULL);
+		if (temp->read_fd == NOT_SET)
+			temp->read_fd = pipes[i][0];
+		else
+			close(pipes[i][0]);
+		if (temp->write_fd == NOT_SET)
+			temp->write_fd = pipes[i][1];
+		else
+			close(pipes[i][1]);
 		temp = temp->next;
+		i++;
 	}
 	return (pipes);
 }
@@ -219,7 +230,7 @@ void	close_files(t_cmd *cmd)
 	}
 }
 
-pid_t	create_child(t_shell *shell, t_cmd *cmd, int pipes[2])
+pid_t	create_child(t_shell *shell, t_cmd *cmd)
 {
 	pid_t	pid;
 
@@ -231,26 +242,10 @@ pid_t	create_child(t_shell *shell, t_cmd *cmd, int pipes[2])
 	}
 	if (pid == 0)
 	{
-		if (cmd->read_fd != NOT_SET)
-		{
-			dup2(cmd->read_fd, STDIN_FILENO);
-			close(cmd->read_fd);
-		}
-		else
-		{
-			dup2(pipes[0], STDIN_FILENO);
-			close(pipes[0]);
-		}
-		if (cmd->write_fd != NOT_SET)
-		{
-			dup2(cmd->write_fd, STDOUT_FILENO);
-			close(cmd->write_fd);
-		}
-		else
-		{
-			dup2(pipes[1], STDOUT_FILENO);
-			close(pipes[1]);
-		}
+		dup2(cmd->read_fd, STDIN_FILENO);
+		close(cmd->read_fd);
+		dup2(cmd->write_fd, STDOUT_FILENO);
+		close(cmd->write_fd);
 		if (is_builtin(cmd->argv[0]))
 			exit(execute_builtin(cmd, shell));
 		else
@@ -258,14 +253,10 @@ pid_t	create_child(t_shell *shell, t_cmd *cmd, int pipes[2])
 	}
 	else
 	{
-		if (cmd->read_fd != NOT_SET)
+		/* if (cmd->read_fd != NOT_SET)
 			close(cmd->read_fd);
 		if (cmd->write_fd != NOT_SET)
-			close(cmd->write_fd);
-		if (cmd->write_fd != NOT_SET)
-			close(pipes[1]);
-		if (cmd->read_fd != NOT_SET)
-			close(pipes[0]);
+			close(cmd->write_fd); */
 	}
 	return (pid);
 }
@@ -281,9 +272,10 @@ int	execute(t_shell *shell)
 	pipes = create_pipes(shell);
 	if (!pipes)
 		return (0);
+	free(pipes);
 	while (curr)
 	{
-		last_pid = create_child(shell, curr, pipes[0]);
+		last_pid = create_child(shell, curr);
 		if (last_pid == -1)
 			return (0);
 		curr = curr->next;
