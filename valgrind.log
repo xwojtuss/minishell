@@ -1,409 +1,188 @@
-==22132== Memcheck, a memory error detector
-==22132== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==22132== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
-==22132== Command: ./minishell
-==22132== Parent PID: 6678
-==22132== 
-==22133== 
-==22133== Process terminating with default action of signal 2 (SIGINT)
-==22133==    at 0x4A057A5: wait4 (wait4.c:30)
-==22133==    by 0x10CE6A: execute (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B30D: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22133== 
-==22133== HEAP SUMMARY:
-==22133==     in use at exit: 245,155 bytes in 468 blocks
-==22133==   total heap usage: 700 allocs, 232 frees, 268,882 bytes allocated
-==22133== 
-==22133== 2 bytes in 1 blocks are still reachable in loss record 3 of 106
-==22133==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22133==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10DD68: ft_strdup (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10ACD7: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22133== 
-==22133== 2 bytes in 1 blocks are still reachable in loss record 4 of 106
-==22133==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22133==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10DD68: ft_strdup (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10AD07: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22133== 
-==22133== 7 bytes in 2 blocks are still reachable in loss record 6 of 106
-==22133==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22133==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10A805: copy_without_quotes (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10AAC9: assign_argv (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10AB99: init_cmd (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B2D6: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22133== 
-==22133== 9 bytes in 1 blocks are still reachable in loss record 11 of 106
-==22133==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22133==    by 0x48A80EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22133==    by 0x489EC9A: alloc_history_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22133==    by 0x48A15AF: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22133==    by 0x10B273: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22133== 
-==22133== 12 bytes in 1 blocks are still reachable in loss record 16 of 106
-==22133==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22133==    by 0x48A80EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22133==    by 0x48A156B: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22133==    by 0x10B273: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22133== 
-==22133== 24 bytes in 1 blocks are still reachable in loss record 24 of 106
-==22133==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22133==    by 0x10ACB0: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22133== 
-==22133== 24 bytes in 1 blocks are still reachable in loss record 28 of 106
-==22133==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22133==    by 0x48A80EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22133==    by 0x489EC7E: alloc_history_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22133==    by 0x48A15AF: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22133==    by 0x10B273: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22133== 
-==22133== 32 bytes in 2 blocks are still reachable in loss record 33 of 106
-==22133==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22133==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10A9B9: assign_argv (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10AB99: init_cmd (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B2D6: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22133== 
-==22133== 112 bytes in 2 blocks are still reachable in loss record 43 of 106
-==22133==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22133==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10A3AE: alloc_cmd (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10AB6E: init_cmd (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B2D6: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22133== 
-==22133== 968 bytes in 64 blocks are still reachable in loss record 56 of 106
-==22133==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22133==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10DDEB: ft_strndup (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10ADBD: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22133== 
-==22133== 1,024 bytes in 1 blocks are still reachable in loss record 57 of 106
-==22133==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22133==    by 0x497A1A4: _IO_file_doallocate (filedoalloc.c:101)
-==22133==    by 0x498A513: _IO_doallocbuf (genops.c:347)
-==22133==    by 0x4987F7F: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
-==22133==    by 0x4988A9E: _IO_new_file_xsputn (fileops.c:1244)
-==22133==    by 0x4988A9E: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
-==22133==    by 0x4955CB8: __printf_buffer_flush_to_file (printf_buffer_to_file.c:59)
-==22133==    by 0x4955CB8: __printf_buffer_to_file_done (printf_buffer_to_file.c:120)
-==22133==    by 0x4960732: __vfprintf_internal (vfprintf-internal.c:1545)
-==22133==    by 0x49551A2: printf (printf.c:33)
-==22133==    by 0x109592: print_array (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B5F4: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22133== 
-==22133== 1,536 bytes in 64 blocks are still reachable in loss record 69 of 106
-==22133==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22133==    by 0x10AD62: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22133== 
-==22133== 3,371 bytes in 64 blocks are still reachable in loss record 75 of 106
-==22133==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22133==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10DD68: ft_strdup (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10AE03: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22133== 
-==22133== 4,016 bytes in 1 blocks are still reachable in loss record 78 of 106
-==22133==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22133==    by 0x48A80EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22133==    by 0x48A161F: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22133==    by 0x10B273: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22133==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22133== 
-==22133== LEAK SUMMARY:
-==22133==    definitely lost: 0 bytes in 0 blocks
-==22133==    indirectly lost: 0 bytes in 0 blocks
-==22133==      possibly lost: 0 bytes in 0 blocks
-==22133==    still reachable: 11,139 bytes in 206 blocks
-==22133==         suppressed: 234,016 bytes in 262 blocks
-==22133== 
-==22133== For lists of detected and suppressed errors, rerun with: -s
-==22133== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==22240== 
-==22240== Process terminating with default action of signal 2 (SIGINT)
-==22240==    at 0x4A057A5: wait4 (wait4.c:30)
-==22240==    by 0x10CE6A: execute (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B30D: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22240== 
-==22240== HEAP SUMMARY:
-==22240==     in use at exit: 245,022 bytes in 460 blocks
-==22240==   total heap usage: 666 allocs, 206 frees, 263,974 bytes allocated
-==22240== 
-==22240== 2 bytes in 1 blocks are still reachable in loss record 1 of 101
-==22240==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22240==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10DD68: ft_strdup (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10ACD7: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22240== 
-==22240== 2 bytes in 1 blocks are still reachable in loss record 2 of 101
-==22240==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22240==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10DD68: ft_strdup (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10AD07: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22240== 
-==22240== 4 bytes in 1 blocks are still reachable in loss record 3 of 101
-==22240==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22240==    by 0x48A80EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22240==    by 0x489EC9A: alloc_history_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22240==    by 0x48A15AF: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22240==    by 0x10B273: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22240== 
-==22240== 4 bytes in 1 blocks are still reachable in loss record 4 of 101
-==22240==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22240==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10A805: copy_without_quotes (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10AAC9: assign_argv (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10AB99: init_cmd (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B2D6: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22240== 
-==22240== 12 bytes in 1 blocks are still reachable in loss record 14 of 101
-==22240==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22240==    by 0x48A80EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22240==    by 0x48A156B: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22240==    by 0x10B273: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22240== 
-==22240== 16 bytes in 1 blocks are still reachable in loss record 20 of 101
-==22240==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22240==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10A9B9: assign_argv (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10AB99: init_cmd (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B2D6: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22240== 
-==22240== 24 bytes in 1 blocks are still reachable in loss record 22 of 101
-==22240==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22240==    by 0x10ACB0: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22240== 
-==22240== 24 bytes in 1 blocks are still reachable in loss record 26 of 101
-==22240==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22240==    by 0x48A80EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22240==    by 0x489EC7E: alloc_history_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22240==    by 0x48A15AF: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22240==    by 0x10B273: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22240== 
-==22240== 56 bytes in 1 blocks are still reachable in loss record 32 of 101
-==22240==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22240==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10A3AE: alloc_cmd (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10AB6E: init_cmd (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B2D6: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22240== 
-==22240== 968 bytes in 64 blocks are still reachable in loss record 51 of 101
-==22240==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22240==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10DDEB: ft_strndup (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10ADBD: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22240== 
-==22240== 1,024 bytes in 1 blocks are still reachable in loss record 52 of 101
-==22240==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22240==    by 0x497A1A4: _IO_file_doallocate (filedoalloc.c:101)
-==22240==    by 0x498A513: _IO_doallocbuf (genops.c:347)
-==22240==    by 0x4987F7F: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
-==22240==    by 0x4988A9E: _IO_new_file_xsputn (fileops.c:1244)
-==22240==    by 0x4988A9E: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
-==22240==    by 0x4955CB8: __printf_buffer_flush_to_file (printf_buffer_to_file.c:59)
-==22240==    by 0x4955CB8: __printf_buffer_to_file_done (printf_buffer_to_file.c:120)
-==22240==    by 0x4960732: __vfprintf_internal (vfprintf-internal.c:1545)
-==22240==    by 0x49551A2: printf (printf.c:33)
-==22240==    by 0x1093C9: main (in /home/wkornato/Documents/minishell/minishell)
-==22240== 
-==22240== 1,536 bytes in 64 blocks are still reachable in loss record 64 of 101
-==22240==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22240==    by 0x10AD62: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22240== 
-==22240== 3,371 bytes in 64 blocks are still reachable in loss record 70 of 101
-==22240==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22240==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10DD68: ft_strdup (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10AE03: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22240== 
-==22240== 4,016 bytes in 1 blocks are still reachable in loss record 73 of 101
-==22240==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22240==    by 0x48A80EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22240==    by 0x48A161F: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22240==    by 0x10B273: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x10B6D5: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22240==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22240== 
-==22240== LEAK SUMMARY:
-==22240==    definitely lost: 0 bytes in 0 blocks
-==22240==    indirectly lost: 0 bytes in 0 blocks
-==22240==      possibly lost: 0 bytes in 0 blocks
-==22240==    still reachable: 11,059 bytes in 203 blocks
-==22240==         suppressed: 233,963 bytes in 257 blocks
-==22240== 
-==22240== For lists of detected and suppressed errors, rerun with: -s
-==22240== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==22132== 
-==22132== Process terminating with default action of signal 1 (SIGHUP)
-==22132==    at 0x4A057A7: wait4 (wait4.c:30)
-==22132==    by 0x1093AF: main (in /home/wkornato/Documents/minishell/minishell)
-==22132== 
-==22132== HEAP SUMMARY:
-==22132==     in use at exit: 1,024 bytes in 1 blocks
-==22132==   total heap usage: 1 allocs, 0 frees, 1,024 bytes allocated
-==22132== 
-==22132== 1,024 bytes in 1 blocks are still reachable in loss record 1 of 1
-==22132==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22132==    by 0x497A1A4: _IO_file_doallocate (filedoalloc.c:101)
-==22132==    by 0x498A513: _IO_doallocbuf (genops.c:347)
-==22132==    by 0x4987F7F: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
-==22132==    by 0x4988A9E: _IO_new_file_xsputn (fileops.c:1244)
-==22132==    by 0x4988A9E: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
-==22132==    by 0x4955CB8: __printf_buffer_flush_to_file (printf_buffer_to_file.c:59)
-==22132==    by 0x4955CB8: __printf_buffer_to_file_done (printf_buffer_to_file.c:120)
-==22132==    by 0x4960732: __vfprintf_internal (vfprintf-internal.c:1545)
-==22132==    by 0x49551A2: printf (printf.c:33)
-==22132==    by 0x1093C9: main (in /home/wkornato/Documents/minishell/minishell)
-==22132== 
-==22132== LEAK SUMMARY:
-==22132==    definitely lost: 0 bytes in 0 blocks
-==22132==    indirectly lost: 0 bytes in 0 blocks
-==22132==      possibly lost: 0 bytes in 0 blocks
-==22132==    still reachable: 1,024 bytes in 1 blocks
-==22132==         suppressed: 0 bytes in 0 blocks
-==22132== 
-==22132== For lists of detected and suppressed errors, rerun with: -s
-==22132== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==22333== 
-==22333== Process terminating with default action of signal 1 (SIGHUP)
-==22333==    at 0x493A52B: kill (syscall-template.S:120)
-==22333==    by 0x48A2818: _rl_signal_handler (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22333==    by 0x489E71D: rl_cleanup_after_signal (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22333==    by 0x48A287D: _rl_signal_handler (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22333==    by 0x48A2D43: rl_read_key (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22333==    by 0x4886443: readline_internal_char (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22333==    by 0x488F8D4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==22333==    by 0x10B6AD: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22333== 
-==22333== HEAP SUMMARY:
-==22333==     in use at exit: 240,970 bytes in 454 blocks
-==22333==   total heap usage: 652 allocs, 198 frees, 259,770 bytes allocated
-==22333== 
-==22333== 2 bytes in 1 blocks are still reachable in loss record 1 of 95
-==22333==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22333==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10DD68: ft_strdup (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10ACD7: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22333== 
-==22333== 2 bytes in 1 blocks are still reachable in loss record 2 of 95
-==22333==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22333==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10DD68: ft_strdup (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10AD07: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22333== 
-==22333== 24 bytes in 1 blocks are still reachable in loss record 18 of 95
-==22333==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22333==    by 0x10ACB0: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22333== 
-==22333== 80 bytes in 1 blocks are still reachable in loss record 28 of 95
-==22333==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22333==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10E88E: ft_strjoin_array (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10B58F: construct_prompt (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10B66B: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22333== 
-==22333== 968 bytes in 64 blocks are still reachable in loss record 46 of 95
-==22333==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22333==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10DDEB: ft_strndup (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10ADBD: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22333== 
-==22333== 1,024 bytes in 1 blocks are still reachable in loss record 47 of 95
-==22333==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22333==    by 0x497A1A4: _IO_file_doallocate (filedoalloc.c:101)
-==22333==    by 0x498A513: _IO_doallocbuf (genops.c:347)
-==22333==    by 0x4987F7F: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
-==22333==    by 0x4988A9E: _IO_new_file_xsputn (fileops.c:1244)
-==22333==    by 0x4988A9E: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
-==22333==    by 0x4955CB8: __printf_buffer_flush_to_file (printf_buffer_to_file.c:59)
-==22333==    by 0x4955CB8: __printf_buffer_to_file_done (printf_buffer_to_file.c:120)
-==22333==    by 0x4960732: __vfprintf_internal (vfprintf-internal.c:1545)
-==22333==    by 0x49551A2: printf (printf.c:33)
-==22333==    by 0x1093C9: main (in /home/wkornato/Documents/minishell/minishell)
-==22333== 
-==22333== 1,536 bytes in 64 blocks are still reachable in loss record 59 of 95
-==22333==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22333==    by 0x10AD62: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22333== 
-==22333== 3,371 bytes in 64 blocks are still reachable in loss record 65 of 95
-==22333==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==22333==    by 0x10DD00: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10DD68: ft_strdup (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10AE03: init_env (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x10B601: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==22333==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
-==22333== 
-==22333== LEAK SUMMARY:
-==22333==    definitely lost: 0 bytes in 0 blocks
-==22333==    indirectly lost: 0 bytes in 0 blocks
-==22333==      possibly lost: 0 bytes in 0 blocks
-==22333==    still reachable: 7,007 bytes in 197 blocks
-==22333==         suppressed: 233,963 bytes in 257 blocks
-==22333== 
-==22333== For lists of detected and suppressed errors, rerun with: -s
-==22333== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13478== Memcheck, a memory error detector
+==13478== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==13478== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==13478== Command: ./minishell
+==13478== Parent PID: 13201
+==13478== 
+==13479== Invalid read of size 1
+==13479==    at 0x10DCA8: ft_strlen (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x1098BB: count_length (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109E9C: replace_var (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109F4C: create_array (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B264: handle_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B662: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
+==13479==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==13479== 
+==13479== 
+==13479== Process terminating with default action of signal 11 (SIGSEGV)
+==13479==  Access not within mapped region at address 0x0
+==13479==    at 0x10DCA8: ft_strlen (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x1098BB: count_length (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109E9C: replace_var (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109F4C: create_array (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B264: handle_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B662: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
+==13479==  If you believe this happened as a result of a stack
+==13479==  overflow in your program's main thread (unlikely but
+==13479==  possible), you can try to increase the size of the
+==13479==  main thread stack using the --main-stacksize= flag.
+==13479==  The main thread stack size used in this run was 8388608.
+==13479== 
+==13479== HEAP SUMMARY:
+==13479==     in use at exit: 244,975 bytes in 459 blocks
+==13479==   total heap usage: 662 allocs, 203 frees, 263,953 bytes allocated
+==13479== 
+==13479== 2 bytes in 1 blocks are still reachable in loss record 1 of 100
+==13479==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13479==    by 0x10DF13: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10DF7B: ft_strdup (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10ACB7: init_env (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B5B8: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
+==13479== 
+==13479== 2 bytes in 1 blocks are still reachable in loss record 2 of 100
+==13479==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13479==    by 0x10DF13: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10DF7B: ft_strdup (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10ACE7: init_env (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B5B8: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
+==13479== 
+==13479== 7 bytes in 1 blocks are still reachable in loss record 3 of 100
+==13479==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13479==    by 0x10DF13: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10DFFE: ft_strndup (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x1096D7: get_var_name (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10988B: count_length (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109E9C: replace_var (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109F4C: create_array (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B264: handle_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B662: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
+==13479== 
+==13479== 12 bytes in 1 blocks are still reachable in loss record 13 of 100
+==13479==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13479==    by 0x48AB0EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==13479==    by 0x48A456B: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==13479==    by 0x10B253: handle_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B662: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
+==13479== 
+==13479== 13 bytes in 1 blocks are still reachable in loss record 16 of 100
+==13479==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13479==    by 0x48AB0EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==13479==    by 0x48A1C9A: alloc_history_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==13479==    by 0x48A45AF: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==13479==    by 0x10B253: handle_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B662: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
+==13479== 
+==13479== 24 bytes in 1 blocks are still reachable in loss record 22 of 100
+==13479==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13479==    by 0x10AC90: init_env (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B5B8: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
+==13479== 
+==13479== 24 bytes in 1 blocks are still reachable in loss record 26 of 100
+==13479==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13479==    by 0x48AB0EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==13479==    by 0x48A1C7E: alloc_history_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==13479==    by 0x48A45AF: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==13479==    by 0x10B253: handle_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B662: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
+==13479== 
+==13479== 968 bytes in 64 blocks are still reachable in loss record 50 of 100
+==13479==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13479==    by 0x10DF13: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10DFFE: ft_strndup (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10AD9D: init_env (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B5B8: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
+==13479== 
+==13479== 1,536 bytes in 64 blocks are still reachable in loss record 63 of 100
+==13479==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13479==    by 0x10AD42: init_env (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B5B8: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
+==13479== 
+==13479== 3,371 bytes in 64 blocks are still reachable in loss record 69 of 100
+==13479==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13479==    by 0x10DF13: ft_calloc (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10DF7B: ft_strdup (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10ADE3: init_env (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B5B8: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
+==13479== 
+==13479== 4,016 bytes in 1 blocks are still reachable in loss record 72 of 100
+==13479==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13479==    by 0x48AB0EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==13479==    by 0x48A461F: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==13479==    by 0x10B253: handle_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x10B662: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==13479==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
+==13479== 
+==13479== LEAK SUMMARY:
+==13479==    definitely lost: 0 bytes in 0 blocks
+==13479==    indirectly lost: 0 bytes in 0 blocks
+==13479==      possibly lost: 0 bytes in 0 blocks
+==13479==    still reachable: 9,975 bytes in 200 blocks
+==13479==         suppressed: 235,000 bytes in 259 blocks
+==13479== 
+==13479== For lists of detected and suppressed errors, rerun with: -s
+==13479== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==13609== 
+==13609== HEAP SUMMARY:
+==13609==     in use at exit: 232,955 bytes in 234 blocks
+==13609==   total heap usage: 708 allocs, 474 frees, 793,975 bytes allocated
+==13609== 
+==13609== 4,016 bytes in 1 blocks are still reachable in loss record 46 of 74
+==13609==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13609==    by 0x48AB0EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==13609==    by 0x48A461F: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==13609==    by 0x10B253: handle_input (in /home/wkornato/Documents/minishell/minishell)
+==13609==    by 0x10B662: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==13609==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
+==13609== 
+==13609== LEAK SUMMARY:
+==13609==    definitely lost: 0 bytes in 0 blocks
+==13609==    indirectly lost: 0 bytes in 0 blocks
+==13609==      possibly lost: 0 bytes in 0 blocks
+==13609==    still reachable: 4,016 bytes in 1 blocks
+==13609==         suppressed: 228,939 bytes in 233 blocks
+==13609== 
+==13609== For lists of detected and suppressed errors, rerun with: -s
+==13609== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13593== 
+==13593== HEAP SUMMARY:
+==13593==     in use at exit: 232,955 bytes in 234 blocks
+==13593==   total heap usage: 685 allocs, 451 frees, 273,055 bytes allocated
+==13593== 
+==13593== 4,016 bytes in 1 blocks are still reachable in loss record 46 of 74
+==13593==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13593==    by 0x48AB0EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==13593==    by 0x48A461F: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==13593==    by 0x10B253: handle_input (in /home/wkornato/Documents/minishell/minishell)
+==13593==    by 0x10B662: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==13593==    by 0x109378: main (in /home/wkornato/Documents/minishell/minishell)
+==13593== 
+==13593== LEAK SUMMARY:
+==13593==    definitely lost: 0 bytes in 0 blocks
+==13593==    indirectly lost: 0 bytes in 0 blocks
+==13593==      possibly lost: 0 bytes in 0 blocks
+==13593==    still reachable: 4,016 bytes in 1 blocks
+==13593==         suppressed: 228,939 bytes in 233 blocks
+==13593== 
+==13593== For lists of detected and suppressed errors, rerun with: -s
+==13593== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13478== 
+==13478== HEAP SUMMARY:
+==13478==     in use at exit: 0 bytes in 0 blocks
+==13478==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==13478== 
+==13478== All heap blocks were freed -- no leaks are possible
+==13478== 
+==13478== For lists of detected and suppressed errors, rerun with: -s
+==13478== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

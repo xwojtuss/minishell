@@ -16,7 +16,7 @@ static void delete_var(t_var **var_list, const char *name)
             free(current->name);
             free(current->value);
             free(current);
-            return;
+            return ;
         }
         prev = current;
         current = current->next;
@@ -28,7 +28,7 @@ int	ft_unset(int argc, char **argv, t_shell *shell)//I guess the exit code is al
 	int i;
 
 	if (!shell || argc < 2)
-		return (0);
+		return (EXIT_FAILURE);
 	i = 1;
 	while (i < argc)
 	{
@@ -36,5 +36,5 @@ int	ft_unset(int argc, char **argv, t_shell *shell)//I guess the exit code is al
 			delete_var(&shell->var, argv[i]);
 		i++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

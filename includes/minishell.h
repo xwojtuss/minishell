@@ -86,7 +86,6 @@ void				throw_error_exit(char *input, char **array, t_cmd *cmd,
 						t_var *var);
 bool				check_redirects(char **array);
 void				wait_for_input(char **envp);
-void				env(t_var *var);
 void				export(t_var *var, t_cmd *cmd);
 void				unset(t_var *var, t_cmd *cmd);
 void				print_variables(t_var *var);
@@ -111,11 +110,12 @@ int					redir_output(char *file, t_cmd *cmd, t_shell *shell);
 int					redir_delimiter(char *delim, t_cmd *cmd, t_shell *shell);
 void				print_cmd(t_cmd *cmd);
 char				*get_var_value(t_var *var, char *name);
+t_var				*get_var_struct(t_var *var, char *name);
 int					execute(t_shell *shell);
 // void				sigint_exit(int num);
 
 int					ft_echo(int argc, char **argv);
-int					ft_cd(int argc, char **argv);
+int					ft_cd(int argc, char **argv, t_shell *shell);
 int					ft_pwd(int argc, char **argv);
 int					ft_export(int argc, char **argv, t_shell *shell);
 int					ft_unset(int argc, char **argv, t_shell *shell);
