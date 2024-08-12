@@ -1,11 +1,41 @@
 #include "minishell.h"
 
-char	*check_pipes(char **input)
+int	check_empty_pipes(char *input, t_shell *shell)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '|')
+		{
+			j = i - 1;
+			while (j >= 0 && input[j] && ft_iswhite(input[j]))
+				j--;
+			if (j < 0 || input[j] == '|')
+			{
+				ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", STDERR_FILENO);
+				if (shell && shell->var && shell->var->value)
+					free(shell->var->value);
+				shell->var->value = ft_itoa(EXIT_FAILURE);
+				add_history((const char *)input);
+				return (0);
+			}
+		}
+		i++;
+	}
+	return (1);
+}
+
+char	*check_pipes(char **input, t_shell *shell)
 {
 	char 	*temp;
 	char	*last;
 	char	*stdin_line;
 
+	if (!check_empty_pipes(*input, shell))
+		return (NULL);
 	while (true)
 	{
 		temp = *input;
@@ -30,7 +60,7 @@ char	*check_pipes(char **input)
 			}
 			if (stdin_line[ft_strlen(stdin_line) - 1] == '\n')
 				stdin_line[ft_strlen(stdin_line) - 1] = '\0';
-			*input = ft_strjoin(temp, stdin_line);
+			*input = ft_strjoin_delim(temp, ' ', stdin_line);
 			free(temp);
 			free(stdin_line);
 			if (!*input)
@@ -56,8 +86,9 @@ void	handle_input(char *input, t_shell *shell)
 	}
 	if (!*input)
 		return (free(input));
-	if (!check_pipes(&input))
-		return (free(input));
+	input = check_pipes(&input, shell);
+	if (!input)
+		throw_error_exit(NULL, NULL, NULL, shell->var);
 	add_history((const char *)input);
 	array = create_array(input, shell->var);
 	if (!array)
