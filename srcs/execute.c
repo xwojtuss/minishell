@@ -2,30 +2,39 @@
 
 bool	is_builtin(char *command)
 {
-	if (!ft_strcmp(command, "echo") || !ft_strcmp(command, "cd") || !ft_strcmp(command, "pwd") || !ft_strcmp(command, "export") || !ft_strcmp(command, "unset") || !ft_strcmp(command, "env") || !ft_strcmp(command, "exit"))
+	if (!ft_strcmp(command, "echo") || !ft_strcmp(command, "cd")
+		|| !ft_strcmp(command, "pwd") || !ft_strcmp(command, "export")
+		|| !ft_strcmp(command, "unset") || !ft_strcmp(command, "env")
+		|| !ft_strcmp(command, "exit"))
 		return (true);
 	return (false);
 }
 
-int	execute_builtin(t_cmd *cmd, t_shell *shell)
+int	execute_builtin(t_cmd *cmd, t_shell *shell, bool do_exit)
 {
+	int	ret;
+
 	if (!cmd->argv || !cmd->argv[0])
-		return (EXIT_FAILURE);
-	if (!ft_strcmp(cmd->argv[0], "echo"))
-		return (ft_echo(cmd->argc, cmd->argv));
-	if (!ft_strcmp(cmd->argv[0], "cd"))
-		return (ft_cd(cmd->argc, cmd->argv));
-	if (!ft_strcmp(cmd->argv[0], "pwd"))
-		return (ft_pwd(cmd->argc, cmd->argv));
-	if (!ft_strcmp(cmd->argv[0], "export"))
-		return (ft_export(cmd->argc, cmd->argv, shell));
-	if (!ft_strcmp(cmd->argv[0], "unset"))
-		return (ft_unset(cmd->argc, cmd->argv, shell));
-	if (!ft_strcmp(cmd->argv[0], "env"))
-		return (ft_env(cmd->argc, cmd->argv,  shell));
-	if (!ft_strcmp(cmd->argv[0], "exit"))
-		return (ft_exit(cmd->argc, cmd->argv));
-	return (0);
+		ret = EXIT_FAILURE;
+	else if (!ft_strcmp(cmd->argv[0], "echo"))
+		ret = ft_echo(cmd->argc, cmd->argv);
+	else if (!ft_strcmp(cmd->argv[0], "cd"))
+		ret = ft_cd(cmd->argc, cmd->argv, shell);
+	else if (!ft_strcmp(cmd->argv[0], "pwd"))
+		ret = ft_pwd(cmd->argc, cmd->argv);
+	else if (!ft_strcmp(cmd->argv[0], "export"))
+		ret = ft_export(cmd->argc, cmd->argv, shell);
+	else if (!ft_strcmp(cmd->argv[0], "unset"))
+		ret = ft_unset(cmd->argc, cmd->argv, shell);
+	else if (!ft_strcmp(cmd->argv[0], "env"))
+		ret = ft_env(cmd->argc, cmd->argv, shell);
+	else if (!ft_strcmp(cmd->argv[0], "exit"))
+		ret = ft_exit(cmd->argc, cmd->argv);
+	else
+		ret = EXIT_FAILURE;
+	if (do_exit)
+		safely_exit(ret, shell, NULL, NULL);
+	return (ret);
 }
 
 bool	check_path_for_file(char *path, char *command)
@@ -71,7 +80,7 @@ char	*locate_file(char *command, char *path)
 	if (!dirs[i])
 		return (free_array(dirs), NULL);
 	result = ft_strjoin(dirs[i], "/");
-	if(!result)
+	if (!result)
 		return (free_array(dirs), NULL);
 	temp = result;
 	result = ft_strjoin(temp, command);
@@ -100,7 +109,7 @@ char	**get_env(t_shell *shell)
 	char	**env;
 	char	*temp;
 	t_var	*tmp;
-	int 	i;
+	int		i;
 
 	tmp = shell->var;
 	i = 0;
@@ -138,9 +147,12 @@ int	execute_external(t_cmd *cmd, t_shell *shell)
 	else
 		path = locate_file(cmd->argv[0], get_var_value(shell->var, "PATH"));
 	if (!path)
-		return (EXIT_FAILURE);
+	{
+		ft_putstr_fd(cmd->argv[0], STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		safely_exit(127, shell, NULL, NULL);
+	}
 	env = get_env(shell);
-	printf("executing %s\n", path);
 	if (execve(path, cmd->argv, env) == -1)
 	{
 		safely_exit(NOT_SET, shell, env, path);
@@ -161,9 +173,11 @@ int	open_redirs(t_cmd *cmd)
 	if (cmd->write_path)
 	{
 		if (cmd->write_mode == MODE_APPEND)
-			cmd->write_fd = open(cmd->write_path, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			cmd->write_fd = open(cmd->write_path, O_WRONLY | O_CREAT | O_APPEND,
+					0644);
 		else if (cmd->write_mode == MODE_WRITE)
-			cmd->write_fd = open(cmd->write_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			cmd->write_fd = open(cmd->write_path, O_WRONLY | O_CREAT | O_TRUNC,
+					0644);
 		if (cmd->write_mode != NOT_SET && cmd->write_fd == -1)
 			return (0);
 	}
@@ -183,36 +197,31 @@ size_t	count_cmds(t_cmd *cmd)
 	return (count);
 }
 
-int **create_pipes(t_shell *shell)
+int	create_pipes(t_shell *shell)
 {
-	int	**pipes;
-	int i;
+	int		pipes[2];
 	t_cmd	*temp;
 
 	temp = shell->cmd;
 	if (!temp)
-		return (NULL);
-	pipes = (int **)ft_calloc(count_cmds(shell->cmd), sizeof(int *));
-	if (!pipes)
-		return (NULL);
-	i = 0;
+		return (0);
 	while (temp)
 	{
-		pipes[i] = (int[2]){NOT_SET, NOT_SET};
-		if (pipe(pipes[i]) == -1)
-			return (NULL);
-		if (temp->read_fd == NOT_SET)
-			temp->read_fd = pipes[i][0];
-		else
-			close(pipes[i][0]);
-		if (temp->write_fd == NOT_SET)
-			temp->write_fd = pipes[i][1];
-		else
-			close(pipes[i][1]);
+		pipes[0] = NOT_SET;
+		pipes[1] = NOT_SET;
+		if (pipe(pipes) == -1)
+			return (0);
+		if (temp == shell->cmd && temp->read_fd == NOT_SET)
+			temp->read_fd = STDIN_FILENO;
+		else if (temp->read_fd == NOT_SET)
+			temp->read_fd = pipes[0];
+		if (temp->next == NULL && temp->write_fd == NOT_SET)
+			temp->write_fd = STDOUT_FILENO;
+		else if (temp->write_fd == NOT_SET)
+			temp->write_fd = pipes[1];
 		temp = temp->next;
-		i++;
 	}
-	return (pipes);
+	return (1);
 }
 
 void	close_files(t_cmd *cmd)
@@ -222,9 +231,9 @@ void	close_files(t_cmd *cmd)
 	while (cmd)
 	{
 		tmp = cmd->next;
-		if (cmd->read_fd != NOT_SET)
+		if (cmd->read_fd != NOT_SET && !isatty(cmd->read_fd))
 			close(cmd->read_fd);
-		if (cmd->write_fd != NOT_SET)
+		if (cmd->write_fd != NOT_SET && !isatty(cmd->write_fd))
 			close(cmd->write_fd);
 		cmd = tmp;
 	}
@@ -242,23 +251,35 @@ pid_t	create_child(t_shell *shell, t_cmd *cmd)
 	}
 	if (pid == 0)
 	{
-		dup2(cmd->read_fd, STDIN_FILENO);
-		close(cmd->read_fd);
-		dup2(cmd->write_fd, STDOUT_FILENO);
-		close(cmd->write_fd);
+		if (cmd->read_fd != STDIN_FILENO)
+		{
+			dup2(cmd->read_fd, STDIN_FILENO);
+			close(cmd->read_fd);
+		}
+		if (cmd->write_fd != STDOUT_FILENO)
+		{
+			dup2(cmd->write_fd, STDOUT_FILENO);
+			close(cmd->write_fd);
+		}
 		if (is_builtin(cmd->argv[0]))
-			exit(execute_builtin(cmd, shell));
+			exit(execute_builtin(cmd, shell, true));
 		else
 			exit(execute_external(cmd, shell));
 	}
-	else
-	{
-		/* if (cmd->read_fd != NOT_SET)
-			close(cmd->read_fd);
-		if (cmd->write_fd != NOT_SET)
-			close(cmd->write_fd); */
-	}
 	return (pid);
+}
+
+int	run_one_builtin(t_cmd *cmd, t_shell *shell)
+{
+	int	status;
+
+	status = execute_builtin(cmd, shell, false);
+	if (shell->var->value)
+		free(shell->var->value);
+	shell->var->value = ft_itoa(WEXITSTATUS(status));
+	if (!shell->var->value)
+		return (0);
+	return (1);
 }
 
 int	execute(t_shell *shell)
@@ -266,13 +287,14 @@ int	execute(t_shell *shell)
 	t_cmd	*curr;
 	pid_t	last_pid;
 	int		status;
-	int		**pipes;
+	int		i;
 
 	curr = shell->cmd;
-	pipes = create_pipes(shell);
-	if (!pipes)
+	if (count_cmds(curr) == 1 && is_builtin(curr->argv[0]))
+		return (run_one_builtin(curr, shell));
+	if (!create_pipes(shell))
 		return (0);
-	free(pipes);
+	// print_cmd(shell->cmd);
 	while (curr)
 	{
 		last_pid = create_child(shell, curr);
@@ -281,9 +303,17 @@ int	execute(t_shell *shell)
 		curr = curr->next;
 	}
 	status = 0;
-	waitpid(last_pid, &status, 0);
-	printf("exit status: %d\n", WEXITSTATUS(status));
-	while (wait(NULL) > 0);
+	i = count_cmds(shell->cmd);
+	while (i > 0)
+	{
+		if (waitpid(0, &status, 0) == last_pid)
+		{
+			if (shell->var->value)
+				free(shell->var->value);
+			shell->var->value = ft_itoa(WEXITSTATUS(status));
+		}
+		i--;
+	}
 	close_files(shell->cmd);
 	return (1);
 }

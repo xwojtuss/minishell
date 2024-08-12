@@ -62,7 +62,6 @@ void	handle_input(char *input, t_shell *shell)
 	array = create_array(input, shell->var);
 	if (!array)
 		throw_error_exit(NULL, NULL, NULL, shell->var);
-	print_array(array);
 	if (!check_redirects(array))
 		return ;
 	if (!init_cmd(array, shell))
@@ -70,7 +69,6 @@ void	handle_input(char *input, t_shell *shell)
 	free_array(array);
 	if (!execute(shell))
 		throw_error_exit(NULL, NULL, shell->cmd, shell->var);
-	printf("executed\n");
 	free_cmd(shell->cmd);
 }
 
@@ -128,12 +126,10 @@ void	wait_for_input(char **envp)
 	char	*prompt;
 	t_shell	shell;
 
-	print_array(envp);
 	if (!init_env(envp, &shell))
 		throw_error_exit(NULL, NULL, NULL, shell.var);
 	while (1)
 	{
-		printf("loop\n");
 		cwd = getcwd(NULL, 0);
 		if (!cwd)
 			throw_error_exit(NULL, NULL, NULL, shell.var);
@@ -141,9 +137,7 @@ void	wait_for_input(char **envp)
 		free(cwd);
 		if (!prompt)
 			throw_error_exit(NULL, NULL, NULL, shell.var);
-		printf("about to read\n");
 		input = readline(prompt);
-		printf("read\n");
 		free(prompt);
 		handle_input(input, &shell);
 	}

@@ -86,5 +86,5 @@ int	ft_export(int argc, char **argv, t_shell *shell)
 		free(name);
 		i++;
 	}
-	exit(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
