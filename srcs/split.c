@@ -91,7 +91,7 @@ char	**split_args(const char *str)
 	result = NULL;
 	buffer = NULL;
 	buf_index = 0;
-	buffer = (char *)ft_calloc(strlen(str) + 1, sizeof(char));
+	buffer = (char *)ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	if (!buffer)
 		return (0);
 	result = (char **)ft_calloc(count_words(str) + 1, sizeof(char *));

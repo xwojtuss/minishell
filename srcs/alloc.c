@@ -61,6 +61,8 @@ int	count_length(char *input, t_var *var)
 				length++;
 			if (input[i] == '|' && input[i + 1] != ' ' && input[i + 1] != '\0' && !is_in_quotes)
 				length++;
+			if (input[i] == '<' || input[i] == '>')
+				length++;
 			length++;
 			i++;
 		}
@@ -78,7 +80,9 @@ int	replace_var_loop(char *input, t_var *var, char *result)
 
 	i = 0;
 	j = 0;
+	name = NULL;
 	is_in_quotes = false;
+	is_in_db_quotes = false;
 	while (input[i])
 	{
 		if (input[i] == '\'')
@@ -123,12 +127,12 @@ char	*replace_var(char *input, t_var *var)
 	char	*result;
 
 	length = count_length(input, var);
-	if (length < 0)
+	if (length <= 0)
 		return (NULL);
 	result = (char *)ft_calloc(length + 1, sizeof(char));
 	if (!result)
 		return (NULL);
-	if (!replace_var_loop(input, var, result))
+	if (!replace_var_loop(input, var, result) || !result)
 		return (free(result), NULL);
 	return (result);
 }

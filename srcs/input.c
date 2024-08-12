@@ -96,7 +96,7 @@ void	handle_input(char *input, t_shell *shell)
 	if (!check_redirects(array))
 		return ;
 	if (!init_cmd(array, shell))
-		throw_error_exit(NULL, array, shell->cmd, shell->var);
+		return (free_cmd(shell->cmd), free_array(array));
 	free_array(array);
 	if (!execute(shell))
 		throw_error_exit(NULL, NULL, shell->cmd, shell->var);

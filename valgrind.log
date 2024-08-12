@@ -1,59 +1,37 @@
-==137128== Memcheck, a memory error detector
-==137128== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==137128== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
-==137128== Command: ./minishell
-==137128== Parent PID: 24023
-==137128== 
-==137155== 
-==137155== HEAP SUMMARY:
-==137155==     in use at exit: 232,955 bytes in 234 blocks
-==137155==   total heap usage: 705 allocs, 471 frees, 791,569 bytes allocated
-==137155== 
-==137155== 4,016 bytes in 1 blocks are still reachable in loss record 46 of 74
-==137155==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==137155==    by 0x48AB0EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==137155==    by 0x48A461F: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==137155==    by 0x10B385: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==137155==    by 0x10B792: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==137155==    by 0x109368: main (in /home/wkornato/Documents/minishell/minishell)
-==137155== 
-==137155== LEAK SUMMARY:
-==137155==    definitely lost: 0 bytes in 0 blocks
-==137155==    indirectly lost: 0 bytes in 0 blocks
-==137155==      possibly lost: 0 bytes in 0 blocks
-==137155==    still reachable: 4,016 bytes in 1 blocks
-==137155==         suppressed: 228,939 bytes in 233 blocks
-==137155== 
-==137155== For lists of detected and suppressed errors, rerun with: -s
-==137155== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==137135== 
-==137135== HEAP SUMMARY:
-==137135==     in use at exit: 232,980 bytes in 236 blocks
-==137135==   total heap usage: 704 allocs, 468 frees, 270,981 bytes allocated
-==137135== 
-==137135== 4,016 bytes in 1 blocks are still reachable in loss record 48 of 76
-==137135==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==137135==    by 0x48AB0EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==137135==    by 0x48A461F: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
-==137135==    by 0x10B385: handle_input (in /home/wkornato/Documents/minishell/minishell)
-==137135==    by 0x10B792: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
-==137135==    by 0x109368: main (in /home/wkornato/Documents/minishell/minishell)
-==137135== 
-==137135== LEAK SUMMARY:
-==137135==    definitely lost: 0 bytes in 0 blocks
-==137135==    indirectly lost: 0 bytes in 0 blocks
-==137135==      possibly lost: 0 bytes in 0 blocks
-==137135==    still reachable: 4,016 bytes in 1 blocks
-==137135==         suppressed: 228,964 bytes in 235 blocks
-==137135== 
-==137135== For lists of detected and suppressed errors, rerun with: -s
-==137135== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==137128== 
-==137128== HEAP SUMMARY:
-==137128==     in use at exit: 0 bytes in 0 blocks
-==137128==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
-==137128== 
-==137128== All heap blocks were freed -- no leaks are possible
-==137128== 
-==137128== For lists of detected and suppressed errors, rerun with: -s
-==137128== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==254319== Memcheck, a memory error detector
+==254319== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==254319== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==254319== Command: ./minishell
+==254319== Parent PID: 251539
+==254319== 
+==254320== 
+==254320== HEAP SUMMARY:
+==254320==     in use at exit: 232,955 bytes in 234 blocks
+==254320==   total heap usage: 716 allocs, 482 frees, 283,608 bytes allocated
+==254320== 
+==254320== 4,016 bytes in 1 blocks are still reachable in loss record 46 of 74
+==254320==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==254320==    by 0x48AB0EC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==254320==    by 0x48A461F: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==254320==    by 0x10B4E5: handle_input (in /home/wkornato/Documents/minishell/minishell)
+==254320==    by 0x10B8F2: wait_for_input (in /home/wkornato/Documents/minishell/minishell)
+==254320==    by 0x109361: main (main.c:26)
+==254320== 
+==254320== LEAK SUMMARY:
+==254320==    definitely lost: 0 bytes in 0 blocks
+==254320==    indirectly lost: 0 bytes in 0 blocks
+==254320==      possibly lost: 0 bytes in 0 blocks
+==254320==    still reachable: 4,016 bytes in 1 blocks
+==254320==         suppressed: 228,939 bytes in 233 blocks
+==254320== 
+==254320== For lists of detected and suppressed errors, rerun with: -s
+==254320== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==254319== 
+==254319== HEAP SUMMARY:
+==254319==     in use at exit: 0 bytes in 0 blocks
+==254319==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==254319== 
+==254319== All heap blocks were freed -- no leaks are possible
+==254319== 
+==254319== For lists of detected and suppressed errors, rerun with: -s
+==254319== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

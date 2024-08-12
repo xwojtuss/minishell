@@ -72,7 +72,13 @@ t_cmd	*read_stdin_delim(char *delim)
 		write(STDOUT_FILENO, "> ", 2);
 		stdin_line = get_next_line(0);
 		if (!stdin_line)
+		{
+			ft_putstr_fd("\nminishell: warning here-document at this line delimited by end-of-file (wanted '", STDERR_FILENO);
+			ft_putstr_fd(delim, STDERR_FILENO);
+			ft_putstr_fd("')\n", STDERR_FILENO);
+			free_cmd(new);
 			return (0);
+		}
 		if (ft_strlen(stdin_line) == 0)
 		{
 			free(stdin_line);
@@ -87,6 +93,8 @@ t_cmd	*read_stdin_delim(char *delim)
 		if (!(new->argv[1]))
 			return (0);
 	}
+	if (new && new->argv && new->argv[1] && ft_strlen(new->argv[1]) > 0)
+		new->argv[1][ft_strlen(new->argv[1]) - 1] = '\0';
 	free(stdin_line);
 	new->argv[2] = NULL;
 	return (new);
@@ -203,7 +211,7 @@ int	init_cmd(char **array, t_shell *shell)
 		if (!new)
 			return (0);
 		if (!assign_argv(array, &new, command))
-			return (0);
+			return (free_cmd(new), 0);
 		if (!curr)
 			shell->cmd = new;
 		else
