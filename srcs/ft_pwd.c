@@ -14,6 +14,7 @@ int	ft_pwd(int argc, char **argv)
 		ft_putstr_fd("\n", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
+	ft_putendl_fd(curr_work_dir, STDOUT_FILENO);
 	free(curr_work_dir);
 	return (EXIT_SUCCESS);
 }

@@ -1,5 +1,25 @@
 #include "minishell.h"
 
+bool	is_in_quotes(char *input, int index)
+{
+	int	quote;
+	int	i;
+
+	i = 0;
+	quote = NOT_SET;
+	while (i < index)
+	{
+		if (input[i] == '\'' && quote == NOT_SET)
+			quote = '\'';
+		else if (input[i] == '\"' && quote == NOT_SET)
+			quote = '\"';
+		else if (input[i] == quote)
+			quote = NOT_SET;
+		i++;
+	}
+	return (quote != NOT_SET);
+}
+
 int	check_empty_pipes(char *input, t_shell *shell)
 {
 	int	i;
@@ -13,7 +33,7 @@ int	check_empty_pipes(char *input, t_shell *shell)
 			j = i - 1;
 			while (j >= 0 && input[j] && ft_iswhite(input[j]))
 				j--;
-			if (j < 0 || input[j] == '|')
+			if ((j < 0 || input[j] == '|') && !is_in_quotes(input, j))
 			{
 				ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", STDERR_FILENO);
 				if (shell && shell->var && shell->var->value)

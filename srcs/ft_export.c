@@ -50,6 +50,22 @@ void	add_env_var(t_var **var, char *name, char *value)
 	tmp->next = new;
 }
 
+bool	is_a_number(char *s)
+{
+	int	i;
+
+	if (!s)
+		return (false);
+	i = 0;
+	while (s[i])
+	{
+		if (!ft_isdigit(s[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 /*
 Saves or updates the variable in the linked list
 if the args is empty it prints all variables, even those without a value
@@ -71,6 +87,14 @@ int	ft_export(int argc, char **argv, t_shell *shell)
 		name = ft_strndup(argv[i], ft_strchrs_mf(argv[i], "=") - argv[i]);
 		if (!name)
 			return (EXIT_FAILURE);
+		if (ft_strchr(name, '-') || ft_strchr(name, '+') || ft_strchr(argv[i], '=') == argv[i] || is_a_number(name))
+		{
+			ft_putstr_fd("minishell: export: '", STDERR_FILENO);
+			ft_putstr_fd(name, STDERR_FILENO);
+			ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+			free(name);
+			return (EXIT_FAILURE);
+		}
 		if (ft_strchr(argv[i], '='))
 			value = ft_strchr(argv[i], '=') + 1;
 		else

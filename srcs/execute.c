@@ -29,7 +29,7 @@ int	execute_builtin(t_cmd *cmd, t_shell *shell, bool do_exit)
 	else if (!ft_strcmp(cmd->argv[0], "env"))
 		ret = ft_env(cmd->argc, cmd->argv, shell);
 	else if (!ft_strcmp(cmd->argv[0], "exit"))
-		ret = ft_exit(cmd->argc, cmd->argv);
+		ret = ft_exit(cmd->argc, cmd->argv, shell);
 	else
 		ret = EXIT_FAILURE;
 	if (do_exit)
@@ -282,7 +282,7 @@ int	run_one_builtin(t_cmd *cmd, t_shell *shell)
 	status = execute_builtin(cmd, shell, false);
 	if (shell->var->value)
 		free(shell->var->value);
-	shell->var->value = ft_itoa(WEXITSTATUS(status));
+	shell->var->value = ft_itoa(status);
 	if (!shell->var->value)
 		return (0);
 	return (1);

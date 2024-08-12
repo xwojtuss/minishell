@@ -121,7 +121,7 @@ int					ft_pwd(int argc, char **argv);
 int					ft_export(int argc, char **argv, t_shell *shell);
 int					ft_unset(int argc, char **argv, t_shell *shell);
 int					ft_env(int argc, char **argv, t_shell *shell);
-int					ft_exit(int argc, char **argv);
+int					ft_exit(int argc, char **argv, t_shell *shell);
 
 // Bartkowe funkcje czyli gowno ale moze jakos dziala
 t_cmd				*Bartek_init_cmd(char **array);
