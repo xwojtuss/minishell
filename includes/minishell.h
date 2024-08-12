@@ -112,6 +112,7 @@ void				print_cmd(t_cmd *cmd);
 char				*get_var_value(t_var *var, char *name);
 t_var				*get_var_struct(t_var *var, char *name);
 int					execute(t_shell *shell);
+void				add_env_var(t_var **var, char *name, char *value);
 // void				sigint_exit(int num);
 
 int					ft_echo(int argc, char **argv);

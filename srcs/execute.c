@@ -197,33 +197,6 @@ size_t	count_cmds(t_cmd *cmd)
 	return (count);
 }
 
-int	create_pipes(t_shell *shell)
-{
-	int		pipes[2];
-	t_cmd	*temp;
-
-	temp = shell->cmd;
-	if (!temp)
-		return (0);
-	while (temp)
-	{
-		pipes[0] = NOT_SET;
-		pipes[1] = NOT_SET;
-		if (pipe(pipes) == -1)
-			return (0);
-		if (temp == shell->cmd && temp->read_fd == NOT_SET)
-			temp->read_fd = STDIN_FILENO;
-		else if (temp->read_fd == NOT_SET)
-			temp->read_fd = pipes[0];
-		if (temp->next == NULL && temp->write_fd == NOT_SET)
-			temp->write_fd = STDOUT_FILENO;
-		else if (temp->write_fd == NOT_SET)
-			temp->write_fd = pipes[1];
-		temp = temp->next;
-	}
-	return (1);
-}
-
 void	close_files(t_cmd *cmd)
 {
 	t_cmd	*tmp;
@@ -239,32 +212,65 @@ void	close_files(t_cmd *cmd)
 	}
 }
 
+int	get_prev_write_fd(t_cmd *cmd, t_cmd *curr)
+{
+	while (cmd->next != curr)
+		cmd = cmd->next;
+	if (!cmd->next)
+		return (STDIN_FILENO);
+	return (cmd->write_fd);
+}
+
+int	get_next_read_fd(t_cmd *curr)
+{
+	if (curr->next)
+		return (curr->next->read_fd);
+	return (STDOUT_FILENO);
+}
+
 pid_t	create_child(t_shell *shell, t_cmd *cmd)
 {
+	int	pipe_fd[2];
+	static int	prev_read_fd = NOT_SET;
 	pid_t	pid;
 
+	pipe_fd[0] = NOT_SET;
+	pipe_fd[1] = NOT_SET;
+	if (cmd->next)
+		if (pipe(pipe_fd) == -1)
+			return (-1);
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("fork");
 		return (-1);
-	}
 	if (pid == 0)
 	{
-		if (cmd->read_fd != STDIN_FILENO)
+		if (prev_read_fd != NOT_SET)
 		{
-			dup2(cmd->read_fd, STDIN_FILENO);
-			close(cmd->read_fd);
+			dup2(prev_read_fd, STDIN_FILENO);
+			close(prev_read_fd);
 		}
-		if (cmd->write_fd != STDOUT_FILENO)
+		if (cmd->next)
 		{
-			dup2(cmd->write_fd, STDOUT_FILENO);
-			close(cmd->write_fd);
+			dup2(pipe_fd[1], STDOUT_FILENO);
+			close(pipe_fd[1]);
+			close(pipe_fd[0]);
 		}
 		if (is_builtin(cmd->argv[0]))
 			exit(execute_builtin(cmd, shell, true));
 		else
 			exit(execute_external(cmd, shell));
+	}
+	else
+	{
+		if (prev_read_fd != NOT_SET)
+			close(prev_read_fd);
+		if (cmd->next)
+		{
+			close(pipe_fd[1]);
+			prev_read_fd = pipe_fd[0];
+		}
+		else
+			prev_read_fd = NOT_SET;
 	}
 	return (pid);
 }
@@ -292,8 +298,6 @@ int	execute(t_shell *shell)
 	curr = shell->cmd;
 	if (count_cmds(curr) == 1 && is_builtin(curr->argv[0]))
 		return (run_one_builtin(curr, shell));
-	if (!create_pipes(shell))
-		return (0);
 	// print_cmd(shell->cmd);
 	while (curr)
 	{

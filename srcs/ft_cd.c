@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:46:58 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/12 18:22:26 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/12 19:59:44 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_cd(int argc, char **argv, t_shell *shell)
 {
 	char *path;
-	char *oldpwd;
+	t_var	*oldpwd;
 	
 	if (argc == 1)
 	{
@@ -27,7 +27,7 @@ int	ft_cd(int argc, char **argv, t_shell *shell)
 		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	oldpwd = get_var_value(shell->var, "PWD");
+	oldpwd = get_var_struct(shell->var, "PWD");
 	path = get_absolute_path(argv[1]);
 	if (chdir(path) != 0)
 	{
@@ -41,9 +41,17 @@ int	ft_cd(int argc, char **argv, t_shell *shell)
 	}
 	if (shell && shell->var && oldpwd)
 	{
-		free(get_var_struct(shell->var, "OLDPWD")->value);
-		get_var_struct(shell->var, "OLDPWD")->value = oldpwd;
-		get_var_struct(shell->var, "PWD")->value = getcwd(NULL, 0);
+		if (get_var_struct(shell->var, "OLDPWD") != NULL)
+		{
+			if (get_var_struct(shell->var, "OLDPWD")->value != NULL)
+				free(get_var_struct(shell->var, "OLDPWD")->value);
+			get_var_struct(shell->var, "OLDPWD")->value = ft_strdup(oldpwd->value);
+		}
+		else
+			add_env_var(&shell->var, "OLDPWD", oldpwd->value);
+		free(oldpwd->value);
+		if (get_var_struct(shell->var, "PWD") != NULL)
+			get_var_struct(shell->var, "PWD")->value = getcwd(NULL, 0);
 	}
 	free(path);
 	return (EXIT_SUCCESS);

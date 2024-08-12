@@ -41,7 +41,7 @@ void	add_env_var(t_var **var, char *name, char *value)
 	if (!new->name)
 		return (free(new));
 	new->value = ft_strdup(value);
-	if (!new->value)
+	if (!new->value && value)
 		return (free(new->name), free(new));
 	new->next = NULL;
 	tmp = *var;
@@ -71,15 +71,14 @@ int	ft_export(int argc, char **argv, t_shell *shell)
 		name = ft_strndup(argv[i], ft_strchrs_mf(argv[i], "=") - argv[i]);
 		if (!name)
 			return (EXIT_FAILURE);
-		value = ft_strchr(argv[i], '=') + 1;
-		if (!value)
-			value = "";
+		if (ft_strchr(argv[i], '='))
+			value = ft_strchr(argv[i], '=') + 1;
+		else
+			value = NULL;
 		if (get_var_value(shell->var, name))
 		{
 			free(get_var_struct(shell->var, name)->value);
 			get_var_struct(shell->var, name)->value = ft_strdup(value);
-			if (!get_var_struct(shell->var, name)->value)
-				return (EXIT_FAILURE);
 		}
 		else
 			add_env_var(&shell->var, name, value);
