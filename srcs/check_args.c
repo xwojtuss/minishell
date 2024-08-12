@@ -34,13 +34,6 @@ bool	check_redirects(char **array)
 	i = 0;
 	while (array[i])
 	{
-		if (!ft_strcmp(array[i], "|") && (i == 0 || is_empty_or_pipe(array[i - 1])))
-		{
-			ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", STDERR_FILENO);
-			// set the $? to STDERR_FILENO
-			free_array(array);
-			return (false);
-		}
 		if (ft_strcmp(array[i], "<") == 0 || ft_strcmp(array[i], ">") == 0 || ft_strcmp(array[i], ">>") == 0)
 		{
 			if (!array[i + 1])

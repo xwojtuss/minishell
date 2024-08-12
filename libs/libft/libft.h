@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:52:16 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/07 23:24:47 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/12 21:09:02 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ char				*ft_strcat(char *dest, char *src);
 char				*ft_fallback_string(char *str, const char *fallback);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strjoin_delim(char const *s1, char delim,
+						char const *s2);
 char				*ft_strjoin_array(char **array);
 char				*ft_strjoin_array_delim(char **array, char delim);
 char				*ft_strtrim(char const *s1, char const *set);
