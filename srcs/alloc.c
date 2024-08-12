@@ -4,6 +4,13 @@ char	*get_var_name(char *input, int *i)
 {
 	char *name;
 
+	if (!input || !i)
+		return (NULL);
+	if (input[*i] == '?')
+	{
+		(*i)++;
+		return (ft_strdup("?"));
+	}
 	name = ft_strndup(input + *i, ft_strchrs_mf(input + *i, " \"\'") - (input + *i));
 	if (!name)
 		return (NULL);
@@ -46,7 +53,7 @@ int	count_length(char *input, t_var *var)
 	{
 		if (input[i] == '\'')
 			is_in_quotes = !is_in_quotes;
-		if (input[i] == '$' && !is_in_quotes && input[i + 1] != ' ' && input[i + 1] != '\0')
+		if (input[i] == '$' && !is_in_quotes && input[i + 1] != ' ' && input[i + 1] != '\"' && input[i + 1] != '\0')
 		{
 			i++;
 			name = get_var_name(input, &i);
@@ -89,7 +96,7 @@ int	replace_var_loop(char *input, t_var *var, char *result)
 			is_in_quotes = !is_in_quotes;
 		else if (input[i] == '\"')
 			is_in_db_quotes = !is_in_db_quotes;
-		if (input[i] == '$' && !is_in_quotes && input[i + 1] != ' ' && input[i + 1] != '\0')
+		if (input[i] == '$' && !is_in_quotes && input[i + 1] != ' ' && input[i + 1] != '\"' && input[i + 1] != '\0')
 		{
 			i++;
 			name = get_var_name(input, &i);
