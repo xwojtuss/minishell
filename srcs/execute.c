@@ -60,6 +60,11 @@ bool	check_path_for_file(char *path, char *command)
 	return (false);
 }
 
+/*
+Checks if the file is in the specified path,
+there can be multiple paths separated by ':'
+if the file is found, it returns the full path
+*/
 char	*locate_file(char *command, char *path)
 {
 	char	**dirs;
@@ -67,6 +72,8 @@ char	*locate_file(char *command, char *path)
 	char	*temp;
 	int		i;
 
+	if (!path || !command)
+		return (NULL);
 	dirs = ft_split(path, ':');
 	if (!dirs)
 		return (NULL);
@@ -168,7 +175,11 @@ int	open_redirs(t_cmd *cmd)
 	{
 		cmd->read_fd = open(cmd->read_path, O_RDONLY);
 		if (cmd->read_fd == -1)
-			return (0);
+		{
+			ft_putstr_fd(cmd->read_path, STDERR_FILENO);
+			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+			return (1);
+		}
 	}
 	if (cmd->write_path)
 	{
@@ -244,16 +255,29 @@ pid_t	create_child(t_shell *shell, t_cmd *cmd)
 		return (-1);
 	if (pid == 0)
 	{
-		if (prev_read_fd != NOT_SET)
+		if (!open_redirs(cmd))
+			safely_exit(0, shell, NULL, NULL);
+		if (cmd->read_fd > 0 && !isatty(cmd->read_fd))
+		{
+			dup2(cmd->read_fd, STDIN_FILENO);
+			close(cmd->read_fd);
+		}
+		else if (prev_read_fd != NOT_SET)
 		{
 			dup2(prev_read_fd, STDIN_FILENO);
 			close(prev_read_fd);
 		}
-		if (cmd->next)
+		if (cmd->next && pipe_fd[1] != NOT_SET)
 		{
 			dup2(pipe_fd[1], STDOUT_FILENO);
 			close(pipe_fd[1]);
-			close(pipe_fd[0]);
+			if (pipe_fd[0] != NOT_SET && !isatty(pipe_fd[0]))
+				close(pipe_fd[0]);
+		}
+		else if (cmd->write_fd != NOT_SET && !isatty(cmd->write_fd))
+		{
+			dup2(cmd->write_fd, STDOUT_FILENO);
+			close(cmd->write_fd);
 		}
 		if (is_builtin(cmd->argv[0]))
 			exit(execute_builtin(cmd, shell, true));
@@ -266,7 +290,8 @@ pid_t	create_child(t_shell *shell, t_cmd *cmd)
 			close(prev_read_fd);
 		if (cmd->next)
 		{
-			close(pipe_fd[1]);
+			if (pipe_fd[1] != NOT_SET)
+				close(pipe_fd[1]);
 			prev_read_fd = pipe_fd[0];
 		}
 		else
@@ -279,6 +304,8 @@ int	run_one_builtin(t_cmd *cmd, t_shell *shell)
 {
 	int	status;
 
+	if (!open_redirs(cmd))
+		return (0);
 	status = execute_builtin(cmd, shell, false);
 	if (shell->var->value)
 		free(shell->var->value);
@@ -311,11 +338,7 @@ int	execute(t_shell *shell)
 	while (i > 0)
 	{
 		if (waitpid(0, &status, 0) == last_pid)
-		{
-			if (shell->var->value)
-				free(shell->var->value);
-			shell->var->value = ft_itoa(WEXITSTATUS(status));
-		}
+			set_last_exit_code(shell->var, WEXITSTATUS(status));
 		i--;
 	}
 	close_files(shell->cmd);

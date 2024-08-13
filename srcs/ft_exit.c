@@ -21,7 +21,12 @@ int ft_exit(int argc, char **argv, t_shell *shell)
                 else if (argv[1][i] == '+')
                     safely_exit(100, shell, NULL, NULL);
                 else
+                {
+                    ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+                    ft_putstr_fd(argv[1], STDERR_FILENO);
+                    ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
                     safely_exit(2, shell, NULL, NULL);
+                }
             }
             i++;
         }

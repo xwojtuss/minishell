@@ -1,5 +1,21 @@
 #include "minishell.h"
 
+void	set_last_exit_code(t_var *start, int exit_code)
+{
+	t_var	*tmp;
+
+	if (!start || exit_code < 0)
+		return ;
+	tmp = get_var_struct(start, "?");
+	if (!tmp)
+		return ;
+	if (tmp->value)
+		free(tmp->value);
+	tmp->value = ft_itoa(exit_code);
+	if (!tmp->value)
+		return ;
+}
+
 bool	is_in_quotes(char *input, int index)
 {
 	int	quote;
@@ -36,9 +52,7 @@ int	check_empty_pipes(char *input, t_shell *shell)
 			if ((j < 0 || input[j] == '|') && !is_in_quotes(input, j))
 			{
 				ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", STDERR_FILENO);
-				if (shell && shell->var && shell->var->value)
-					free(shell->var->value);
-				shell->var->value = ft_itoa(EXIT_FAILURE);
+				set_last_exit_code(shell->var, EXIT_FAILURE);
 				add_history((const char *)input);
 				return (0);
 			}
