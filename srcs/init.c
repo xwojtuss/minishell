@@ -115,7 +115,16 @@ int	set_redirect(char *str, t_cmd **cmd, char *file)
 		(*cmd)->write_path = get_absolute_path(file);
 	}
 	else if (!ft_strcmp(str, "<"))
+	{
 		(*cmd)->read_path = get_absolute_path(file);
+		if (!does_file_exist((*cmd)->read_path))
+		{
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
+			ft_putstr_fd(file, STDERR_FILENO);
+			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+			return (0);
+		}
+	}
 	else if (!ft_strcmp(str, "<<"))
 	{
 		new = read_stdin_delim(file);
@@ -210,16 +219,22 @@ int	init_cmd(char **array, t_shell *shell)
 		new = alloc_cmd(&i, &command);
 		if (!new)
 			return (0);
-		if (!assign_argv(array, &new, command))
-			return (free_cmd(new), 0);
-		if (!curr)
-			shell->cmd = new;
+		if (assign_argv(array, &new, command))
+		{
+			if (!curr)
+				shell->cmd = new;
+			else
+				curr->next = new;
+			if (new->next)
+				curr = new->next;
+			else
+				curr = new;
+		}
 		else
-			curr->next = new;
-		if (new->next)
-			curr = new->next;
-		else
-			curr = new;
+		{
+			set_last_exit_code(shell->var, EXIT_FAILURE);
+			free_cmd(new);
+		}		
 		while (array[i] && ft_strcmp(array[i], "|"))
 			i++;
 		if (array[i])
