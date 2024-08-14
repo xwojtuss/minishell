@@ -1,16 +1,41 @@
 #include "minishell.h"
 
+/*
+returns the status of the file
+1 - a directory
+2 - no execute permission
+4 - no read permission
+8 - no write permission
+128 - file does not exist
+*/
+int	check_file(char *path)
+{
+	struct stat	info;
+	int		status;
+
+	status = 0;
+	if (access(path, F_OK) != 0)
+		return (128);
+	if (stat(path, &info) != 0)
+		return (128);
+	if (S_ISDIR(info.st_mode))
+		status |= 1;
+	if (access(path, X_OK) != 0)
+		status |= 2;
+	if (access(path, R_OK) != 0)
+		status |= 4;
+	if (access(path, W_OK) != 0)
+		status |= 8;
+	return (status);
+}
+
 bool	does_file_exist(char *path)
 {
-	int	fd;
-
 	if (!path)
 		return (false);
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		return (false);
-	close(fd);
-	return (true);
+	if (access(path, F_OK) == 0)
+		return (true);
+	return (false);
 }
 
 char	*remove_dots(char *final, char *path)

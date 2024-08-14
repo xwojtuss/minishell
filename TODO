@@ -1,15 +1,6 @@
 echo cat > file | echo test > file (trzeba uważać przy redirect())
-finish function to init the t_cmd struct (Wojtek),
-write function to execute the processes (they need to pipe infinitely using the fd's provided in t_cmd) (Wojtek),
-add exit, unset, finish export (Bartek),
-test builtins,
-make it so that the executable is searched in the $PATH dirs if the path looks relative
-write the function handling the redirect functionality,
 make sure to handle signals when different processes are running,
 make sure that the $? is being set everywhere it needs to
 make the file structure make sense,
 clean up the .h file,
 Norm fixes,
-
-
-In the split do not get rid of any quotes, make sure that the array consists of the words and quotes, we will differentiate between the words and the words in quotes when we do the init cmd!!!

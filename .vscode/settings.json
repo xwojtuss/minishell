@@ -4,6 +4,8 @@
 		"libft.h": "c",
 		"typeinfo": "c",
 		"type_traits": "c",
-		"utility": "c"
-	}
+		"utility": "c",
+		"stat.h": "c"
+	},
+	"makefile.configureOnOpen": true
 }

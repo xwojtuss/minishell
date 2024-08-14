@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42warsaw.p      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 19:50:55 by wkornato          #+#    #+#             */
-/*   Updated: 2024/03/05 19:50:56 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/14 16:30:33 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

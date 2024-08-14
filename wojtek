@@ -1,0 +1,10 @@
+includes
+libs
+Makefile
+minishell
+minishell_tester
+readline.supp
+srcs
+TODO
+valgrind.log
+wojtek

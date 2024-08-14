@@ -54,11 +54,11 @@ typedef struct s_cmd
 /*
 Stores the name and value of an environment variable
 */
-typedef struct s_var // to delete, it has to be a array of strings
+typedef struct s_var
 {
-	char *name;
-	char *value;
-	struct s_var *next;
+	char			*name;
+	char			*value;
+	struct s_var	*next;
 }					t_var;
 
 /*
@@ -70,6 +70,7 @@ typedef struct s_shell
 {
 	t_cmd			*cmd;
 	t_var			*var;
+	char			*last_command;
 }					t_shell;
 
 extern int			g_signum;
@@ -82,6 +83,7 @@ int					pipe_exec(char **cmd1, char **cmd2);
 char				**create_array(char *input, t_var *var);
 void				free_cmd(t_cmd *cmd);
 void				free_array(char **array);
+int					check_file(char *path);
 void				throw_error_exit(char *input, char **array, t_cmd *cmd,
 						t_var *var);
 bool				check_redirects(char **array);
