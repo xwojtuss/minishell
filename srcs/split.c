@@ -2,8 +2,8 @@
 
 static int	count_words(char const *s)
 {
-	int count;
-	int quote;
+	int	count;
+	int	quote;
 
 	while (*s == ' ')
 		s++;
@@ -47,10 +47,11 @@ int	add_string(char ****array, int *size, const char *str)
 	return (1);
 }
 
-static int	copy_data(const char *str, char ***result, char *buffer, int buf_index)
+static int	copy_data(const char *str, char ***result, char *buffer,
+		int buf_index)
 {
-	int		wait_for;
-	int		size;
+	int	wait_for;
+	int	size;
 
 	size = 0;
 	wait_for = NOT_SET;
@@ -84,9 +85,9 @@ static int	copy_data(const char *str, char ***result, char *buffer, int buf_inde
 
 char	**split_args(const char *str)
 {
-	char **result;
-	char *buffer;
-	int buf_index;
+	char	**result;
+	char	*buffer;
+	int		buf_index;
 
 	result = NULL;
 	buffer = NULL;

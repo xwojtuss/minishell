@@ -2,7 +2,7 @@
 
 char	*get_var_name(char *input, int *i)
 {
-	char *name;
+	char	*name;
 
 	if (!input || !i)
 		return (NULL);
@@ -11,7 +11,8 @@ char	*get_var_name(char *input, int *i)
 		(*i)++;
 		return (ft_strdup("?"));
 	}
-	name = ft_strndup(input + *i, ft_strchrs_mf(input + *i, " \"\'") - (input + *i));
+	name = ft_strndup(input + *i, ft_strchrs_mf(input + *i, " \"\'") - (input
+				+ *i));
 	if (!name)
 		return (NULL);
 	*i += ft_strlen(name);
@@ -40,14 +41,16 @@ char	*get_var_value(t_var *var, char *name)
 	return (NULL);
 }
 
-static	void	check_for_spaces(char *input, int *length, int *i, bool is_in_quotes)
+static void	check_for_spaces(char *input, int *length, int *i,
+		bool is_in_quotes)
 {
 	if (i > 0 && input[*i] == '|' && input[*i - 1] != ' ' && !is_in_quotes)
 		(*length)++;
-	if (input[*i] == '|' && input[*i + 1] != ' ' && input[*i + 1] != '\0' && !is_in_quotes)
+	if (input[*i] == '|' && input[*i + 1] != ' ' && input[*i + 1] != '\0'
+		&& !is_in_quotes)
 		(*length)++;
 	if (input[*i] == '<' || input[*i] == '>')
-		(*length)+=2;
+		(*length) += 2;
 	(*length)++;
 	(*i)++;
 }
@@ -66,7 +69,8 @@ int	count_length(char *input, t_var *var)
 	{
 		if (input[i] == '\'')
 			is_in_quotes = !is_in_quotes;
-		if (input[i] == '$' && !is_in_quotes && input[i + 1] != ' ' && input[i + 1] != '\"' && input[i + 1] != '\0')
+		if (input[i] == '$' && !is_in_quotes && input[i + 1] != ' ' && input[i
+			+ 1] != '\"' && input[i + 1] != '\0')
 		{
 			i++;
 			name = get_var_name(input, &i);
@@ -100,30 +104,40 @@ int	replace_var_loop(char *input, t_var *var, char *result)
 			is_in_quotes = !is_in_quotes;
 		else if (input[i] == '\"')
 			is_in_db_quotes = !is_in_db_quotes;
-		if (input[i] == '$' && !is_in_quotes && input[i + 1] != ' ' && input[i + 1] != '\"' && input[i + 1] != '\0')
+		if (input[i] == '$' && !is_in_quotes && input[i + 1] != ' ' && input[i
+			+ 1] != '\"' && input[i + 1] != '\0')
 		{
 			i++;
 			name = get_var_name(input, &i);
 			if (!name)
 				return (0);
-			ft_strlcpy(result + j, get_var_value(var, name), ft_strlen(get_var_value(var, name)) + 1);
+			ft_strlcpy(result + j, get_var_value(var, name),
+				ft_strlen(get_var_value(var, name)) + 1);
 			j += ft_strlen(get_var_value(var, name));
 			free(name);
 		}
 		else
 		{
-			if (i > 0 && input[i] == '|' && input[i - 1] != ' ' && !is_in_quotes && !is_in_db_quotes)
+			if (i > 0 && input[i] == '|' && input[i - 1] != ' ' && !is_in_quotes
+				&& !is_in_db_quotes)
 				result[j++] = ' ';
-			else if (i > 0 && input[i] == '<' && input[i - 1] != ' ' && input[i - 1] != '<' && !is_in_quotes && !is_in_db_quotes)
+			else if (i > 0 && input[i] == '<' && input[i - 1] != ' ' && input[i
+				- 1] != '<' && !is_in_quotes && !is_in_db_quotes)
 				result[j++] = ' ';
-			else if (i > 0 && input[i] == '>' && input[i - 1] != ' ' && input[i - 1] != '>' && !is_in_quotes && !is_in_db_quotes)
+			else if (i > 0 && input[i] == '>' && input[i - 1] != ' ' && input[i
+				- 1] != '>' && !is_in_quotes && !is_in_db_quotes)
 				result[j++] = ' ';
 			result[j] = input[i];
-			if (input[i] == '|' && input[i + 1] != ' ' && input[i + 1] != '\0' && !is_in_quotes && !is_in_db_quotes)
+			if (input[i] == '|' && input[i + 1] != ' ' && input[i + 1] != '\0'
+				&& !is_in_quotes && !is_in_db_quotes)
 				result[++j] = ' ';
-			else if (input[i] == '<' && input[i + 1] != ' ' && input[i + 1] != '<' && input[i + 1] != '\0' && !is_in_quotes && !is_in_db_quotes)
+			else if (input[i] == '<' && input[i + 1] != ' ' && input[i
+				+ 1] != '<' && input[i + 1] != '\0' && !is_in_quotes
+				&& !is_in_db_quotes)
 				result[++j] = ' ';
-			else if (input[i] == '>' && input[i + 1] != ' ' && input[i + 1] != '>' && input[i + 1] != '\0' && !is_in_quotes && !is_in_db_quotes)
+			else if (input[i] == '>' && input[i + 1] != ' ' && input[i
+				+ 1] != '>' && input[i + 1] != '\0' && !is_in_quotes
+				&& !is_in_db_quotes)
 				result[++j] = ' ';
 			j++;
 			i++;
@@ -153,8 +167,8 @@ Turns the input into an array of strings using ft_split
 */
 char	**create_array(char *input, t_var *var)
 {
-	char	*input_replaced;
-	char	**result;
+	char *input_replaced;
+	char **result;
 
 	input_replaced = replace_var(input, var);
 	if (!input_replaced)

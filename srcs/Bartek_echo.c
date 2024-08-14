@@ -2,8 +2,8 @@
 
 void	Bartek_echo(t_cmd *cmd)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 	int new_line;
 
 	i = 1;

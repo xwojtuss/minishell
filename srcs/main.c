@@ -8,7 +8,7 @@ Mostly handles signals, creates a child to read stdin
 int	main(int argc, char **argv, char **envp)
 {
 	pid_t	pid;
-	int status;
+	int		status;
 
 	(void)argc;
 	(void)argv;

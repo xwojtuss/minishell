@@ -1,18 +1,19 @@
 #include "minishell.h"
 
 /*
-redirect will happen right before we fork, we will open and close the file before and after the fork
+redirect will happen right before we fork,
+	we will open and close the file before and after the fork
 
 if the stdout of a previous command is a file then we execute the next command without piping the output of the previous command
 */
 int	redirect(char *str, char *file, t_cmd *cmd, t_shell *shell)
 {
-	int		status;
+	int	status;
 
 	if (file == NULL)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token 'newline'\n",
-				STDERR_FILENO); //$? = 2
+						STDERR_FILENO); //$? = 2
 		return (0);
 	}
 	if (ft_strcmp(str, ">"))
@@ -73,7 +74,8 @@ t_cmd	*read_stdin_delim(char *delim)
 		stdin_line = get_next_line(0);
 		if (!stdin_line)
 		{
-			ft_putstr_fd("\nminishell: warning here-document at this line delimited by end-of-file (wanted '", STDERR_FILENO);
+			ft_putstr_fd("\nminishell: warning here-document at this line delimited by end-of-file (wanted '",
+				STDERR_FILENO);
 			ft_putstr_fd(delim, STDERR_FILENO);
 			ft_putstr_fd("')\n", STDERR_FILENO);
 			free_cmd(new);
@@ -84,7 +86,8 @@ t_cmd	*read_stdin_delim(char *delim)
 			free(stdin_line);
 			continue ;
 		}
-		if (!ft_strncmp(stdin_line, delim, ft_max(ft_strlen(delim), ft_strlen(stdin_line) - 1)))
+		if (!ft_strncmp(stdin_line, delim, ft_max(ft_strlen(delim),
+					ft_strlen(stdin_line) - 1)))
 			break ;
 		temp = new->argv[1];
 		new->argv[1] = ft_strjoin(temp, stdin_line);
@@ -93,7 +96,7 @@ t_cmd	*read_stdin_delim(char *delim)
 		if (!(new->argv[1]))
 			return (0);
 	}
-	if (new && new->argv && new->argv[1] && ft_strlen(new->argv[1]) > 0)
+	if (new &&new->argv &&new->argv[1] && ft_strlen(new->argv[1]) > 0)
 		new->argv[1][ft_strlen(new->argv[1]) - 1] = '\0';
 	free(stdin_line);
 	new->argv[2] = NULL;
@@ -110,7 +113,8 @@ int	set_redirect(char *str, t_cmd **cmd, char *file)
 			free((*cmd)->write_path);
 		(*cmd)->write_mode = MODE_WRITE;
 		(*cmd)->write_path = get_absolute_path(file);
-		if ((*cmd)->write_path && does_file_exist((*cmd)->write_path) && check_file((*cmd)->write_path) & 8)
+		if ((*cmd)->write_path && does_file_exist((*cmd)->write_path)
+			&& check_file((*cmd)->write_path) & 8)
 		{
 			ft_putstr_fd(file, STDERR_FILENO);
 			ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
@@ -125,7 +129,8 @@ int	set_redirect(char *str, t_cmd **cmd, char *file)
 			free((*cmd)->write_path);
 		(*cmd)->write_mode = MODE_APPEND;
 		(*cmd)->write_path = get_absolute_path(file);
-		if ((*cmd)->write_path && does_file_exist((*cmd)->write_path) && check_file((*cmd)->write_path) & 8)
+		if ((*cmd)->write_path && does_file_exist((*cmd)->write_path)
+			&& check_file((*cmd)->write_path) & 8)
 		{
 			ft_putstr_fd(file, STDERR_FILENO);
 			ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
@@ -260,7 +265,7 @@ int	init_cmd(char **array, t_shell *shell)
 			if (!shell->cmd)
 				free_cmd(new);
 			next_read_path = "./.minishell_empty_file";
-		}		
+		}
 		while (array[i] && ft_strcmp(array[i], "|"))
 			i++;
 		if (array[i])

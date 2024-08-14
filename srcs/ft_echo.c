@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:58:10 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/15 00:01:00 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/15 00:23:31 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	print_argv(char **argv, int i, int new_line)
 
 int	ft_echo(int argc, char **argv)
 {
-	int	j;
-	int	i;
+	int j;
+	int i;
 	int new_line;
-	
+
 	(void)argc;
 	i = 1;
 	new_line = 1;
