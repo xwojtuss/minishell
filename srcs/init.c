@@ -28,7 +28,7 @@ int	redirect(char *str, char *file, t_cmd *cmd, t_shell *shell)
 	return (1);
 }
 
-t_cmd	*alloc_cmd(int *i, int *command)
+t_cmd	*alloc_cmd(int *i, int *command, char *read_path)
 {
 	t_cmd	*new;
 
@@ -36,7 +36,7 @@ t_cmd	*alloc_cmd(int *i, int *command)
 	if (!new)
 		return (NULL);
 	new->argv = NULL;
-	new->read_path = NULL;
+	new->read_path = ft_strdup(read_path);
 	new->read_fd = NOT_SET;
 	new->write_fd = NOT_SET;
 	new->write_mode = NOT_SET;
@@ -54,7 +54,7 @@ t_cmd	*read_stdin_delim(char *delim)
 	char	*stdin_line;
 	char	*temp;
 
-	new = alloc_cmd(NULL, NULL);
+	new = alloc_cmd(NULL, NULL, NULL);
 	if (!new)
 		return (0);
 	new->argv = (char **)ft_calloc(3, sizeof(char *));
@@ -106,13 +106,35 @@ int	set_redirect(char *str, t_cmd **cmd, char *file)
 
 	if (!ft_strcmp(str, ">"))
 	{
+		if ((*cmd)->write_path)
+		{
+			close(open((*cmd)->write_path, O_WRONLY | O_CREAT, 0644));
+			free((*cmd)->write_path);
+		}
 		(*cmd)->write_mode = MODE_WRITE;
 		(*cmd)->write_path = get_absolute_path(file);
+		if ((*cmd)->write_path && does_file_exist((*cmd)->write_path) && check_file((*cmd)->write_path) & 8)
+		{
+			ft_putstr_fd(file, STDERR_FILENO);
+			ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+			return (0);
+		}
 	}
 	else if (!ft_strcmp(str, ">>"))
 	{
+		if ((*cmd)->write_path)
+		{
+			close(open((*cmd)->write_path, O_WRONLY | O_CREAT, 0644));
+			free((*cmd)->write_path);
+		}
 		(*cmd)->write_mode = MODE_APPEND;
 		(*cmd)->write_path = get_absolute_path(file);
+		if ((*cmd)->write_path && does_file_exist((*cmd)->write_path) && check_file((*cmd)->write_path) & 8)
+		{
+			ft_putstr_fd(file, STDERR_FILENO);
+			ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+			return (0);
+		}
 	}
 	else if (!ft_strcmp(str, "<"))
 	{
@@ -209,14 +231,16 @@ int	init_cmd(char **array, t_shell *shell)
 {
 	t_cmd	*new;
 	t_cmd	*curr;
+	char	*next_read_path;
 	int		i;
 	int		command;
 
 	i = 0;
 	curr = NULL;
+	next_read_path = NULL;
 	while (array[i])
 	{
-		new = alloc_cmd(&i, &command);
+		new = alloc_cmd(&i, &command, next_read_path);
 		if (!new)
 			return (0);
 		if (assign_argv(array, &new, command))
@@ -233,7 +257,9 @@ int	init_cmd(char **array, t_shell *shell)
 		else
 		{
 			set_last_exit_code(shell->var, EXIT_FAILURE);
-			free_cmd(new);
+			if (!shell->cmd)
+				free_cmd(new);
+			next_read_path = "./.minishell_empty_file";
 		}		
 		while (array[i] && ft_strcmp(array[i], "|"))
 			i++;

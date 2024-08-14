@@ -145,12 +145,28 @@ char	**get_env(t_shell *shell)
 int	execute_external(t_cmd *cmd, t_shell *shell)
 {
 	char	*path;
+	int		status;
 	char	**env;
 
 	if (!cmd->argv || !cmd->argv[0])
 		return (EXIT_FAILURE);
 	if (cmd->argv[0][0] == '.' || cmd->argv[0][0] == '/')
+	{
+		status = check_file(cmd->argv[0]);
+		if (status & 1)
+		{
+			ft_putstr_fd(cmd->argv[0], STDERR_FILENO);
+			ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
+			safely_exit(126, shell, NULL, NULL);
+		}
+		else if (status & 2)
+		{
+			ft_putstr_fd(cmd->argv[0], STDERR_FILENO);
+			ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+			safely_exit(126, shell, NULL, NULL);
+		}
 		path = ft_strdup(cmd->argv[0]);
+	}
 	else
 		path = locate_file(cmd->argv[0], get_var_value(shell->var, "PATH"));
 	if (!path)
@@ -171,7 +187,7 @@ int	execute_external(t_cmd *cmd, t_shell *shell)
 
 int	open_redirs(t_cmd *cmd)
 {
-	if (cmd->read_path)
+	if (cmd->read_path && ft_strcmp(cmd->read_path, "./.minishell_empty_file"))
 	{
 		cmd->read_fd = open(cmd->read_path, O_RDONLY);
 		if (cmd->read_fd == -1)
@@ -180,6 +196,14 @@ int	open_redirs(t_cmd *cmd)
 			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 			return (1);
 		}
+	}
+	else if (cmd->read_path)
+	{
+		free(cmd->read_path);
+		cmd->read_path = get_absolute_path("./.minishell_empty_file");
+		cmd->read_fd = open(cmd->read_path, O_RDONLY | O_CREAT | O_TRUNC, 0644);
+		if (cmd->read_fd == -1)
+			return (0);
 	}
 	if (cmd->write_path)
 	{
@@ -221,6 +245,7 @@ void	close_files(t_cmd *cmd)
 			close(cmd->write_fd);
 		cmd = tmp;
 	}
+	unlink("./.minishell_empty_file");
 }
 
 int	get_prev_write_fd(t_cmd *cmd, t_cmd *curr)
@@ -267,17 +292,17 @@ pid_t	create_child(t_shell *shell, t_cmd *cmd)
 			dup2(prev_read_fd, STDIN_FILENO);
 			close(prev_read_fd);
 		}
-		if (cmd->next && pipe_fd[1] != NOT_SET)
+		if (cmd->write_fd != NOT_SET && !isatty(cmd->write_fd))
+		{
+			dup2(cmd->write_fd, STDOUT_FILENO);
+			close(cmd->write_fd);
+		}
+		else if (cmd->next && pipe_fd[1] != NOT_SET)
 		{
 			dup2(pipe_fd[1], STDOUT_FILENO);
 			close(pipe_fd[1]);
 			if (pipe_fd[0] != NOT_SET && !isatty(pipe_fd[0]))
 				close(pipe_fd[0]);
-		}
-		else if (cmd->write_fd != NOT_SET && !isatty(cmd->write_fd))
-		{
-			dup2(cmd->write_fd, STDOUT_FILENO);
-			close(cmd->write_fd);
 		}
 		if (is_builtin(cmd->argv[0]))
 			exit(execute_builtin(cmd, shell, true));
@@ -306,7 +331,18 @@ int	run_one_builtin(t_cmd *cmd, t_shell *shell)
 
 	if (!open_redirs(cmd))
 		return (0);
+	if (cmd->read_fd != NOT_SET && !isatty(cmd->read_fd))
+	{
+		dup2(cmd->read_fd, STDIN_FILENO);
+		close(cmd->read_fd);
+	}
+	if (cmd->write_fd != NOT_SET && !isatty(cmd->write_fd))
+	{
+		dup2(cmd->write_fd, STDOUT_FILENO);
+		close(cmd->write_fd);
+	}
 	status = execute_builtin(cmd, shell, false);
+	close_files(cmd);
 	if (shell->var->value)
 		free(shell->var->value);
 	shell->var->value = ft_itoa(status);
@@ -323,9 +359,8 @@ int	execute(t_shell *shell)
 	int		i;
 
 	curr = shell->cmd;
-	if (count_cmds(curr) == 1 && is_builtin(curr->argv[0]))
+	if (count_cmds(curr) == 1 && (!ft_strcmp(curr->argv[0], "exit") || !ft_strcmp(curr->argv[0], "export") || !ft_strcmp(curr->argv[0], "unset") || !ft_strcmp(curr->argv[0], "cd")))
 		return (run_one_builtin(curr, shell));
-	// print_cmd(shell->cmd);
 	while (curr)
 	{
 		last_pid = create_child(shell, curr);
@@ -333,6 +368,7 @@ int	execute(t_shell *shell)
 			return (0);
 		curr = curr->next;
 	}
+	// print_cmd(shell->cmd);
 	status = 0;
 	i = count_cmds(shell->cmd);
 	while (i > 0)

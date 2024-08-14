@@ -132,6 +132,7 @@ void	handle_input(char *input, t_shell *shell)
 	if (!init_cmd(array, shell))
 		return (free_cmd(shell->cmd), free_array(array));
 	free_array(array);
+	// print_cmd(shell->cmd);
 	if (!execute(shell))
 		throw_error_exit(NULL, NULL, shell->cmd, shell->var);
 	free_cmd(shell->cmd);
@@ -173,13 +174,15 @@ char	*construct_prompt(char *cwd, t_var *var)//only a preview, there is a way mo
 	prompt_array[7] = ":";
 	prompt_array[8] = BLUE_COLOR;
 	prompt_array[9] = BOLD_TEXT;
-	prompt_array[10] = ft_fallback_string(get_relative_path(cwd, var), cwd);
+	prompt_array[10] = "path here";
+	(void)cwd;
+	/* prompt_array[10] = ft_fallback_string(get_relative_path(cwd, var), cwd); */
 	prompt_array[11] = DEFAULT_COLOR;
 	prompt_array[12] = NORMAL_TEXT;
 	prompt_array[13] = "$ ";
 	prompt = ft_strjoin_array(prompt_array);
-	if (ft_strcmp(prompt_array[10], cwd) != 0)
-		free(prompt_array[10]);
+	/* if (ft_strcmp(prompt_array[10], cwd) != 0)
+		free(prompt_array[10]); */
 	free(prompt_array);
 	return (prompt);
 }

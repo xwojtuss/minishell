@@ -69,7 +69,7 @@ int	count_length(char *input, t_var *var)
 			if (input[i] == '|' && input[i + 1] != ' ' && input[i + 1] != '\0' && !is_in_quotes)
 				length++;
 			if (input[i] == '<' || input[i] == '>')
-				length++;
+				length += 2;
 			length++;
 			i++;
 		}
