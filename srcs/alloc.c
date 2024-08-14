@@ -19,7 +19,8 @@ char	*get_var_name(char *input, int *i)
 }
 
 /*
-This returns the value of a variable given its name, the return value is not a duplicate of the value, so it should not be freed
+This returns the value of a variable given its name
+the return value is not a duplicate of the value, so it should not be freed
 */
 char	*get_var_value(t_var *var, char *name)
 {
@@ -37,6 +38,18 @@ char	*get_var_value(t_var *var, char *name)
 		tmp = tmp->next;
 	}
 	return (NULL);
+}
+
+static	void	check_for_spaces(char *input, int *length, int *i, bool is_in_quotes)
+{
+	if (i > 0 && input[*i] == '|' && input[*i - 1] != ' ' && !is_in_quotes)
+		(*length)++;
+	if (input[*i] == '|' && input[*i + 1] != ' ' && input[*i + 1] != '\0' && !is_in_quotes)
+		(*length)++;
+	if (input[*i] == '<' || input[*i] == '>')
+		(*length)+=2;
+	(*length)++;
+	(*i)++;
 }
 
 int	count_length(char *input, t_var *var)
@@ -63,16 +76,7 @@ int	count_length(char *input, t_var *var)
 			free(name);
 		}
 		else
-		{
-			if (i > 0 && input[i] == '|' && input[i - 1] != ' ' && !is_in_quotes)
-				length++;
-			if (input[i] == '|' && input[i + 1] != ' ' && input[i + 1] != '\0' && !is_in_quotes)
-				length++;
-			if (input[i] == '<' || input[i] == '>')
-				length += 2;
-			length++;
-			i++;
-		}
+			check_for_spaces(input, &length, &i, is_in_quotes);
 	}
 	return (length);
 }

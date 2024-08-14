@@ -14,6 +14,7 @@ int	execute_builtin(t_cmd *cmd, t_shell *shell, bool do_exit)
 {
 	int	ret;
 
+	ret = EXIT_FAILURE;
 	if (!cmd->argv || !cmd->argv[0])
 		ret = EXIT_FAILURE;
 	else if (!ft_strcmp(cmd->argv[0], "echo"))
@@ -30,8 +31,6 @@ int	execute_builtin(t_cmd *cmd, t_shell *shell, bool do_exit)
 		ret = ft_env(cmd->argc, cmd->argv, shell);
 	else if (!ft_strcmp(cmd->argv[0], "exit"))
 		ret = ft_exit(cmd->argc, cmd->argv, shell);
-	else
-		ret = EXIT_FAILURE;
 	if (do_exit)
 		safely_exit(ret, shell, NULL, NULL);
 	return (ret);
@@ -60,6 +59,20 @@ bool	check_path_for_file(char *path, char *command)
 	return (false);
 }
 
+char	*get_path_of_file(char **dirs, char *command)
+{
+	int		i;
+
+	i = 0;
+	while (dirs[i])
+	{
+		if (check_path_for_file(dirs[i], command))
+			break ;
+		i++;
+	}
+	return (dirs[i]);
+}
+
 /*
 Checks if the file is in the specified path,
 there can be multiple paths separated by ':'
@@ -70,23 +83,17 @@ char	*locate_file(char *command, char *path)
 	char	**dirs;
 	char	*result;
 	char	*temp;
-	int		i;
+	
 
 	if (!path || !command)
 		return (NULL);
 	dirs = ft_split(path, ':');
 	if (!dirs)
 		return (NULL);
-	i = 0;
-	while (dirs[i])
-	{
-		if (check_path_for_file(dirs[i], command))
-			break ;
-		i++;
-	}
-	if (!dirs[i])
+	temp = get_path_of_file(dirs, command);
+	if (!temp)
 		return (free_array(dirs), NULL);
-	result = ft_strjoin(dirs[i], "/");
+	result = ft_strjoin(temp, "/");
 	if (!result)
 		return (free_array(dirs), NULL);
 	temp = result;
@@ -270,11 +277,78 @@ int	get_next_read_fd(t_cmd *curr)
 	return (STDOUT_FILENO);
 }
 
+void	duplicate_fd(int fd, int std_fd)
+{
+	if (fd != NOT_SET && !isatty(fd))
+	{
+		dup2(fd, std_fd);
+		close(fd);
+	}
+}
+
+void	duplicate_read_fd(t_cmd *cmd, int prev_read_fd)
+{
+	if (cmd->read_fd > 0 && !isatty(cmd->read_fd))
+	{
+		dup2(cmd->read_fd, STDIN_FILENO);
+		close(cmd->read_fd);
+	}
+	else if (prev_read_fd != NOT_SET)
+	{
+		dup2(prev_read_fd, STDIN_FILENO);
+		close(prev_read_fd);
+	}
+}
+
+void	duplicate_write_fd(t_cmd *cmd, int pipe_fd[2])
+{
+	if (cmd->write_fd != NOT_SET && !isatty(cmd->write_fd))
+	{
+		dup2(cmd->write_fd, STDOUT_FILENO);
+		close(cmd->write_fd);
+	}
+	else if (cmd->next && pipe_fd[1] != NOT_SET)
+	{
+		dup2(pipe_fd[1], STDOUT_FILENO);
+		close(pipe_fd[1]);
+		if (pipe_fd[0] != NOT_SET && !isatty(pipe_fd[0]))
+			close(pipe_fd[0]);
+	}
+}
+
+void	child_routine(t_shell *shell, t_cmd *cmd, int pipe_fd[2],
+		int prev_read_fd)
+{
+	if (!open_redirs(cmd))
+		safely_exit(0, shell, NULL, NULL);
+	duplicate_read_fd(cmd, prev_read_fd);
+	duplicate_write_fd(cmd, pipe_fd);
+	if (is_builtin(cmd->argv[0]))
+		exit(execute_builtin(cmd, shell, true));
+	else
+		exit(execute_external(cmd, shell));
+}
+
+void	parent_routine(t_cmd *cmd, int pipe_fd[2],
+		int *prev_read_fd)
+{
+	if (*prev_read_fd != NOT_SET)
+		close(*prev_read_fd);
+	if (cmd->next)
+	{
+		if (pipe_fd[1] != NOT_SET)
+			close(pipe_fd[1]);
+		*prev_read_fd = pipe_fd[0];
+	}
+	else
+		*prev_read_fd = NOT_SET;
+}
+
 pid_t	create_child(t_shell *shell, t_cmd *cmd)
 {
-	int	pipe_fd[2];
+	int			pipe_fd[2];
 	static int	prev_read_fd = NOT_SET;
-	pid_t	pid;
+	pid_t		pid;
 
 	pipe_fd[0] = NOT_SET;
 	pipe_fd[1] = NOT_SET;
@@ -285,49 +359,9 @@ pid_t	create_child(t_shell *shell, t_cmd *cmd)
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)
-	{
-		if (!open_redirs(cmd))
-			safely_exit(0, shell, NULL, NULL);
-		if (cmd->read_fd > 0 && !isatty(cmd->read_fd))
-		{
-			dup2(cmd->read_fd, STDIN_FILENO);
-			close(cmd->read_fd);
-		}
-		else if (prev_read_fd != NOT_SET)
-		{
-			dup2(prev_read_fd, STDIN_FILENO);
-			close(prev_read_fd);
-		}
-		if (cmd->write_fd != NOT_SET && !isatty(cmd->write_fd))
-		{
-			dup2(cmd->write_fd, STDOUT_FILENO);
-			close(cmd->write_fd);
-		}
-		else if (cmd->next && pipe_fd[1] != NOT_SET)
-		{
-			dup2(pipe_fd[1], STDOUT_FILENO);
-			close(pipe_fd[1]);
-			if (pipe_fd[0] != NOT_SET && !isatty(pipe_fd[0]))
-				close(pipe_fd[0]);
-		}
-		if (is_builtin(cmd->argv[0]))
-			exit(execute_builtin(cmd, shell, true));
-		else
-			exit(execute_external(cmd, shell));
-	}
+		child_routine(shell, cmd, pipe_fd, prev_read_fd);
 	else
-	{
-		if (prev_read_fd != NOT_SET)
-			close(prev_read_fd);
-		if (cmd->next)
-		{
-			if (pipe_fd[1] != NOT_SET)
-				close(pipe_fd[1]);
-			prev_read_fd = pipe_fd[0];
-		}
-		else
-			prev_read_fd = NOT_SET;
-	}
+		parent_routine(cmd, pipe_fd, &prev_read_fd);
 	return (pid);
 }
 
@@ -337,16 +371,8 @@ int	run_one_builtin(t_cmd *cmd, t_shell *shell)
 
 	if (!open_redirs(cmd))
 		return (0);
-	if (cmd->read_fd != NOT_SET && !isatty(cmd->read_fd))
-	{
-		dup2(cmd->read_fd, STDIN_FILENO);
-		close(cmd->read_fd);
-	}
-	if (cmd->write_fd != NOT_SET && !isatty(cmd->write_fd))
-	{
-		dup2(cmd->write_fd, STDOUT_FILENO);
-		close(cmd->write_fd);
-	}
+	duplicate_fd(cmd->read_fd, STDIN_FILENO);
+	duplicate_fd(cmd->write_fd, STDOUT_FILENO);
 	status = execute_builtin(cmd, shell, false);
 	close_files(cmd);
 	if (shell->var->value)
@@ -357,24 +383,11 @@ int	run_one_builtin(t_cmd *cmd, t_shell *shell)
 	return (1);
 }
 
-int	execute(t_shell *shell)
+void	wait_for_processes(t_shell *shell, pid_t last_pid)
 {
-	t_cmd	*curr;
-	pid_t	last_pid;
-	int		status;
-	int		i;
+	int	status;
+	int	i;
 
-	curr = shell->cmd;
-	if (count_cmds(curr) == 1 && (!ft_strcmp(curr->argv[0], "exit") || !ft_strcmp(curr->argv[0], "export") || !ft_strcmp(curr->argv[0], "unset") || !ft_strcmp(curr->argv[0], "cd")))
-		return (run_one_builtin(curr, shell));
-	while (curr)
-	{
-		last_pid = create_child(shell, curr);
-		if (last_pid == -1)
-			return (0);
-		curr = curr->next;
-	}
-	// print_cmd(shell->cmd);
 	status = 0;
 	i = count_cmds(shell->cmd);
 	while (i > 0)
@@ -383,6 +396,26 @@ int	execute(t_shell *shell)
 			set_last_exit_code(shell->var, WEXITSTATUS(status));
 		i--;
 	}
+}
+
+int	execute(t_shell *shell)
+{
+	t_cmd	*curr;
+	pid_t	last_pid;
+
+	curr = shell->cmd;
+	if (count_cmds(curr) == 1 && (!ft_strcmp(curr->argv[0], "exit")
+			|| !ft_strcmp(curr->argv[0], "export") || !ft_strcmp(curr->argv[0],
+				"unset") || !ft_strcmp(curr->argv[0], "cd")))
+		return (run_one_builtin(curr, shell));
+	while (curr)
+	{
+		last_pid = create_child(shell, curr);
+		if (last_pid == -1)
+			return (0);
+		curr = curr->next;
+	}
+	wait_for_processes(shell, last_pid);
 	close_files(shell->cmd);
 	return (1);
 }
