@@ -60,7 +60,7 @@ char	*remove_dots(char *final, char *path)
 {
 	char	*token;
 	char	*rest;
-	char	temp[PATH_MAX] = {0};
+	char	temp[PATH_MAX];
 	char	*last_slash;
 
 	rest = path;

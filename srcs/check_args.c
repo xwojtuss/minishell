@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_args.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/15 00:31:08 by wkornato          #+#    #+#             */
+/*   Updated: 2024/08/15 00:31:09 by wkornato         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 bool	is_empty_or_pipe(char *str)
@@ -11,7 +23,7 @@ bool	is_empty_or_pipe(char *str)
 
 bool	check_redirects(t_shell *shell, char **array)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (array[i])

@@ -161,10 +161,10 @@ char	*get_relative_path(char *cwd, t_var *var)
 }
 
 char	*construct_prompt(char *cwd, t_var *var)
-//only a preview,there is a way more efficient way to do this
+// only a preview,there is a way more efficient way to do this
 {
-	char **prompt_array;
-	char *prompt;
+	char	**prompt_array;
+	char	*prompt;
 
 	prompt_array = (char **)ft_calloc(15, sizeof(char *));
 	if (!prompt_array)
