@@ -153,7 +153,6 @@ char	**create_array(char *input, t_var *var)
 	char	**result;
 
 	input_replaced = replace_var(input, var);
-	free(input);
 	if (!input_replaced)
 		return (NULL);
 	result = split_args(input_replaced);

@@ -49,10 +49,10 @@ int	check_empty_pipes(char *input, t_shell *shell)
 			j = i - 1;
 			while (j >= 0 && input[j] && ft_iswhite(input[j]))
 				j--;
-			if ((j < 0 || input[j] == '|') && !is_in_quotes(input, j))
+			if ((j < 0 || input[j] == '|' || input[j] == '<') && !is_in_quotes(input, j))
 			{
-				ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", STDERR_FILENO);
-				set_last_exit_code(shell->var, EXIT_FAILURE);
+				ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", STDERR_FILENO);
+				set_last_exit_code(shell->var, 2);
 				add_history((const char *)input);
 				return (0);
 			}
@@ -62,14 +62,12 @@ int	check_empty_pipes(char *input, t_shell *shell)
 	return (1);
 }
 
-char	*check_pipes(char **input, t_shell *shell)
+char	*check_pipes(char **input)
 {
 	char 	*temp;
 	char	*last;
 	char	*stdin_line;
 
-	if (!check_empty_pipes(*input, shell))
-		return (NULL);
 	while (true)
 	{
 		temp = *input;
@@ -120,14 +118,17 @@ void	handle_input(char *input, t_shell *shell)
 	}
 	if (!*input)
 		return (free(input));
-	input = check_pipes(&input, shell);
+	if (!check_empty_pipes(input, shell))
+		return (free(input));
+	input = check_pipes(&input);
 	if (!input)
 		throw_error_exit(NULL, NULL, NULL, shell->var);
 	add_history((const char *)input);
 	array = create_array(input, shell->var);
+	free(input);
 	if (!array)
-		throw_error_exit(NULL, NULL, NULL, shell->var);
-	if (!check_redirects(array))
+		return ;
+	if (!check_redirects(shell, array))
 		return ;
 	if (!init_cmd(array, shell))
 		return (free_cmd(shell->cmd), free_array(array));

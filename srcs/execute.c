@@ -153,6 +153,12 @@ int	execute_external(t_cmd *cmd, t_shell *shell)
 	if (cmd->argv[0][0] == '.' || cmd->argv[0][0] == '/')
 	{
 		status = check_file(cmd->argv[0]);
+		if (status & 128)
+		{
+			ft_putstr_fd(cmd->argv[0], STDERR_FILENO);
+			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+			safely_exit(127, shell, NULL, NULL);
+		}
 		if (status & 1)
 		{
 			ft_putstr_fd(cmd->argv[0], STDERR_FILENO);

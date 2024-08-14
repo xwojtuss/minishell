@@ -107,10 +107,7 @@ int	set_redirect(char *str, t_cmd **cmd, char *file)
 	if (!ft_strcmp(str, ">"))
 	{
 		if ((*cmd)->write_path)
-		{
-			close(open((*cmd)->write_path, O_WRONLY | O_CREAT, 0644));
 			free((*cmd)->write_path);
-		}
 		(*cmd)->write_mode = MODE_WRITE;
 		(*cmd)->write_path = get_absolute_path(file);
 		if ((*cmd)->write_path && does_file_exist((*cmd)->write_path) && check_file((*cmd)->write_path) & 8)
@@ -119,14 +116,13 @@ int	set_redirect(char *str, t_cmd **cmd, char *file)
 			ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 			return (0);
 		}
+		if ((*cmd)->write_path)
+			close(open((*cmd)->write_path, O_WRONLY | O_CREAT, 0644));
 	}
 	else if (!ft_strcmp(str, ">>"))
 	{
 		if ((*cmd)->write_path)
-		{
-			close(open((*cmd)->write_path, O_WRONLY | O_CREAT, 0644));
 			free((*cmd)->write_path);
-		}
 		(*cmd)->write_mode = MODE_APPEND;
 		(*cmd)->write_path = get_absolute_path(file);
 		if ((*cmd)->write_path && does_file_exist((*cmd)->write_path) && check_file((*cmd)->write_path) & 8)
@@ -135,6 +131,8 @@ int	set_redirect(char *str, t_cmd **cmd, char *file)
 			ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 			return (0);
 		}
+		if ((*cmd)->write_path)
+			close(open((*cmd)->write_path, O_WRONLY | O_CREAT, 0644));
 	}
 	else if (!ft_strcmp(str, "<"))
 	{
