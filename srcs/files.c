@@ -38,6 +38,24 @@ bool	does_file_exist(char *path)
 	return (false);
 }
 
+static void	double_dot(char *temp, char *token, char **last_slash)
+{
+	if (ft_strcmp(token, "..") == 0)
+	{
+		if (*last_slash)
+		{
+			**last_slash = '\0';
+			*last_slash = ft_strrchr(temp, '/');
+		}
+	}
+	else
+	{
+		ft_strlcat(temp, "/", PATH_MAX - strlen(temp));
+		ft_strlcat(temp, token, PATH_MAX - strlen(temp));
+		*last_slash = ft_strrchr(temp, '/');
+	}
+}
+
 char	*remove_dots(char *final, char *path)
 {
 	char	*token;
@@ -54,20 +72,9 @@ char	*remove_dots(char *final, char *path)
 			break ;
 		if (ft_strcmp(token, ".") == 0)
 			continue ;
-		else if (ft_strcmp(token, "..") == 0)
-		{
-			if (last_slash)
-			{
-				*last_slash = '\0';
-				last_slash = ft_strrchr(temp, '/');
-			}
-		}
 		else
-		{
-			ft_strlcat(temp, "/", PATH_MAX - strlen(temp));
-			ft_strlcat(temp, token, PATH_MAX - strlen(temp));
-			last_slash = ft_strrchr(temp, '/');
-		}
+			double_dot(temp, token, &last_slash);
+		
 	}
 	ft_strlcpy(final, temp, PATH_MAX);
 	return (final);
@@ -97,10 +104,7 @@ char	*get_rid_of_quotes(char *path)
 		else if (*temp == quotes)
 			quotes = NOT_SET;
 		else
-		{
-			result[i] = *temp;
-			i++;
-		}
+			result[i++] = *temp;
 		temp++;
 	}
 	return (result);
@@ -121,10 +125,7 @@ char	*get_absolute_path(char *path)
 	if (!result)
 		return (free(temp), NULL);
 	if (!getcwd(result, PATH_MAX))
-	{
-		free(result);
-		return (NULL);
-	}
+		return (free(result), NULL);
 	ft_strlcat(result, "/", PATH_MAX - ft_strlen(result));
 	ft_strlcat(result, temp, PATH_MAX - ft_strlen(result));
 	final = (char *)ft_calloc(PATH_MAX, sizeof(char));

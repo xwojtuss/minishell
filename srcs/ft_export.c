@@ -66,6 +66,23 @@ bool	is_a_number(char *s)
 	return (true);
 }
 
+static void	update_var(t_shell *shell, char *name, char *line)
+{
+	char	*value;
+
+	if (ft_strchr(line, '='))
+		value = ft_strchr(line, '=') + 1;
+	else
+		value = NULL;
+	if (get_var_value(shell->var, name))
+	{
+		free(get_var_struct(shell->var, name)->value);
+		get_var_struct(shell->var, name)->value = ft_strdup(value);
+	}
+	else
+		add_env_var(&shell->var, name, value);
+}
+
 /*
 Saves or updates the variable in the linked list
 if the args is empty it prints all variables, even those without a value
@@ -74,13 +91,9 @@ int	ft_export(int argc, char **argv, t_shell *shell)
 {
 	int		i;
 	char	*name;
-	char	*value;
 
 	if (argc == 1)
-	{
-		print_variables(shell->var);
-		return (0);
-	}
+		return (print_variables(shell->var), 0);
 	i = 1;
 	while (i < argc)
 	{
@@ -92,20 +105,9 @@ int	ft_export(int argc, char **argv, t_shell *shell)
 			ft_putstr_fd("minishell: export: '", STDERR_FILENO);
 			ft_putstr_fd(name, STDERR_FILENO);
 			ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-			free(name);
-			return (EXIT_FAILURE);
+			return (free(name), EXIT_FAILURE);
 		}
-		if (ft_strchr(argv[i], '='))
-			value = ft_strchr(argv[i], '=') + 1;
-		else
-			value = NULL;
-		if (get_var_value(shell->var, name))
-		{
-			free(get_var_struct(shell->var, name)->value);
-			get_var_struct(shell->var, name)->value = ft_strdup(value);
-		}
-		else
-			add_env_var(&shell->var, name, value);
+		update_var(shell, name, argv[i]);
 		free(name);
 		i++;
 	}

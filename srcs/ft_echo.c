@@ -6,16 +6,29 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:58:10 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/08 00:59:04 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/15 00:01:00 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	print_argv(char **argv, int i, int new_line)
+{
+	while (argv[i])
+	{
+		ft_putstr_fd(argv[i], STDOUT_FILENO);
+		if (argv[i + 1])
+			ft_putstr_fd(" ", STDOUT_FILENO);
+		i++;
+	}
+	if (new_line)
+		ft_putstr_fd("\n", STDOUT_FILENO);
+}
+
 int	ft_echo(int argc, char **argv)
 {
-	int	i;
 	int	j;
+	int	i;
 	int new_line;
 	
 	(void)argc;
@@ -31,14 +44,6 @@ int	ft_echo(int argc, char **argv)
 		else
 			break ;
 	}
-	while (argv[i])
-	{
-		ft_putstr_fd(argv[i], STDOUT_FILENO);
-		if (argv[i + 1])
-			ft_putstr_fd(" ", STDOUT_FILENO);
-		i++;
-	}
-	if (new_line)
-		ft_putstr_fd("\n", STDOUT_FILENO);
+	print_argv(argv, i, new_line);
 	return (EXIT_SUCCESS);
 }
