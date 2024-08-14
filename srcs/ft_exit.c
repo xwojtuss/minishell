@@ -1,5 +1,23 @@
 #include "minishell.h"
 
+static void check_arg(t_shell *shell, char *arg, int i)
+{
+    if (!ft_isdigit(arg[i]))
+    {
+        if (arg[i] == '-')
+            safely_exit(156, shell, NULL, NULL);
+        else if (arg[i] == '+')
+            safely_exit(100, shell, NULL, NULL);
+        else
+        {
+            ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+            ft_putstr_fd(arg, STDERR_FILENO);
+            ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+            safely_exit(2, shell, NULL, NULL);
+        }
+    }
+}
+
 int ft_exit(int argc, char **argv, t_shell *shell)
 {
     int exit_code = 0;
@@ -13,23 +31,7 @@ int ft_exit(int argc, char **argv, t_shell *shell)
     if (argc == 2)
     {
         while (argv[1][i])
-        {
-            if (!ft_isdigit(argv[1][i]))
-            {
-				if (argv[1][i] == '-')
-                    safely_exit(156, shell, NULL, NULL);
-                else if (argv[1][i] == '+')
-                    safely_exit(100, shell, NULL, NULL);
-                else
-                {
-                    ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-                    ft_putstr_fd(argv[1], STDERR_FILENO);
-                    ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-                    safely_exit(2, shell, NULL, NULL);
-                }
-            }
-            i++;
-        }
+            check_arg(shell, argv[1], i++);
         exit_code = ft_atoi(argv[1]);
     }
     safely_exit(exit_code, shell, NULL, NULL);
