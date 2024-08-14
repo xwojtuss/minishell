@@ -97,9 +97,9 @@ char	**split_args(const char *str)
 	result = (char **)ft_calloc(count_words(str) + 1, sizeof(char *));
 	if (!result)
 		return (free(buffer), NULL);
-	result[count_words(str)] = NULL;
 	if (!copy_data(str, &result, buffer, buf_index))
 		return (free(buffer), free_array(result), NULL);
+	result[count_words(str)] = NULL;
 	free(buffer);
 	return (result);
 }

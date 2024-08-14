@@ -80,6 +80,8 @@ char	*get_rid_of_quotes(char *path)
 	char	quotes;
 	int		i;
 
+	if (!path)
+		return (NULL);
 	result = (char *)ft_calloc(PATH_MAX, sizeof(char));
 	if (!result)
 		return (NULL);

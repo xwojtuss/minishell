@@ -61,7 +61,7 @@ bool	check_path_for_file(char *path, char *command)
 
 char	*get_path_of_file(char **dirs, char *command)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (dirs[i])
@@ -83,7 +83,6 @@ char	*locate_file(char *command, char *path)
 	char	**dirs;
 	char	*result;
 	char	*temp;
-	
 
 	if (!path || !command)
 		return (NULL);
@@ -118,18 +117,12 @@ size_t	count_env_vars(t_var *var)
 	return (count);
 }
 
-char	**get_env(t_shell *shell)
+char	**get_env_loop(char **env, t_var *tmp)
 {
-	char	**env;
-	char	*temp;
-	t_var	*tmp;
-	int		i;
+	int	i;
+	char *temp;
 
-	tmp = shell->var;
 	i = 0;
-	env = (char **)ft_calloc(count_env_vars(shell->var) + 1, sizeof(char *));
-	if (!env)
-		return (NULL);
 	while (tmp)
 	{
 		env[i] = ft_strjoin(tmp->name, "=");
@@ -149,6 +142,26 @@ char	**get_env(t_shell *shell)
 	return (env);
 }
 
+char	**get_env(t_shell *shell)
+{
+	char	**env;
+	t_var	*tmp;
+
+	tmp = shell->var;
+	env = (char **)ft_calloc(count_env_vars(shell->var) + 1, sizeof(char *));
+	if (!env)
+		return (NULL);
+	env = get_env_loop(env, tmp);
+	return (env);
+}
+
+void	print_error(t_shell *shell, char *command, char *message, int status)
+{
+	ft_putstr_fd(command, STDERR_FILENO);
+	ft_putstr_fd(message, STDERR_FILENO);
+	safely_exit(status, shell, NULL, NULL);
+}
+
 int	execute_external(t_cmd *cmd, t_shell *shell)
 {
 	char	*path;
@@ -161,63 +174,51 @@ int	execute_external(t_cmd *cmd, t_shell *shell)
 	{
 		status = check_file(cmd->argv[0]);
 		if (status & 128)
-		{
-			ft_putstr_fd(cmd->argv[0], STDERR_FILENO);
-			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-			safely_exit(127, shell, NULL, NULL);
-		}
+			print_error(shell, cmd->argv[0], ": No such file or directory\n", 127);
 		if (status & 1)
-		{
-			ft_putstr_fd(cmd->argv[0], STDERR_FILENO);
-			ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
-			safely_exit(126, shell, NULL, NULL);
-		}
+			print_error(shell, cmd->argv[0], ": Is a directory\n", 126);
 		else if (status & 2)
-		{
-			ft_putstr_fd(cmd->argv[0], STDERR_FILENO);
-			ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
-			safely_exit(126, shell, NULL, NULL);
-		}
+			print_error(shell, cmd->argv[0], ": Permission denied\n", 126);
 		path = ft_strdup(cmd->argv[0]);
 	}
 	else
 		path = locate_file(cmd->argv[0], get_var_value(shell->var, "PATH"));
 	if (!path)
-	{
-		ft_putstr_fd(cmd->argv[0], STDERR_FILENO);
-		ft_putstr_fd(": command not found\n", STDERR_FILENO);
-		safely_exit(127, shell, NULL, NULL);
-	}
+		print_error(shell, cmd->argv[0], ": command not found\n", 127);
 	env = get_env(shell);
-	if (execve(path, cmd->argv, env) == -1)
+	execve(path, cmd->argv, env);
+	return (safely_exit(NOT_SET, shell, env, path), EXIT_FAILURE);
+}
+
+int	open_temp_file(t_cmd *cmd)
+{
+	free(cmd->read_path);
+	cmd->read_path = get_absolute_path("./.minishell_empty_file");
+	cmd->read_fd = open(cmd->read_path, O_RDONLY | O_CREAT | O_TRUNC, 0644);
+	if (cmd->read_fd == -1)
+		return (0);
+	return (1);
+}
+
+int	open_normal_file(t_cmd *cmd)
+{
+	cmd->read_fd = open(cmd->read_path, O_RDONLY);
+	if (cmd->read_fd == -1)
 	{
-		safely_exit(NOT_SET, shell, env, path);
-		return (EXIT_FAILURE);
+		ft_putstr_fd(cmd->read_path, STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		return (1);
 	}
-	safely_exit(NOT_SET, shell, env, path);
-	return (EXIT_FAILURE);
+	return (1);
 }
 
 int	open_redirs(t_cmd *cmd)
 {
-	if (cmd->read_path && ft_strcmp(cmd->read_path, "./.minishell_empty_file"))
-	{
-		cmd->read_fd = open(cmd->read_path, O_RDONLY);
-		if (cmd->read_fd == -1)
-		{
-			ft_putstr_fd(cmd->read_path, STDERR_FILENO);
-			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-			return (1);
-		}
-	}
-	else if (cmd->read_path)
-	{
-		free(cmd->read_path);
-		cmd->read_path = get_absolute_path("./.minishell_empty_file");
-		cmd->read_fd = open(cmd->read_path, O_RDONLY | O_CREAT | O_TRUNC, 0644);
-		if (cmd->read_fd == -1)
-			return (0);
-	}
+	if (cmd->read_path && !ft_strcmp(cmd->read_path, "./.minishell_empty_file")
+		&& !open_temp_file(cmd))
+		return (1);
+	else if (cmd->read_path && !open_normal_file(cmd))
+		return (0);
 	if (cmd->write_path)
 	{
 		if (cmd->write_mode == MODE_APPEND)
@@ -329,8 +330,7 @@ void	child_routine(t_shell *shell, t_cmd *cmd, int pipe_fd[2],
 		exit(execute_external(cmd, shell));
 }
 
-void	parent_routine(t_cmd *cmd, int pipe_fd[2],
-		int *prev_read_fd)
+void	parent_routine(t_cmd *cmd, int pipe_fd[2], int *prev_read_fd)
 {
 	if (*prev_read_fd != NOT_SET)
 		close(*prev_read_fd);

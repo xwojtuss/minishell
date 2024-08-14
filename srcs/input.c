@@ -130,7 +130,7 @@ void	handle_input(char *input, t_shell *shell)
 		return ;
 	if (!check_redirects(shell, array))
 		return ;
-	if (!init_cmd(array, shell))
+	if (!init_cmd(array, shell) || !shell->cmd || !shell->cmd->argv || !shell->cmd->argv[0])
 		return (free_cmd(shell->cmd), free_array(array));
 	free_array(array);
 	// print_cmd(shell->cmd);
