@@ -119,8 +119,8 @@ size_t	count_env_vars(t_var *var)
 
 char	**get_env_loop(char **env, t_var *tmp)
 {
-	int	i;
-	char *temp;
+	int		i;
+	char	*temp;
 
 	i = 0;
 	while (tmp)
@@ -174,7 +174,8 @@ int	execute_external(t_cmd *cmd, t_shell *shell)
 	{
 		status = check_file(cmd->argv[0]);
 		if (status & 128)
-			print_error(shell, cmd->argv[0], ": No such file or directory\n", 127);
+			print_error(shell, cmd->argv[0], ": No such file or directory\n",
+				127);
 		if (status & 1)
 			print_error(shell, cmd->argv[0], ": Is a directory\n", 126);
 		else if (status & 2)

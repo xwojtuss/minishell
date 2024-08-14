@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:46:58 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/15 00:09:35 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/15 00:23:33 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static void	modify_pwd(t_shell *shell)
 		{
 			if (get_var_struct(shell->var, "OLDPWD")->value != NULL)
 				free(get_var_struct(shell->var, "OLDPWD")->value);
-			get_var_struct(shell->var, "OLDPWD")->value = ft_strdup(oldpwd->value);
+			get_var_struct(shell->var,
+					"OLDPWD")->value = ft_strdup(oldpwd->value);
 		}
 		else
 			add_env_var(&shell->var, "OLDPWD", oldpwd->value);
@@ -36,11 +37,13 @@ static void	modify_pwd(t_shell *shell)
 int	ft_cd(int argc, char **argv, t_shell *shell)
 {
 	char *path;
-	
+
 	if (argc == 1)
-		return (ft_putstr_fd("minishell: cd: not enough arguments\n", STDERR_FILENO), EXIT_FAILURE);
+		return (ft_putstr_fd("minishell: cd: not enough arguments\n",
+				STDERR_FILENO), EXIT_FAILURE);
 	if (argc != 2)
-		return (ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO), EXIT_FAILURE);
+		return (ft_putstr_fd("minishell: cd: too many arguments\n",
+				STDERR_FILENO), EXIT_FAILURE);
 	path = get_absolute_path(argv[1]);
 	if (chdir(path) != 0)
 	{

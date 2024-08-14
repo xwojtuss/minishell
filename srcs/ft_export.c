@@ -100,7 +100,8 @@ int	ft_export(int argc, char **argv, t_shell *shell)
 		name = ft_strndup(argv[i], ft_strchrs_mf(argv[i], "=") - argv[i]);
 		if (!name)
 			return (EXIT_FAILURE);
-		if (ft_strchr(name, '-') || ft_strchr(name, '+') || ft_strchr(argv[i], '=') == argv[i] || is_a_number(name))
+		if (ft_strchr(name, '-') || ft_strchr(name, '+') || ft_strchr(argv[i],
+				'=') == argv[i] || is_a_number(name))
 		{
 			ft_putstr_fd("minishell: export: '", STDERR_FILENO);
 			ft_putstr_fd(name, STDERR_FILENO);

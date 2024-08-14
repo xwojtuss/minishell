@@ -5,7 +5,7 @@ Prints the array of strings, the array must be NULL terminated
 */
 void	print_array(char **array)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (array[i])
@@ -17,7 +17,7 @@ void	print_array(char **array)
 
 void	print_cmd(t_cmd *cmd)
 {
-	t_cmd *tmp;
+	t_cmd	*tmp;
 	int		i;
 
 	i = 0;

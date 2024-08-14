@@ -26,7 +26,7 @@ static void	delete_var(t_var **var_list, const char *name)
 }
 
 int	ft_unset(int argc, char **argv, t_shell *shell)
-		// I guess the exit code is always 0 xd
+// I guess the exit code is always 0 xd
 {
 	int i;
 

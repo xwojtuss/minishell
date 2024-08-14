@@ -11,7 +11,7 @@ returns the status of the file
 int	check_file(char *path)
 {
 	struct stat	info;
-	int		status;
+	int			status;
 
 	status = 0;
 	if (access(path, F_OK) != 0)
@@ -74,7 +74,6 @@ char	*remove_dots(char *final, char *path)
 			continue ;
 		else
 			double_dot(temp, token, &last_slash);
-		
 	}
 	ft_strlcpy(final, temp, PATH_MAX);
 	return (final);

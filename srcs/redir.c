@@ -2,7 +2,8 @@
 
 bool	is_redirect(char *str)
 {
-	if (!ft_strcmp(str, ">") || !ft_strcmp(str, ">>") || !ft_strcmp(str, "<<") || !ft_strcmp(str, "<"))
+	if (!ft_strcmp(str, ">") || !ft_strcmp(str, ">>") || !ft_strcmp(str, "<<")
+		|| !ft_strcmp(str, "<"))
 		return (true);
 	return (false);
 }
@@ -56,8 +57,8 @@ int	redir_delimiter(char *delim, t_cmd *cmd, t_shell *shell)
 	(void)shell;
 	(void)cmd;
 	(void)shell;
-	char	buffer[BUFFER_SIZE + 1];
-	int	bytes;
+	char buffer[BUFFER_SIZE + 1];
+	int bytes;
 	while (true)
 	{
 		printf("> ");

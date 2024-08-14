@@ -49,9 +49,11 @@ int	check_empty_pipes(char *input, t_shell *shell)
 			j = i - 1;
 			while (j >= 0 && input[j] && ft_iswhite(input[j]))
 				j--;
-			if ((j < 0 || input[j] == '|' || input[j] == '<') && !is_in_quotes(input, j))
+			if ((j < 0 || input[j] == '|' || input[j] == '<')
+				&& !is_in_quotes(input, j))
 			{
-				ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", STDERR_FILENO);
+				ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
+					STDERR_FILENO);
 				set_last_exit_code(shell->var, 2);
 				add_history((const char *)input);
 				return (0);
@@ -64,7 +66,7 @@ int	check_empty_pipes(char *input, t_shell *shell)
 
 char	*check_pipes(char **input)
 {
-	char 	*temp;
+	char	*temp;
 	char	*last;
 	char	*stdin_line;
 
@@ -130,7 +132,8 @@ void	handle_input(char *input, t_shell *shell)
 		return ;
 	if (!check_redirects(shell, array))
 		return ;
-	if (!init_cmd(array, shell) || !shell->cmd || !shell->cmd->argv || !shell->cmd->argv[0])
+	if (!init_cmd(array, shell) || !shell->cmd || !shell->cmd->argv
+		|| !shell->cmd->argv[0])
 		return (free_cmd(shell->cmd), free_array(array));
 	free_array(array);
 	// print_cmd(shell->cmd);
@@ -157,10 +160,11 @@ char	*get_relative_path(char *cwd, t_var *var)
 	return (home);
 }
 
-char	*construct_prompt(char *cwd, t_var *var)//only a preview, there is a way more efficient way to do this
+char	*construct_prompt(char *cwd, t_var *var)
+//only a preview,there is a way more efficient way to do this
 {
-	char	**prompt_array;
-	char	*prompt;
+	char **prompt_array;
+	char *prompt;
 
 	prompt_array = (char **)ft_calloc(15, sizeof(char *));
 	if (!prompt_array)
@@ -169,7 +173,8 @@ char	*construct_prompt(char *cwd, t_var *var)//only a preview, there is a way mo
 	prompt_array[1] = BOLD_TEXT;
 	prompt_array[2] = ft_fallback_string(get_var_value(var, "USER"), "user");
 	prompt_array[3] = "@";
-	prompt_array[4] = ft_fallback_string(get_var_value(var, "HOSTNAME"), "hostname");
+	prompt_array[4] = ft_fallback_string(get_var_value(var, "HOSTNAME"),
+			"hostname");
 	prompt_array[5] = DEFAULT_COLOR;
 	prompt_array[6] = NORMAL_TEXT;
 	prompt_array[7] = ":";
@@ -177,7 +182,8 @@ char	*construct_prompt(char *cwd, t_var *var)//only a preview, there is a way mo
 	prompt_array[9] = BOLD_TEXT;
 	prompt_array[10] = "path here";
 	(void)cwd;
-	/* prompt_array[10] = ft_fallback_string(get_relative_path(cwd, var), cwd); */
+	/* prompt_array[10] = ft_fallback_string(get_relative_path(cwd, var),
+			cwd); */
 	prompt_array[11] = DEFAULT_COLOR;
 	prompt_array[12] = NORMAL_TEXT;
 	prompt_array[13] = "$ ";

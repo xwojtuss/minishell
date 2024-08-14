@@ -4,7 +4,7 @@ void	Bartek_execute(t_cmd *cmd, t_shell *shell)
 {
 	if (NULL == cmd || NULL == cmd->args || NULL == cmd->args[0])
 		return ;
-	
+
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
 	{
 		Bartek_echo(cmd);

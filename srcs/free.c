@@ -24,7 +24,7 @@ Frees the array of strings, the array must be NULL terminated
 */
 void	free_array(char **array)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (array[i])
@@ -42,7 +42,7 @@ Free the var linked list
 */
 void	free_var(t_var *var)
 {
-	t_var *tmp;
+	t_var	*tmp;
 
 	while (var)
 	{
