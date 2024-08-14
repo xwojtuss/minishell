@@ -27,22 +27,26 @@ It will check for the following:
 
 it frees the array and returns false if there is an error
 */
-bool	check_redirects(char **array)
+bool	check_redirects(t_shell *shell, char **array)
 {
 	int	i;
 
 	i = 0;
 	while (array[i])
 	{
-		if (ft_strcmp(array[i], "<") == 0 || ft_strcmp(array[i], ">") == 0 || ft_strcmp(array[i], ">>") == 0)
+		if ((ft_strcmp(array[i], "<") == 0 || ft_strcmp(array[i], ">") == 0 || ft_strcmp(array[i], ">>") == 0 || ft_strcmp(array[i], "<<") == 0) && !array[i + 1])
 		{
-			if (!array[i + 1])
-			{
-				ft_putstr_fd("minishell: syntax error near unexpected token 'newline'\n", STDERR_FILENO);
-				// set the $? to STDERR_FILENO
-				free_array(array);
-				return (false);
-			}
+			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", STDERR_FILENO);
+			set_last_exit_code(shell->var, 2);
+			free_array(array);
+			return (false);
+		}
+		if (!ft_strcmp(array[i], ">>>"))
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token `>'\n", STDERR_FILENO);
+			set_last_exit_code(shell->var, 2);
+			free_array(array);
+			return (false);
 		}
 		i++;
 	}

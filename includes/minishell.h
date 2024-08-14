@@ -86,7 +86,7 @@ void				free_array(char **array);
 int					check_file(char *path);
 void				throw_error_exit(char *input, char **array, t_cmd *cmd,
 						t_var *var);
-bool				check_redirects(char **array);
+bool				check_redirects(t_shell *shell, char **array);
 void				wait_for_input(char **envp);
 void				export(t_var *var, t_cmd *cmd);
 void				unset(t_var *var, t_cmd *cmd);
