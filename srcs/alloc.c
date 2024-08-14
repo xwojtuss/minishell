@@ -167,8 +167,8 @@ Turns the input into an array of strings using ft_split
 */
 char	**create_array(char *input, t_var *var)
 {
-	char *input_replaced;
-	char **result;
+	char	*input_replaced;
+	char	**result;
 
 	input_replaced = replace_var(input, var);
 	if (!input_replaced)

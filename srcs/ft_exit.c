@@ -20,9 +20,11 @@ static void	check_arg(t_shell *shell, char *arg, int i)
 
 int	ft_exit(int argc, char **argv, t_shell *shell)
 {
-	int exit_code = 0;
-	int i = 0;
+	int	exit_code;
+	int	i;
 
+	exit_code = 0;
+	i = 0;
 	if (argc > 2)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);

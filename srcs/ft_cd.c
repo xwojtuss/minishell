@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:46:58 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/15 00:23:33 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/15 00:30:17 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	modify_pwd(t_shell *shell)
 
 int	ft_cd(int argc, char **argv, t_shell *shell)
 {
-	char *path;
+	char	*path;
 
 	if (argc == 1)
 		return (ft_putstr_fd("minishell: cd: not enough arguments\n",

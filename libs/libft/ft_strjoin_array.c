@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:07:36 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/07 23:16:44 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/15 00:28:31 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	get_length(char **array)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -29,9 +29,9 @@ static int	get_length(char **array)
 
 char	*ft_strjoin_array(char **array)
 {
-	char	*result;
-	int		i;
-	int		j;
+	char *result;
+	int i;
+	int j;
 
 	i = 0;
 	j = 0;
