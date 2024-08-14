@@ -198,7 +198,8 @@ int	assign_argv(char **array, t_cmd **new, int command)
 			i++;
 		else
 			(*new)->argc++;
-		i++;
+		if (array[i] && ft_strcmp(array[i], "|"))
+			i++;
 	}
 	(*new)->argv = (char **)ft_calloc((*new)->argc + 1, sizeof(char *));
 	if (!((*new)->argv))
@@ -220,7 +221,8 @@ int	assign_argv(char **array, t_cmd **new, int command)
 				return (0);
 			j++;
 		}
-		i++;
+		if (array[i] && ft_strcmp(array[i], "|"))
+			i++;
 	}
 	return (1);
 }

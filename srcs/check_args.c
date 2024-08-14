@@ -18,7 +18,7 @@ bool	check_redirects(t_shell *shell, char **array)
 	{
 		if ((ft_strcmp(array[i], "<") == 0 || ft_strcmp(array[i], ">") == 0 || ft_strcmp(array[i], ">>") == 0 || ft_strcmp(array[i], "<<") == 0) && !array[i + 1])
 			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", STDERR_FILENO);
-		if (!ft_strcmp(array[i], ">>>"))
+		else if (!ft_strcmp(array[i], ">>>"))
 			ft_putstr_fd("minishell: syntax error near unexpected token `>'\n", STDERR_FILENO);
 		else
 		{
