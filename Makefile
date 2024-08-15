@@ -8,7 +8,7 @@ NAME = minishell
 
 SRCS = main.c signals.c pipe.c debug.c alloc.c free.c errors.c init.c check_args.c input.c split.c \
 	redir.c files.c execute.c ft_unset.c ft_export.c ft_exit.c ft_echo.c ft_env.c ft_pwd.c ft_cd.c \
-	# Bartek_cmd_init.c Bartek_echo.c Bartek_execute.c Bartek_pwd.c Bartek_handle_error.c Bartek_cd.c Bartek_exit.c Bartek_unset.c Bartek_export.c \
+	commands.c misc.c env_vars.c fd_management.c open_files.c path.c run_processes.c
 
 SRCS_FOLDER = ${addprefix srcs/,${SRCS}}
 

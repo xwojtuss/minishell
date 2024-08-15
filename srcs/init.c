@@ -30,26 +30,6 @@ int	redirect(char *str, char *file, t_cmd *cmd, t_shell *shell)
 	return (1);
 }
 
-t_cmd	*alloc_cmd(int *i, int *command, char *read_path)
-{
-	t_cmd	*new;
-
-	new = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
-	if (!new)
-		return (NULL);
-	new->argv = NULL;
-	new->read_path = ft_strdup(read_path);
-	new->read_fd = NOT_SET;
-	new->write_fd = NOT_SET;
-	new->write_mode = NOT_SET;
-	new->write_path = NULL;
-	new->next = NULL;
-	if (i && command)
-		*command = *i;
-	new->argc = 0;
-	return (new);
-}
-
 t_cmd	*create_new_cmd_echo(void)
 {
 	t_cmd	*new;

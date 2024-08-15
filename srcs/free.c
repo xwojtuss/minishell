@@ -1,5 +1,21 @@
 #include "minishell.h"
 
+void	close_files(t_cmd *cmd)
+{
+	t_cmd	*tmp;
+
+	while (cmd)
+	{
+		tmp = cmd->next;
+		if (cmd->read_fd != NOT_SET && !isatty(cmd->read_fd))
+			close(cmd->read_fd);
+		if (cmd->write_fd != NOT_SET && !isatty(cmd->write_fd))
+			close(cmd->write_fd);
+		cmd = tmp;
+	}
+	unlink("./.minishell_empty_file");
+}
+
 /*
 A safe way to exit the program, freeing all the allocated memory
 If the exit code is NOT_SET, it will not exit

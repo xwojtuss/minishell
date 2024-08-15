@@ -1,6 +1,72 @@
 #include "minishell.h"
 
 /*
+Checks if the file is in the specified path,
+there can be multiple paths separated by ':'
+if the file is found, it returns the full path
+*/
+char	*locate_file(char *command, char *path)
+{
+	char	**dirs;
+	char	*result;
+	char	*temp;
+
+	if (!path || !command)
+		return (NULL);
+	dirs = ft_split(path, ':');
+	if (!dirs)
+		return (NULL);
+	temp = get_path_of_file(dirs, command);
+	if (!temp)
+		return (free_array(dirs), NULL);
+	result = ft_strjoin(temp, "/");
+	if (!result)
+		return (free_array(dirs), NULL);
+	temp = result;
+	result = ft_strjoin(temp, command);
+	free(temp);
+	free_array(dirs);
+	return (result);
+}
+
+bool	check_path_for_file(char *path, char *command)
+{
+	DIR				*dir;
+	struct dirent	*info;
+
+	dir = opendir(path);
+	if (!dir)
+		return (false);
+	while (true)
+	{
+		info = readdir(dir);
+		if (!info)
+			break ;
+		if (!ft_strcmp(info->d_name, command))
+		{
+			closedir(dir);
+			return (true);
+		}
+	}
+	closedir(dir);
+	return (false);
+}
+
+char	*get_path_of_file(char **dirs, char *command)
+{
+	int	i;
+
+	i = 0;
+	while (dirs[i])
+	{
+		if (check_path_for_file(dirs[i], command))
+			break ;
+		i++;
+	}
+	return (dirs[i]);
+}
+
+/*
 returns the status of the file
 1 - a directory
 2 - no execute permission
@@ -36,103 +102,4 @@ bool	does_file_exist(char *path)
 	if (access(path, F_OK) == 0)
 		return (true);
 	return (false);
-}
-
-static void	double_dot(char *temp, char *token, char **last_slash)
-{
-	if (ft_strcmp(token, "..") == 0)
-	{
-		if (*last_slash)
-		{
-			**last_slash = '\0';
-			*last_slash = ft_strrchr(temp, '/');
-		}
-	}
-	else
-	{
-		ft_strlcat(temp, "/", PATH_MAX - strlen(temp));
-		ft_strlcat(temp, token, PATH_MAX - strlen(temp));
-		*last_slash = ft_strrchr(temp, '/');
-	}
-}
-
-char	*remove_dots(char *final, char *path)
-{
-	char	*token;
-	char	*rest;
-	char	temp[PATH_MAX];
-	char	*last_slash;
-
-	ft_bzero(temp, PATH_MAX);
-	rest = path;
-	last_slash = NULL;
-	while (true)
-	{
-		token = ft_strtok_r(rest, "/", &rest);
-		if (!token)
-			break ;
-		if (ft_strcmp(token, ".") == 0)
-			continue ;
-		else
-			double_dot(temp, token, &last_slash);
-	}
-	ft_strlcpy(final, temp, PATH_MAX);
-	return (final);
-}
-
-char	*get_rid_of_quotes(char *path)
-{
-	char	*result;
-	char	*temp;
-	char	quotes;
-	int		i;
-
-	if (!path)
-		return (NULL);
-	result = (char *)ft_calloc(PATH_MAX, sizeof(char));
-	if (!result)
-		return (NULL);
-	temp = path;
-	quotes = NOT_SET;
-	i = 0;
-	while (*temp)
-	{
-		if (*temp == '\'' && quotes == NOT_SET)
-			quotes = '\'';
-		else if (*temp == '\"' && quotes == NOT_SET)
-			quotes = '\"';
-		else if (*temp == quotes)
-			quotes = NOT_SET;
-		else
-			result[i++] = *temp;
-		temp++;
-	}
-	return (result);
-}
-
-char	*get_absolute_path(char *path)
-{
-	char	*temp;
-	char	*result;
-	char	*final;
-
-	temp = get_rid_of_quotes(path);
-	if (!temp)
-		return (NULL);
-	if (temp[0] == '/')
-		return (temp);
-	result = (char *)ft_calloc(PATH_MAX, sizeof(char));
-	if (!result)
-		return (free(temp), NULL);
-	if (!getcwd(result, PATH_MAX))
-		return (free(result), NULL);
-	ft_strlcat(result, "/", PATH_MAX - ft_strlen(result));
-	ft_strlcat(result, temp, PATH_MAX - ft_strlen(result));
-	final = (char *)ft_calloc(PATH_MAX, sizeof(char));
-	if (!final)
-		return (free(temp), free(result), NULL);
-	remove_dots(final, result);
-	free(result);
-	free(temp);
-	return (final);
 }

@@ -1,44 +1,23 @@
 #include "minishell.h"
 
-char	*get_var_name(char *input, int *i)
+t_cmd	*alloc_cmd(int *i, int *command, char *read_path)
 {
-	char	*name;
+	t_cmd	*new;
 
-	if (!input || !i)
+	new = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+	if (!new)
 		return (NULL);
-	if (input[*i] == '?')
-	{
-		(*i)++;
-		return (ft_strdup("?"));
-	}
-	name = ft_strndup(input + *i, ft_strchrs_mf(input + *i, " \"\'") - (input
-				+ *i));
-	if (!name)
-		return (NULL);
-	*i += ft_strlen(name);
-	return (name);
-}
-
-/*
-This returns the value of a variable given its name
-the return value is not a duplicate of the value, so it should not be freed
-*/
-char	*get_var_value(t_var *var, char *name)
-{
-	t_var	*tmp;
-
-	if (!name || !var)
-		return (NULL);
-	tmp = var;
-	while (tmp)
-	{
-		if (!tmp->name)
-			return (NULL);
-		if (!ft_strcmp(tmp->name, name))
-			return (tmp->value);
-		tmp = tmp->next;
-	}
-	return (NULL);
+	new->argv = NULL;
+	new->read_path = ft_strdup(read_path);
+	new->read_fd = NOT_SET;
+	new->write_fd = NOT_SET;
+	new->write_mode = NOT_SET;
+	new->write_path = NULL;
+	new->next = NULL;
+	if (i && command)
+		*command = *i;
+	new->argc = 0;
+	return (new);
 }
 
 static void	check_for_spaces(char *input, int *length, int *i,
