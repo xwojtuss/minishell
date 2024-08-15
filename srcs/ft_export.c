@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	print_variables(t_var *var)
+static void	print_variables(t_var *var)
 {
 	t_var	*curr;
 
@@ -13,57 +13,6 @@ void	print_variables(t_var *var)
 			printf("declare -x %s\n", curr->name);
 		curr = curr->next;
 	}
-}
-
-t_var	*get_var_struct(t_var *var, char *name)
-{
-	t_var	*tmp;
-
-	tmp = var;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->name, name))
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
-void	add_env_var(t_var **var, char *name, char *value)
-{
-	t_var	*new;
-	t_var	*tmp;
-
-	new = (t_var *)malloc(sizeof(t_var));
-	if (!new)
-		return ;
-	new->name = ft_strdup(name);
-	if (!new->name)
-		return (free(new));
-	new->value = ft_strdup(value);
-	if (!new->value && value)
-		return (free(new->name), free(new));
-	new->next = NULL;
-	tmp = *var;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
-}
-
-bool	is_a_number(char *s)
-{
-	int	i;
-
-	if (!s)
-		return (false);
-	i = 0;
-	while (s[i])
-	{
-		if (!ft_isdigit(s[i]))
-			return (false);
-		i++;
-	}
-	return (true);
 }
 
 static void	update_var(t_shell *shell, char *name, char *line)

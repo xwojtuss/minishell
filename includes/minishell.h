@@ -75,71 +75,185 @@ typedef struct s_shell
 
 extern int			g_signum;
 
-void				safely_exit(int exit_code, t_shell *shell, char **array,
-						char *input);
-void				sig_handler(int num);
-void				handle_input(char *input, t_shell *shell);
-int					pipe_exec(char **cmd1, char **cmd2);
-char				**create_array(char *input, t_var *var);
-void				free_cmd(t_cmd *cmd);
-void				free_array(char **array);
-int					check_file(char *path);
-void				throw_error_exit(char *input, char **array, t_cmd *cmd,
-						t_var *var);
-bool				check_redirects(t_shell *shell, char **array);
-void				wait_for_input(char **envp);
-void				export(t_var *var, t_cmd *cmd);
-void				unset(t_var *var, t_cmd *cmd);
-void				print_variables(t_var *var);
-int					init_env(char **envp, t_shell *shell);
-int					init_cmd(char **array, t_shell *shell);
-void				free_var(t_var *var);
-char				**split_args(char const *s);
-char				*get_absolute_path(char *path);
-int					redirect(char *type, char *path, t_cmd *cmd,
-						t_shell *shell);
-bool				is_redirect(char *str);
+// srcs/alloc.c
+
+t_cmd				*alloc_cmd(int *i, int *command, char *read_path);
+// static void	check_for_spaces(char *input, int *length, int *i,
+// 		bool is_in_quotes);
+
 int					count_length(char *input, t_var *var);
 int					replace_var_loop(char *input, t_var *var, char *result);
 char				*replace_var(char *input, t_var *var);
-void				handle_input(char *input, t_shell *shell);
-void				wait_for_input(char **envp);
-void				sigint_exit(int num);
-void				sig_do_nothing(int num);
-int					redir_input(char *file, t_cmd *cmd, t_shell *shell);
-int					redir_append(char *file, t_cmd *cmd, t_shell *shell);
-int					redir_output(char *file, t_cmd *cmd, t_shell *shell);
-int					redir_delimiter(char *delim, t_cmd *cmd, t_shell *shell);
+char				**create_array(char *input, t_var *var);
+
+// srcs/check_args.c
+
+bool				is_empty_or_pipe(char *str);
+bool				check_redirects(t_shell *shell, char **array);
+
+// srcs/commands.c
+
+size_t				count_cmds(t_cmd *cmd);
+
+// srcs/debug.c
+
+void				print_array(char **array);
 void				print_cmd(t_cmd *cmd);
-char				*get_var_value(t_var *var, char *name);
-t_var				*get_var_struct(t_var *var, char *name);
-int					execute(t_shell *shell);
-bool				does_file_exist(char *path);
-char				*locate_file(char *command, char *path);
+
+// srcs/env_vars.c
+
 void				add_env_var(t_var **var, char *name, char *value);
-void				set_last_exit_code(t_var *start, int exit_code);
-// void				sigint_exit(int num);
+t_var				*get_var_struct(t_var *var, char *name);
+size_t				count_env_vars(t_var *var);
+char				*get_var_value(t_var *var, char *name);
+char				*get_var_name(char *input, int *i);
+
+// srcs/errors.c
+
+void				print_error(t_shell *shell, char *command, char *message,
+						int status);
+void				throw_error_exit(char *input, char **array, t_cmd *cmd,
+						t_var *var);
+
+// srcs/execute.c
+
+int					execute_builtin(t_cmd *cmd, t_shell *shell, bool do_exit);
+char				**get_env_loop(char **env, t_var *tmp);
+char				**get_env(t_shell *shell);
+int					execute_external(t_cmd *cmd, t_shell *shell);
+int					open_redirs(t_cmd *cmd);
+int					run_one_builtin(t_cmd *cmd, t_shell *shell);
+int					execute(t_shell *shell);
+
+// srcs/fd_management.c
+
+int					get_prev_write_fd(t_cmd *cmd, t_cmd *curr);
+int					get_next_read_fd(t_cmd *curr);
+void				duplicate_fd(int fd, int std_fd);
+void				duplicate_read_fd(t_cmd *cmd, int prev_read_fd);
+void				duplicate_write_fd(t_cmd *cmd, int pipe_fd[2]);
+
+// srcs/files.c
+
+char				*locate_file(char *command, char *path);
+bool				check_path_for_file(char *path, char *command);
+char				*get_path_of_file(char **dirs, char *command);
+int					check_file(char *path);
+bool				does_file_exist(char *path);
+
+// srcs/free.c
+
+void				close_files(t_cmd *cmd);
+void				safely_exit(int exit_code, t_shell *shell, char **array,
+						char *input);
+void				free_array(char **array);
+void				free_var(t_var *var);
+void				free_cmd(t_cmd *cmd);
+
+// srcs/ft_cd.c
+
+int					ft_cd(int argc, char **argv, t_shell *shell);
+
+// srcs/ft_echo.c
 
 int					ft_echo(int argc, char **argv);
-int					ft_cd(int argc, char **argv, t_shell *shell);
-int					ft_pwd(int argc, char **argv);
-int					ft_export(int argc, char **argv, t_shell *shell);
-int					ft_unset(int argc, char **argv, t_shell *shell);
+
+// srcs/ft_env.c
+
 int					ft_env(int argc, char **argv, t_shell *shell);
+
+// srcs/ft_exit.c
+
 int					ft_exit(int argc, char **argv, t_shell *shell);
 
-// Bartkowe funkcje czyli gowno ale moze jakos dziala
-t_cmd				*Bartek_init_cmd(char **array);
-void				Bartek_execute(t_cmd *cmd, t_shell *shell);
-void				Bartek_echo(t_cmd *cmd);
-void				Bartek_handle_error(const char *message_to_print);
-void				Bartek_pwd(t_cmd *cmd);
-void				Bartek_cd(t_cmd *cmd);
-int					is_num(const char *str);
-void				Bartek_exit(t_cmd *cmd);
-void				Bartek_unset(t_cmd *cmd, t_shell *shell);
+// srcs/ft_export.c
 
-// TO DELETE:
-void				print_array(char **array);
+int					ft_export(int argc, char **argv, t_shell *shell);
+
+// srcs/ft_pwd.c
+
+int					ft_pwd(int argc, char **argv);
+
+// srcs/ft_unset.c
+
+int					ft_unset(int argc, char **argv, t_shell *shell);
+
+// srcs/init.c
+
+int					redirect(char *str, char *file, t_cmd *cmd, t_shell *shell);
+t_cmd				*create_new_cmd_echo(void);
+int					read_stdin(t_cmd *new, char *delim);
+t_cmd				*read_stdin_delim(char *delim);
+int					set_redirect(char *str, t_cmd **cmd, char *file);
+char				*copy_without_quotes(char *s);
+int					assign_argv(char **array, t_cmd **new, int command);
+int					init_cmd(char **array, t_shell *shell);
+int					init_env(char **envp, t_shell *shell);
+
+// srcs/input.c
+
+void				set_last_exit_code(t_var *start, int exit_code);
+bool				is_in_quotes(char *input, int index);
+int					check_empty_pipes(char *input, t_shell *shell);
+char				**read_stdin_pipe(char **input, char *temp);
+char				*check_pipes(char **input);
+int					prelimenary_checks(char **input, t_shell *shell);
+void				handle_input(char *input, t_shell *shell);
+char				*get_relative_path(char *cwd, t_var *var);
+void				set_name_and_hostname(char **prompt_array, t_var *var);
+void				set_path_prompt(char **prompt_array);
+char				*construct_prompt(char *cwd, t_var *var);
+void				wait_for_input(char **envp);
+
+// srcs/main.c
+
+void				child_process_in_main(char **envp);
+void				parent_process_in_main(pid_t pid, int status);
+int					main(int argc, char **argv, char **envp);
+
+// srcs/misc.c
+
+bool				is_builtin(char *command);
+bool				is_a_number(char *s);
+
+// srcs/open_files.c
+
+int					open_temp_file(t_cmd *cmd);
+int					open_normal_file(t_cmd *cmd);
+
+// srcs/path.c
+
+char				*get_absolute_path(char *path);
+
+// srcs/pipe.c
+
+// srcs/redir.c
+
+bool				is_redirect(char *str);
+int					redir_input(char *file, t_cmd *cmd, t_shell *shell);
+int					redir_output(char *file, t_cmd *cmd, t_shell *shell);
+int					redir_append(char *file, t_cmd *cmd, t_shell *shell);
+int					redir_delimiter(char *delim, t_cmd *cmd, t_shell *shell);
+
+// srcs/run_processes.c
+
+void				child_routine(t_shell *shell, t_cmd *cmd, int pipe_fd[2],
+						int prev_read_fd);
+void				parent_routine(t_cmd *cmd, int pipe_fd[2],
+						int *prev_read_fd);
+pid_t				create_child(t_shell *shell, t_cmd *cmd);
+void				wait_for_processes(t_shell *shell, pid_t last_pid);
+
+// srcs/signals.c
+
+void				sig_handler(int signum);
+void				sig_do_nothing(int num);
+
+// srcs/split.c
+
+int					add_string(char ****array, int *size, const char *str);
+int					copy_word(char *buffer, int *buf_index, char ****result,
+						int *size);
+char				**split_args(const char *str);
 
 #endif

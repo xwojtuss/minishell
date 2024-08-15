@@ -1,5 +1,12 @@
 #include "minishell.h"
 
+void	print_error(t_shell *shell, char *command, char *message, int status)
+{
+	ft_putstr_fd(command, STDERR_FILENO);
+	ft_putstr_fd(message, STDERR_FILENO);
+	safely_exit(status, shell, NULL, NULL);
+}
+
 /*
 Clears the history, frees the input, the array and the cmd if they are not null,
 	exits with EXIT_FAILURE
