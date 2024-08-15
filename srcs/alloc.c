@@ -8,7 +8,10 @@ t_cmd	*alloc_cmd(int *i, int *command, char *read_path)
 	if (!new)
 		return (NULL);
 	new->argv = NULL;
-	new->read_path = ft_strdup(read_path);
+	if (read_path)
+		new->read_path = ft_strdup(read_path);
+	else
+		new->read_path = NULL;
 	new->read_fd = NOT_SET;
 	new->write_fd = NOT_SET;
 	new->write_mode = NOT_SET;
