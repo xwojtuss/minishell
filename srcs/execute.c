@@ -2,6 +2,8 @@
 
 bool	is_builtin(char *command)
 {
+	if (!command)
+		return (false);
 	if (!ft_strcmp(command, "echo") || !ft_strcmp(command, "cd")
 		|| !ft_strcmp(command, "pwd") || !ft_strcmp(command, "export")
 		|| !ft_strcmp(command, "unset") || !ft_strcmp(command, "env")
@@ -169,7 +171,7 @@ int	execute_external(t_cmd *cmd, t_shell *shell)
 	char	**env;
 
 	if (!cmd->argv || !cmd->argv[0])
-		return (EXIT_FAILURE);
+		safely_exit(EXIT_SUCCESS, shell, NULL, NULL);
 	if (cmd->argv[0][0] == '.' || cmd->argv[0][0] == '/')
 	{
 		status = check_file(cmd->argv[0]);
@@ -188,7 +190,7 @@ int	execute_external(t_cmd *cmd, t_shell *shell)
 		print_error(shell, cmd->argv[0], ": command not found\n", 127);
 	env = get_env(shell);
 	execve(path, cmd->argv, env);
-	return (safely_exit(NOT_SET, shell, env, path), EXIT_FAILURE);
+	return (safely_exit(EXIT_FAILURE, shell, env, path), EXIT_FAILURE);
 }
 
 int	open_temp_file(t_cmd *cmd)
@@ -405,7 +407,7 @@ int	execute(t_shell *shell)
 	pid_t	last_pid;
 
 	curr = shell->cmd;
-	if (count_cmds(curr) == 1 && (!ft_strcmp(curr->argv[0], "exit")
+	if (count_cmds(curr) == 1 && curr->argv && (!ft_strcmp(curr->argv[0], "exit")
 			|| !ft_strcmp(curr->argv[0], "export") || !ft_strcmp(curr->argv[0],
 				"unset") || !ft_strcmp(curr->argv[0], "cd")))
 		return (run_one_builtin(curr, shell));

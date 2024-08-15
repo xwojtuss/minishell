@@ -12,8 +12,9 @@ int	redirect(char *str, char *file, t_cmd *cmd, t_shell *shell)
 
 	if (file == NULL)
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token 'newline'\n",
-						STDERR_FILENO); //$? = 2
+		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",
+						STDERR_FILENO);
+		set_last_exit_code(shell->var, 2);
 		return (0);
 	}
 	if (ft_strcmp(str, ">"))
@@ -49,56 +50,73 @@ t_cmd	*alloc_cmd(int *i, int *command, char *read_path)
 	return (new);
 }
 
-t_cmd	*read_stdin_delim(char *delim)
+t_cmd	*create_new_cmd_echo(void)
 {
 	t_cmd	*new;
-	char	*stdin_line;
-	char	*temp;
 
 	new = alloc_cmd(NULL, NULL, NULL);
 	if (!new)
-		return (0);
+		return (NULL);
 	new->argv = (char **)ft_calloc(3, sizeof(char *));
 	if (!(new->argv))
-		return (0);
+		return (free_cmd(new), NULL);
 	new->argv[0] = ft_strdup("echo");
 	if (!new->argv[0])
-		return (0);
+		return (free_cmd(new), NULL);
 	new->argv[1] = ft_strdup("");
 	if (!(new->argv[1]))
-		return (0);
+		return (free_cmd(new), NULL);
 	new->argc = 2;
+	return (new);
+}
+
+int	read_stdin(t_cmd *new, char *delim)
+{
+	char	*stdin_line;
+	char	*temp;
+	
+	stdin_line = get_next_line(0);
+	if (!stdin_line)
+	{
+		ft_putstr_fd("\nminishell: warning here-document at this line delimited by end-of-file (wanted '",
+			STDERR_FILENO);
+		ft_putstr_fd(delim, STDERR_FILENO);
+		ft_putstr_fd("')\n", STDERR_FILENO);
+		return (0);
+	}
+	if (ft_strlen(stdin_line) == 0)
+		return (free(stdin_line), 1);
+	if (!ft_strncmp(stdin_line, delim, ft_max(ft_strlen(delim),
+				ft_strlen(stdin_line) - 1)))
+		return (free(stdin_line), 2);
+	temp = new->argv[1];
+	new->argv[1] = ft_strjoin(temp, stdin_line);
+	free(temp);
+	free(stdin_line);
+	if (!(new->argv[1]))
+		return (0);
+	return (1);
+}
+
+t_cmd	*read_stdin_delim(char *delim)
+{
+	t_cmd	*new;
+	int	ret;
+
+	new = create_new_cmd_echo();
+	if (!new)
+		return (0);
 	while (true)
 	{
 		write(STDOUT_FILENO, "> ", 2);
-		stdin_line = get_next_line(0);
-		if (!stdin_line)
-		{
-			ft_putstr_fd("\nminishell: warning here-document at this line delimited by end-of-file (wanted '",
-				STDERR_FILENO);
-			ft_putstr_fd(delim, STDERR_FILENO);
-			ft_putstr_fd("')\n", STDERR_FILENO);
-			free_cmd(new);
-			return (0);
-		}
-		if (ft_strlen(stdin_line) == 0)
-		{
-			free(stdin_line);
-			continue ;
-		}
-		if (!ft_strncmp(stdin_line, delim, ft_max(ft_strlen(delim),
-					ft_strlen(stdin_line) - 1)))
+		ret = read_stdin(new, delim);
+		if (ret == 2)
 			break ;
-		temp = new->argv[1];
-		new->argv[1] = ft_strjoin(temp, stdin_line);
-		free(temp);
-		free(stdin_line);
-		if (!(new->argv[1]))
-			return (0);
+		else if (ret == 0)
+			return (free_cmd(new), NULL);
 	}
 	if (new &&new->argv &&new->argv[1] && ft_strlen(new->argv[1]) > 0)
 		new->argv[1][ft_strlen(new->argv[1]) - 1] = '\0';
-	free(stdin_line);
 	new->argv[2] = NULL;
 	return (new);
 }
@@ -153,7 +171,7 @@ int	set_redirect(char *str, t_cmd **cmd, char *file)
 	else if (!ft_strcmp(str, "<<"))
 	{
 		new = read_stdin_delim(file);
-		if (!new)
+		if (!new || !new->argv || !new->argv[0])
 			return (0);
 		new->next = *cmd;
 		*cmd = new;
