@@ -100,7 +100,7 @@ int	open_redirs(t_cmd *cmd)
 		return (1);
 	else if (cmd->read_path && !open_normal_file(cmd))
 		return (0);
-	if (cmd->write_path)
+	if (cmd->write_path && ft_strcmp(cmd->write_path, "./.minishell_empty_file_two"))
 	{
 		if (cmd->write_mode == MODE_APPEND)
 			cmd->write_fd = open(cmd->write_path, O_WRONLY | O_CREAT | O_APPEND,
@@ -111,6 +111,9 @@ int	open_redirs(t_cmd *cmd)
 		if (cmd->write_mode != NOT_SET && cmd->write_fd == -1)
 			return (0);
 	}
+	else if (cmd->write_path)
+		if (!open_temp_file_two(cmd))
+			return (0);
 	return (1);
 }
 

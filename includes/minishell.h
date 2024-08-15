@@ -93,6 +93,7 @@ bool				check_redirects(t_shell *shell, char **array);
 
 // srcs/commands.c
 
+t_cmd				*get_last_cmd(t_cmd *cmd);
 size_t				count_cmds(t_cmd *cmd);
 
 // srcs/debug.c
@@ -218,6 +219,7 @@ bool				is_a_number(char *s);
 
 // srcs/open_files.c
 
+int					open_temp_file_two(t_cmd *cmd);
 int					open_temp_file(t_cmd *cmd);
 int					open_normal_file(t_cmd *cmd);
 

@@ -256,12 +256,14 @@ int	init_cmd(char **array, t_shell *shell)
 				curr = new->next;
 			else
 				curr = new;
+			next_read_path = NULL;
 		}
 		else
 		{
 			set_last_exit_code(shell->var, EXIT_FAILURE);
-			if (!shell->cmd)
-				free_cmd(new);
+			free_cmd(new);
+			free_cmd(shell->cmd);
+			shell->cmd = NULL;
 			next_read_path = "./.minishell_empty_file";
 		}
 		while (array[i] && ft_strcmp(array[i], "|"))

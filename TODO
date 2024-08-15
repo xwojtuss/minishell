@@ -4,3 +4,5 @@ make sure that the $? is being set everywhere it needs to
 make the file structure make sense,
 clean up the .h file,
 Norm fixes,
+
+echo >>./outfiles/outfile01 bye >./test_files/invalid_permission | ceho hi

@@ -1,9 +1,23 @@
 #include "minishell.h"
 
+int	open_temp_file_two(t_cmd *cmd)
+{
+	free(cmd->write_path);
+	cmd->write_path = get_absolute_path("./.minishell_empty_file_two");
+	if (!cmd->write_path)
+		return (0);
+	cmd->write_fd = open(cmd->write_path, O_RDONLY | O_CREAT | O_TRUNC, 0644);
+	if (cmd->write_fd == -1)
+		return (0);
+	return (1);
+}
+
 int	open_temp_file(t_cmd *cmd)
 {
 	free(cmd->read_path);
 	cmd->read_path = get_absolute_path("./.minishell_empty_file");
+	if (!cmd->read_path)
+		return (0);
 	cmd->read_fd = open(cmd->read_path, O_RDONLY | O_CREAT | O_TRUNC, 0644);
 	if (cmd->read_fd == -1)
 		return (0);
