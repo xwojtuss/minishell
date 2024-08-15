@@ -64,11 +64,33 @@ int	check_empty_pipes(char *input, t_shell *shell)
 	return (1);
 }
 
+char	**read_stdin_pipe(char **input, char *temp)
+{
+	char	*stdin_line;
+
+	write(STDOUT_FILENO, "> ", 2);
+	stdin_line = get_next_line(0);
+	if (!stdin_line)
+		return (NULL);
+	if (ft_strlen(stdin_line) == 0)
+	{
+		free(stdin_line);
+		return (NULL);
+	}
+	if (stdin_line[ft_strlen(stdin_line) - 1] == '\n')
+		stdin_line[ft_strlen(stdin_line) - 1] = '\0';
+	*input = ft_strjoin_delim(temp, ' ', stdin_line);
+	free(temp);
+	free(stdin_line);
+	if (!*input)
+		return (NULL);
+	return (input);
+}
+
 char	*check_pipes(char **input)
 {
 	char	*temp;
 	char	*last;
-	char	*stdin_line;
 
 	while (true)
 	{
@@ -82,26 +104,29 @@ char	*check_pipes(char **input)
 		if (*last)
 			break ;
 		else
-		{
-			write(STDOUT_FILENO, "> ", 2);
-			stdin_line = get_next_line(0);
-			if (!stdin_line)
-				return (NULL);
-			if (ft_strlen(stdin_line) == 0)
-			{
-				free(stdin_line);
-				continue ;
-			}
-			if (stdin_line[ft_strlen(stdin_line) - 1] == '\n')
-				stdin_line[ft_strlen(stdin_line) - 1] = '\0';
-			*input = ft_strjoin_delim(temp, ' ', stdin_line);
-			free(temp);
-			free(stdin_line);
-			if (!*input)
-				return (NULL);
-		}
+			input = read_stdin_pipe(input, temp);
 	}
 	return (*input);
+}
+
+int	prelimenary_checks(char **input, t_shell *shell)
+{
+	shell->cmd = NULL;
+	if (*input == NULL)
+	{
+		rl_clear_history();
+		free_var(shell->var);
+		exit(EXIT_SUCCESS);
+	}
+	if (!**input)
+		return (free(*input), 0);
+	if (!check_empty_pipes(*input, shell))
+		return (free(*input), 0);
+	*input = check_pipes(input);
+	if (!*input)
+		throw_error_exit(NULL, NULL, NULL, shell->var);
+	add_history((const char *)*input);
+	return (1);
 }
 
 /*
@@ -111,26 +136,11 @@ void	handle_input(char *input, t_shell *shell)
 {
 	char	**array;
 
-	shell->cmd = NULL;
-	if (input == NULL)
-	{
-		rl_clear_history();
-		free_var(shell->var);
-		exit(EXIT_SUCCESS);
-	}
-	if (!*input)
-		return (free(input));
-	if (!check_empty_pipes(input, shell))
-		return (free(input));
-	input = check_pipes(&input);
-	if (!input)
-		throw_error_exit(NULL, NULL, NULL, shell->var);
-	add_history((const char *)input);
+	if (!prelimenary_checks(&input, shell))
+		return ;
 	array = create_array(input, shell->var);
 	free(input);
-	if (!array)
-		return ;
-	if (!check_redirects(shell, array))
+	if (!array || !check_redirects(shell, array))
 		return ;
 	if (!init_cmd(array, shell) || !shell->cmd || !shell->cmd->argv
 		|| !shell->cmd->argv[0])
@@ -160,6 +170,31 @@ char	*get_relative_path(char *cwd, t_var *var)
 	return (home);
 }
 
+void	set_name_and_hostname(char **prompt_array, t_var *var)
+{
+	prompt_array[0] = GREEN_COLOR;
+	prompt_array[1] = BOLD_TEXT;
+	prompt_array[2] = ft_fallback_string(get_var_value(var, "USER"), "user");
+	prompt_array[3] = "@";
+	prompt_array[4] = ft_fallback_string(get_var_value(var, "HOSTNAME"),
+			"hostname");
+	prompt_array[5] = DEFAULT_COLOR;
+	prompt_array[6] = NORMAL_TEXT;
+}
+
+void	set_path_prompt(char **prompt_array)
+{
+	prompt_array[7] = ":";
+	prompt_array[8] = BLUE_COLOR;
+	prompt_array[9] = BOLD_TEXT;
+	prompt_array[10] = "path here";
+	/* prompt_array[10] = ft_fallback_string(get_relative_path(cwd, var),
+			cwd); */
+	prompt_array[11] = DEFAULT_COLOR;
+	prompt_array[12] = NORMAL_TEXT;
+	prompt_array[13] = "$ ";
+}
+
 char	*construct_prompt(char *cwd, t_var *var)
 // only a preview,there is a way more efficient way to do this
 {
@@ -169,27 +204,12 @@ char	*construct_prompt(char *cwd, t_var *var)
 	prompt_array = (char **)ft_calloc(15, sizeof(char *));
 	if (!prompt_array)
 		return (NULL);
-	prompt_array[0] = GREEN_COLOR;
-	prompt_array[1] = BOLD_TEXT;
-	prompt_array[2] = ft_fallback_string(get_var_value(var, "USER"), "user");
-	prompt_array[3] = "@";
-	prompt_array[4] = ft_fallback_string(get_var_value(var, "HOSTNAME"),
-			"hostname");
-	prompt_array[5] = DEFAULT_COLOR;
-	prompt_array[6] = NORMAL_TEXT;
-	prompt_array[7] = ":";
-	prompt_array[8] = BLUE_COLOR;
-	prompt_array[9] = BOLD_TEXT;
-	prompt_array[10] = "path here";
-	(void)cwd;
-	/* prompt_array[10] = ft_fallback_string(get_relative_path(cwd, var),
-			cwd); */
-	prompt_array[11] = DEFAULT_COLOR;
-	prompt_array[12] = NORMAL_TEXT;
-	prompt_array[13] = "$ ";
+	set_name_and_hostname(prompt_array, var);
+	set_path_prompt(prompt_array);
 	prompt = ft_strjoin_array(prompt_array);
 	/* if (ft_strcmp(prompt_array[10], cwd) != 0)
 		free(prompt_array[10]); */
+	(void)cwd;
 	free(prompt_array);
 	return (prompt);
 }
