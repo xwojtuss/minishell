@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bkaleta <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/16 20:34:21 by bkaleta           #+#    #+#             */
+/*   Updated: 2024/08/16 20:36:45 by bkaleta          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # define EXIT_SIGINT 130
@@ -250,6 +262,11 @@ void				wait_for_processes(t_shell *shell, pid_t last_pid);
 
 void				sig_handler(int signum);
 void				sig_do_nothing(int num);
+void				handle_eof(void);
+void				init_signals(void);
+void				signal_quit(int sig);
+void				sig_handler(int sig);
+void				init_child_signals(void);
 
 // srcs/split.c
 

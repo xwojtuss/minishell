@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bkaleta <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/16 22:00:23 by bkaleta           #+#    #+#             */
+/*   Updated: 2024/08/16 22:05:33 by bkaleta          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static char	*check_count_quotes(int *quote, char *s, int *count)
@@ -29,8 +41,8 @@ static char	*check_count_quotes(int *quote, char *s, int *count)
 static int	count_words(char const *s)
 {
 	char	*temp;
-	int	count;
-	int	quote;
+	int		count;
+	int		quote;
 
 	while (*s == ' ')
 		s++;
@@ -44,15 +56,6 @@ static int	count_words(char const *s)
 	return (count);
 }
 
-int	add_string(char ****array, int *size, const char *str)
-{
-	(**array)[*size] = ft_strdup(str);
-	if (!(**array)[*size])
-		return (0);
-	(*size)++;
-	return (1);
-}
-
 static void	check_quotes(int *wait_for, char c)
 {
 	if (c == '\"' && *wait_for == NOT_SET)
@@ -61,15 +64,6 @@ static void	check_quotes(int *wait_for, char c)
 		*wait_for = '\'';
 	else if (c == *wait_for)
 		*wait_for = NOT_SET;
-}
-
-int	copy_word(char *buffer, int *buf_index, char ****result, int *size)
-{
-	buffer[*buf_index] = '\0';
-	if (!add_string(result, size, buffer))
-		return (0);
-	*buf_index = 0;
-	return (1);
 }
 
 static int	copy_data(const char *str, char ***result, char *buffer,
@@ -94,7 +88,7 @@ static int	copy_data(const char *str, char ***result, char *buffer,
 	}
 	if (buf_index > 0)
 		if (!copy_word(buffer, &buf_index, &result, &size))
-				return (0);
+			return (0);
 	return (1);
 }
 
