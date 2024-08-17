@@ -6,7 +6,7 @@
 /*   By: bkaleta <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 20:34:21 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/16 20:36:45 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/17 12:15:31 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,12 +262,12 @@ void				wait_for_processes(t_shell *shell, pid_t last_pid);
 
 void				sig_handler(int signum);
 void				sig_do_nothing(int num);
-void				handle_eof(void);
+void				handle_eof(t_shell *shell);
 void				init_signals(void);
 void				signal_quit(int sig);
 void				sig_handler(int sig);
 void				init_child_signals(void);
-
+void    sig_kill(int signum);
 // srcs/split.c
 
 int					add_string(char ****array, int *size, const char *str);

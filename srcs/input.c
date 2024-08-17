@@ -6,7 +6,7 @@
 /*   By: bkaleta <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 21:39:29 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/16 21:58:24 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/17 12:06:53 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	wait_for_input(char **envp)
 		throw_error_exit(NULL, NULL, NULL, shell.var);
 	while (1)
 	{
-		cwd = getcwd(NULL, 0);
+		cwd = getcwd(NULL, 0);			
 		if (!cwd)
 			throw_error_exit(NULL, NULL, NULL, shell.var);
 		prompt = construct_prompt(cwd, shell.var);
@@ -109,7 +109,7 @@ void	wait_for_input(char **envp)
 		input = readline(prompt);
 		free(prompt);
 		if (!input)
-			handle_eof();
+			handle_eof(&shell);
 		else
 			handle_input(input, &shell);
 	}
