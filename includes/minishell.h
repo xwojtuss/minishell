@@ -6,7 +6,7 @@
 /*   By: bkaleta <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 20:34:21 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/17 12:15:31 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/17 12:31:14 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ int					prelimenary_checks(char **input, t_shell *shell);
 void				handle_input(char *input, t_shell *shell);
 char				*get_relative_path(char *cwd, t_var *var);
 void				set_name_and_hostname(char **prompt_array, t_var *var);
-void				set_path_prompt(char **prompt_array);
+void				set_path_prompt(char *cwd, char **prompt_array, t_var *var);
 char				*construct_prompt(char *cwd, t_var *var);
 void				wait_for_input(char **envp);
 
