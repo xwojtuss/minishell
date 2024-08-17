@@ -6,7 +6,7 @@
 /*   By: bkaleta <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 20:33:05 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/16 20:33:08 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/17 11:54:59 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,15 @@ int	g_signum = -42;
 
 void	child_process_in_main(char **envp)
 {
-	init_child_signals();
-	//signal(SIGINT, NULL);
-	//signal(SIGQUIT, NULL);
+	init_signals();
 	wait_for_input(envp);
 	exit(EXIT_SUCCESS);
 }
 
 void	parent_process_in_main(pid_t pid, int status)
 {
-	//signal(SIGINT, sig_handler);
-	//signal(SIGQUIT, signal_quit);
-	init_signals();
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		exit(WEXITSTATUS(status));

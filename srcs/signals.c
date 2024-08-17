@@ -6,7 +6,7 @@
 /*   By: bkaleta <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 22:06:49 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/16 22:06:51 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/17 12:21:19 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ Sets the global variable g_signum to the signal number,
 
 void    sig_handler(int sig)
 {
+    g_signum = sig;
     (void)sig;
 	printf("\n");
     rl_on_new_line();
@@ -47,6 +48,16 @@ void    init_signals(void)
     signal(SIGINT, sig_handler);
 }
 
+void    sig_kill(int signum)
+{
+    signal(signum, SIG_IGN);
+    kill(0, signum);
+    if (signum == SIGQUIT)
+        printf("Quit");
+    printf("\n");
+    rl_on_new_line();
+}
+
 void init_child_signals(void)
 {
 	
@@ -54,15 +65,10 @@ void init_child_signals(void)
     signal(SIGQUIT, NULL);
 }
 
-// void    init_signals_duo(void)
-// {
-//     signal(SIGQUIT, signal_quit_duo);
-//     signal(SIGINT, signal_c_duo);
-// }
-
 // Funkcja obsługująca EOF (Ctrl+D)
-void	handle_eof(void)
+void	handle_eof(t_shell *shell)
 {
+    free_var(shell->var);
 	write(STDOUT_FILENO, "exit\n", 5);
 	exit(EXIT_SUCCESS);
 }

@@ -145,6 +145,8 @@ int	execute(t_shell *shell)
 			|| !ft_strcmp(curr->argv[0], "export") || !ft_strcmp(curr->argv[0],
 				"unset") || !ft_strcmp(curr->argv[0], "cd")))
 		return (run_one_builtin(curr, shell));
+	signal(SIGINT, sig_kill);
+	signal(SIGQUIT, sig_kill);
 	while (curr)
 	{
 		last_pid = create_child(shell, curr);
@@ -153,6 +155,7 @@ int	execute(t_shell *shell)
 		curr = curr->next;
 	}
 	wait_for_processes(shell, last_pid);
+	init_signals();
 	close_files(shell->cmd);
 	return (1);
 }
