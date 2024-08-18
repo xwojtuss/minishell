@@ -6,7 +6,7 @@
 /*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:34:33 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 23:19:31 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/19 00:24:01 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	prelimenary_checks(char **input, t_shell *shell)
 	{
 		rl_clear_history();
 		free_var(shell->var);
-		free_history(shell);
+		//free_history(shell);
 		exit(EXIT_SUCCESS);
 	}
 	if (!**input)
@@ -51,8 +51,6 @@ int	prelimenary_checks(char **input, t_shell *shell)
 		add_history((const char *)*input);
 		update_last_command(shell->history, *input);
 	}
-	else
-		free(*input);
 	return (1);
 }
 
@@ -119,12 +117,11 @@ void	wait_for_input(char **envp)
 		free(prompt);
 		if (!input)
 		{
-			//free_history(&shell);
+			free_history(&shell);
 			handle_eof(&shell);
 		}
 		else
 			handle_input(input, &shell);
-		free_history(&shell);
 	}
 	free(prompt);
 	free_var((&shell)->var);
