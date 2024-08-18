@@ -6,7 +6,7 @@
 /*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:20:46 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 12:20:50 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/18 22:03:40 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,11 @@ typedef struct s_var
 	struct s_var	*next;
 }					t_var;
 
+typedef struct s_history
+{
+	char			*last_cmd;
+}					t_history;
+
 /*
 Stores the environment variables and the pointer to the command linked list
 will be used in export, unset, env,
@@ -82,7 +87,8 @@ typedef struct s_shell
 {
 	t_cmd			*cmd;
 	t_var			*var;
-	char			*last_command;
+	t_history		*history;
+	//char			*last_command;
 }					t_shell;
 
 // srcs/alloc.c
@@ -188,6 +194,11 @@ int					ft_pwd(int argc, char **argv);
 // srcs/ft_unset.c
 
 int					ft_unset(int argc, char **argv, t_shell *shell);
+
+// srcs/history.c
+void				history_init(t_shell *shell);
+void				update_last_command(t_history *history, char *new_command);
+void				free_history(t_shell *shell);
 
 // srcs/init.c
 

@@ -1,29 +1,874 @@
-==16062== Memcheck, a memory error detector
-==16062== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==16062== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
-==16062== Command: ./minishell
-==16062== Parent PID: 14855
-==16062== 
-==16095== 
-==16095== HEAP SUMMARY:
-==16095==     in use at exit: 232,252 bytes in 238 blocks
-==16095==   total heap usage: 612 allocs, 374 frees, 270,826 bytes allocated
-==16095== 
-==16095== LEAK SUMMARY:
-==16095==    definitely lost: 0 bytes in 0 blocks
-==16095==    indirectly lost: 0 bytes in 0 blocks
-==16095==      possibly lost: 0 bytes in 0 blocks
-==16095==    still reachable: 0 bytes in 0 blocks
-==16095==         suppressed: 232,252 bytes in 238 blocks
-==16095== 
-==16095== For lists of detected and suppressed errors, rerun with: -s
-==16095== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==16062== 
-==16062== HEAP SUMMARY:
-==16062==     in use at exit: 0 bytes in 0 blocks
-==16062==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
-==16062== 
-==16062== All heap blocks were freed -- no leaks are possible
-==16062== 
-==16062== For lists of detected and suppressed errors, rerun with: -s
-==16062== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==2958== Memcheck, a memory error detector
+==2958== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==2958== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
+==2958== Command: ./minishell
+==2958== Parent PID: 21777
+==2958== 
+==6253== Invalid read of size 8
+==6253==    at 0x10BB44: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4ac7040 is 0 bytes inside a block of size 8 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F409: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x10F305: history_init (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BDB4: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 8
+==6253==    at 0x10BB56: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4ac7040 is 0 bytes inside a block of size 8 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F409: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x10F305: history_init (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BDB4: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x1102AF: ft_strcmp (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BB64: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b10680 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F3FC: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x49828E9: strdup (strdup.c:42)
+==6253==    by 0x10F382: update_last_command (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BB8D: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x1102D3: ft_strcmp (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BB64: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b10680 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F3FC: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x49828E9: strdup (strdup.c:42)
+==6253==    by 0x10F382: update_last_command (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BB8D: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x1102E7: ft_strcmp (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BB64: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b10682 is 2 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F3FC: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x49828E9: strdup (strdup.c:42)
+==6253==    by 0x10F382: update_last_command (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BB8D: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x109C2A: count_length (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A38C: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x109C3C: count_length (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A38C: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x109C5B: count_length (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A38C: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x109D7D: check_for_spaces (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109D39: count_length (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A38C: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x109DC7: check_for_spaces (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109D39: count_length (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A38C: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x109E2E: check_for_spaces (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109D39: count_length (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A38C: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x109E46: check_for_spaces (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109D39: count_length (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A38C: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x109EBA: replace_var_loop (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A3E6: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x109ECC: replace_var_loop (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A3E6: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x109EF0: replace_var_loop (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A3E6: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x109F14: replace_var_loop (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A3E6: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x10A19C: replace_var_loop (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A3E6: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x10A1B2: replace_var_loop (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A3E6: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x10A228: replace_var_loop (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A3E6: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x10A2B8: replace_var_loop (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A3E6: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x10A035: replace_var_loop (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A3E6: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df1 is 1 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x10A09D: replace_var_loop (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A3E6: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df1 is 1 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x10A11F: replace_var_loop (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A3E6: replace_var (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10A44C: create_array (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBEB: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df1 is 1 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid free() / delete / delete[] / realloc()
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BBF8: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b11df0 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10BB9E: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x489C338: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x4871FB9: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x48733DA: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==6253==    by 0x10BE51: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 8
+==6253==    at 0x10F3E3: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4ac7040 is 0 bytes inside a block of size 8 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F409: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x10F305: history_init (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BDB4: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 8
+==6253==    at 0x10F3F5: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4ac7040 is 0 bytes inside a block of size 8 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F409: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x10F305: history_init (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BDB4: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid free() / delete / delete[] / realloc()
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F3FC: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b10680 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F3FC: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x49828E9: strdup (strdup.c:42)
+==6253==    by 0x10F382: update_last_command (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BB8D: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid free() / delete / delete[] / realloc()
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F409: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4ac7040 is 0 bytes inside a block of size 8 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F409: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x10F305: history_init (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BDB4: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 1
+==6253==    at 0x110312: ft_strcmp (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BB64: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b10680 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F3FC: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x49828E9: strdup (strdup.c:42)
+==6253==    by 0x10F382: update_last_command (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BB8D: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 8
+==6253==    at 0x10F364: update_last_command (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BB8D: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4ac7040 is 0 bytes inside a block of size 8 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F409: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x10F305: history_init (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BDB4: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 8
+==6253==    at 0x10F372: update_last_command (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BB8D: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4ac7040 is 0 bytes inside a block of size 8 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F409: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x10F305: history_init (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BDB4: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid free() / delete / delete[] / realloc()
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F379: update_last_command (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BB8D: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4b10680 is 0 bytes inside a block of size 3 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F3FC: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x49828E9: strdup (strdup.c:42)
+==6253==    by 0x10F382: update_last_command (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BB8D: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid write of size 8
+==6253==    at 0x10F38A: update_last_command (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BB8D: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4ac7040 is 0 bytes inside a block of size 8 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F409: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x10F305: history_init (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BDB4: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==6253== Invalid read of size 8
+==6253==    at 0x10F391: update_last_command (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BB8D: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Address 0x4ac7040 is 0 bytes inside a block of size 8 free'd
+==6253==    at 0x484317B: free (vg_replace_malloc.c:872)
+==6253==    by 0x10F409: free_history (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BE8D: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==  Block was alloc'd at
+==6253==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==6253==    by 0x10F305: history_init (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x10BDB4: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==6253== 
+==13419== 
+==13419== HEAP SUMMARY:
+==13419==     in use at exit: 232,329 bytes in 235 blocks
+==13419==   total heap usage: 642 allocs, 414 frees, 279,723 bytes allocated
+==13419== 
+==13419== 4 bytes in 1 blocks are definitely lost in loss record 1 of 75
+==13419==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==13419==    by 0x49828E9: strdup (strdup.c:42)
+==13419==    by 0x10F382: update_last_command (in /home/bkaleta/Wojtek/minishell/minishell)
+==13419==    by 0x10BB8D: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==13419==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==13419==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==13419==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==13419==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==13419== 
+==13419== LEAK SUMMARY:
+==13419==    definitely lost: 4 bytes in 1 blocks
+==13419==    indirectly lost: 0 bytes in 0 blocks
+==13419==      possibly lost: 0 bytes in 0 blocks
+==13419==    still reachable: 0 bytes in 0 blocks
+==13419==         suppressed: 232,325 bytes in 234 blocks
+==13419== 
+==13419== For lists of detected and suppressed errors, rerun with: -s
+==13419== ERROR SUMMARY: 109 errors from 35 contexts (suppressed: 0 from 0)
+==14011== 
+==14011== HEAP SUMMARY:
+==14011==     in use at exit: 232,325 bytes in 234 blocks
+==14011==   total heap usage: 661 allocs, 436 frees, 284,367 bytes allocated
+==14011== 
+==14011== LEAK SUMMARY:
+==14011==    definitely lost: 0 bytes in 0 blocks
+==14011==    indirectly lost: 0 bytes in 0 blocks
+==14011==      possibly lost: 0 bytes in 0 blocks
+==14011==    still reachable: 0 bytes in 0 blocks
+==14011==         suppressed: 232,325 bytes in 234 blocks
+==14011== 
+==14011== For lists of detected and suppressed errors, rerun with: -s
+==14011== ERROR SUMMARY: 176 errors from 34 contexts (suppressed: 0 from 0)
+==14553== 
+==14553== HEAP SUMMARY:
+==14553==     in use at exit: 232,325 bytes in 234 blocks
+==14553==   total heap usage: 680 allocs, 458 frees, 289,011 bytes allocated
+==14553== 
+==14553== LEAK SUMMARY:
+==14553==    definitely lost: 0 bytes in 0 blocks
+==14553==    indirectly lost: 0 bytes in 0 blocks
+==14553==      possibly lost: 0 bytes in 0 blocks
+==14553==    still reachable: 0 bytes in 0 blocks
+==14553==         suppressed: 232,325 bytes in 234 blocks
+==14553== 
+==14553== For lists of detected and suppressed errors, rerun with: -s
+==14553== ERROR SUMMARY: 245 errors from 34 contexts (suppressed: 0 from 0)
+==15729== 
+==15729== HEAP SUMMARY:
+==15729==     in use at exit: 232,330 bytes in 235 blocks
+==15729==   total heap usage: 701 allocs, 481 frees, 289,579 bytes allocated
+==15729== 
+==15729== 5 bytes in 1 blocks are definitely lost in loss record 1 of 75
+==15729==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==15729==    by 0x49828E9: strdup (strdup.c:42)
+==15729==    by 0x10F382: update_last_command (in /home/bkaleta/Wojtek/minishell/minishell)
+==15729==    by 0x10BB8D: prelimenary_checks (in /home/bkaleta/Wojtek/minishell/minishell)
+==15729==    by 0x10BBCC: handle_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==15729==    by 0x10BE84: wait_for_input (in /home/bkaleta/Wojtek/minishell/minishell)
+==15729==    by 0x109369: child_process_in_main (in /home/bkaleta/Wojtek/minishell/minishell)
+==15729==    by 0x109441: main (in /home/bkaleta/Wojtek/minishell/minishell)
+==15729== 
+==15729== LEAK SUMMARY:
+==15729==    definitely lost: 5 bytes in 1 blocks
+==15729==    indirectly lost: 0 bytes in 0 blocks
+==15729==      possibly lost: 0 bytes in 0 blocks
+==15729==    still reachable: 0 bytes in 0 blocks
+==15729==         suppressed: 232,325 bytes in 234 blocks
+==15729== 
+==15729== For lists of detected and suppressed errors, rerun with: -s
+==15729== ERROR SUMMARY: 260 errors from 35 contexts (suppressed: 0 from 0)
+==6253== 
+==6253== HEAP SUMMARY:
+==6253==     in use at exit: 232,445 bytes in 243 blocks
+==6253==   total heap usage: 711 allocs, 484 frees, 294,083 bytes allocated
+==6253== 
+==6253== LEAK SUMMARY:
+==6253==    definitely lost: 0 bytes in 0 blocks
+==6253==    indirectly lost: 0 bytes in 0 blocks
+==6253==      possibly lost: 0 bytes in 0 blocks
+==6253==    still reachable: 0 bytes in 0 blocks
+==6253==         suppressed: 232,445 bytes in 243 blocks
+==6253== 
+==6253== For lists of detected and suppressed errors, rerun with: -s
+==6253== ERROR SUMMARY: 262 errors from 34 contexts (suppressed: 0 from 0)
+==2958== 
+==2958== HEAP SUMMARY:
+==2958==     in use at exit: 0 bytes in 0 blocks
+==2958==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==2958== 
+==2958== All heap blocks were freed -- no leaks are possible
+==2958== 
+==2958== For lists of detected and suppressed errors, rerun with: -s
+==2958== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

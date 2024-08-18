@@ -6,7 +6,7 @@
 /*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:34:33 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 12:34:37 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/18 23:19:31 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	prelimenary_checks(char **input, t_shell *shell)
 	{
 		rl_clear_history();
 		free_var(shell->var);
+		free_history(shell);
 		exit(EXIT_SUCCESS);
 	}
 	if (!**input)
@@ -44,7 +45,14 @@ int	prelimenary_checks(char **input, t_shell *shell)
 	*input = check_pipes(input);
 	if (!*input)
 		throw_error_exit(NULL, NULL, NULL, shell->var);
-	add_history((const char *)*input);
+	if (shell->history->last_cmd == NULL
+		|| ft_strcmp(shell->history->last_cmd, *input) != 0)
+	{
+		add_history((const char *)*input);
+		update_last_command(shell->history, *input);
+	}
+	else
+		free(*input);
 	return (1);
 }
 
@@ -95,6 +103,7 @@ void	wait_for_input(char **envp)
 	char	*prompt;
 	t_shell	shell;
 
+	history_init(&shell);
 	if (!init_env(envp, &shell))
 		throw_error_exit(NULL, NULL, NULL, shell.var);
 	while (1)
@@ -109,9 +118,13 @@ void	wait_for_input(char **envp)
 		input = readline(prompt);
 		free(prompt);
 		if (!input)
+		{
+			//free_history(&shell);
 			handle_eof(&shell);
+		}
 		else
 			handle_input(input, &shell);
+		free_history(&shell);
 	}
 	free(prompt);
 	free_var((&shell)->var);
