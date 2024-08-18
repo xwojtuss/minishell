@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/16 21:56:10 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/17 12:30:39 by bkaleta          ###   ########.fr       */
+/*   Created: 2024/08/18 12:36:15 by bkaleta           #+#    #+#             */
+/*   Updated: 2024/08/18 12:36:35 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	set_path_prompt(char *cwd, char **prompt_array, t_var *var)
 	prompt_array[7] = ":";
 	prompt_array[8] = BLUE_COLOR;
 	prompt_array[9] = BOLD_TEXT;
-	//prompt_array[10] = "path here";
 	prompt_array[10] = ft_fallback_string(get_relative_path(cwd, var),
 			cwd);
 	prompt_array[11] = DEFAULT_COLOR;

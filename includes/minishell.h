@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/16 20:34:21 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/17 12:31:14 by bkaleta          ###   ########.fr       */
+/*   Created: 2024/08/18 12:20:46 by bkaleta           #+#    #+#             */
+/*   Updated: 2024/08/18 12:20:50 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ typedef struct s_shell
 	t_var			*var;
 	char			*last_command;
 }					t_shell;
-
-extern int			g_signum;
 
 // srcs/alloc.c
 
@@ -261,13 +259,12 @@ void				wait_for_processes(t_shell *shell, pid_t last_pid);
 // srcs/signals.c
 
 void				sig_handler(int signum);
-void				sig_do_nothing(int num);
 void				handle_eof(t_shell *shell);
 void				init_signals(void);
 void				signal_quit(int sig);
 void				sig_handler(int sig);
-void				init_child_signals(void);
-void    sig_kill(int signum);
+void				sig_kill(int signum);
+
 // srcs/split.c
 
 int					add_string(char ****array, int *size, const char *str);

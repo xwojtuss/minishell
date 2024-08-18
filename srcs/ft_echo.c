@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:58:10 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/15 00:23:31 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/18 12:27:06 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	print_argv(char **argv, int i, int new_line)
 
 int	ft_echo(int argc, char **argv)
 {
-	int j;
-	int i;
-	int new_line;
+	int	j;
+	int	i;
+	int	new_line;
 
 	(void)argc;
 	i = 1;

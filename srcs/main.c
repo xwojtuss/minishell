@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/16 20:33:05 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/17 11:54:59 by bkaleta          ###   ########.fr       */
+/*   Created: 2024/08/18 12:21:14 by bkaleta           #+#    #+#             */
+/*   Updated: 2024/08/18 12:21:16 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_signum = -42;
 
 void	child_process_in_main(char **envp)
 {

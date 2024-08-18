@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/18 12:29:59 by bkaleta           #+#    #+#             */
+/*   Updated: 2024/08/18 12:33:23 by bkaleta          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
 redirect will happen right before we fork,
 	we will open and close the file before and after the fork
 
-if the stdout of a previous command is a file then we execute the next command without piping the output of the previous command
+if the stdout of a previous command is a file then we execute 
+the next command without piping the output of the previous command
 */
 int	redirect(char *str, char *file, t_cmd *cmd, t_shell *shell)
 {
@@ -54,7 +67,7 @@ int	read_stdin(t_cmd *new, char *delim)
 {
 	char	*stdin_line;
 	char	*temp;
-	
+
 	stdin_line = get_next_line(0);
 	if (!stdin_line)
 	{
@@ -81,7 +94,7 @@ int	read_stdin(t_cmd *new, char *delim)
 t_cmd	*read_stdin_delim(char *delim)
 {
 	t_cmd	*new;
-	int	ret;
+	int		ret;
 
 	new = create_new_cmd_echo();
 	if (!new)
@@ -95,7 +108,7 @@ t_cmd	*read_stdin_delim(char *delim)
 		else if (ret == 0)
 			return (free_cmd(new), NULL);
 	}
-	if (new &&new->argv &&new->argv[1] && ft_strlen(new->argv[1]) > 0)
+	if (new && new->argv && new->argv[1] && ft_strlen(new->argv[1]) > 0)
 		new->argv[1][ft_strlen(new->argv[1]) - 1] = '\0';
 	new->argv[2] = NULL;
 	return (new);
@@ -276,9 +289,9 @@ int	init_cmd(char **array, t_shell *shell)
 
 int	init_env(char **envp, t_shell *shell)
 {
-	t_var *new;
-	t_var *curr;
-	int i;
+	t_var	*new;
+	t_var	*curr;
+	int		i;
 
 	i = 0;
 	curr = (t_var *)malloc(sizeof(t_var));
@@ -300,7 +313,7 @@ int	init_env(char **envp, t_shell *shell)
 		new->name = ft_strndup(envp[i], ft_strchr(envp[i], '=') - envp[i]);
 		if (!new->name)
 			return (0);
-		new->value = ft_strdup(ft_strchr(envp[i], '=') + 1); // to change
+		new->value = ft_strdup(ft_strchr(envp[i], '=') + 1);
 		if (!new->value)
 			return (0);
 		new->next = NULL;
