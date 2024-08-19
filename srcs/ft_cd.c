@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:46:58 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/15 00:30:17 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/19 11:41:20 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	modify_pwd(t_shell *shell)
 			if (get_var_struct(shell->var, "OLDPWD")->value != NULL)
 				free(get_var_struct(shell->var, "OLDPWD")->value);
 			get_var_struct(shell->var,
-					"OLDPWD")->value = ft_strdup(oldpwd->value);
+				"OLDPWD")->value = ft_strdup(oldpwd->value);
 		}
 		else
 			add_env_var(&shell->var, "OLDPWD", oldpwd->value);

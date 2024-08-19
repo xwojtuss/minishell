@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:25:26 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 12:25:28 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/19 11:41:42 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ int	open_redirs(t_cmd *cmd)
 		return (1);
 	else if (cmd->read_path && !open_normal_file(cmd))
 		return (0);
-	if (cmd->write_path && ft_strcmp(cmd->write_path, "./.minishell_empty_file_two"))
+	if (cmd->write_path && ft_strcmp(cmd->write_path,
+			"./.minishell_empty_file_two"))
 	{
 		if (cmd->write_mode == MODE_APPEND)
 			cmd->write_fd = open(cmd->write_path, O_WRONLY | O_CREAT | O_APPEND,
@@ -153,9 +154,10 @@ int	execute(t_shell *shell)
 	pid_t	last_pid;
 
 	curr = shell->cmd;
-	if (count_cmds(curr) == 1 && curr->argv && (!ft_strcmp(curr->argv[0], "exit")
-			|| !ft_strcmp(curr->argv[0], "export") || !ft_strcmp(curr->argv[0],
-				"unset") || !ft_strcmp(curr->argv[0], "cd")))
+	if (count_cmds(curr) == 1 && curr->argv && (!ft_strcmp(curr->argv[0],
+				"exit") || !ft_strcmp(curr->argv[0], "export")
+			|| !ft_strcmp(curr->argv[0], "unset") || !ft_strcmp(curr->argv[0],
+				"cd")))
 		return (run_one_builtin(curr, shell));
 	signal(SIGINT, sig_kill);
 	signal(SIGQUIT, sig_kill);

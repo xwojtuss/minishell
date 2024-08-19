@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 18:25:00 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/19 00:25:44 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/19 11:42:24 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,16 @@ void	update_last_command(t_history *history, char *new_command)
 		throw_error_exit(NULL, NULL, NULL, NULL);
 }
 
-void free_history(t_shell *shell)
+void	free_history(t_shell *shell)
 {
-    if (shell->history)
-    {
-        if (shell->history->last_cmd)
-        {
-            free(shell->history->last_cmd);
-            shell->history->last_cmd = NULL; // Uniknięcie dostępu do zwolnionej pamięci
-        }
-        free(shell->history);
-        shell->history = NULL; // Uniknięcie dostępu do zwolnionej pamięci
-    }
+	if (shell->history)
+	{
+		if (shell->history->last_cmd)
+		{
+			free(shell->history->last_cmd);
+			shell->history->last_cmd = NULL;
+		}
+		free(shell->history);
+		shell->history = NULL;
+	}
 }
-
-// void	free_history(t_shell *shell)
-// {
-// 	if (shell->history)
-// 	{
-// 		if (shell->history->last_cmd)
-// 			free(shell->history->last_cmd);
-// 		free(shell->history);
-// 	}
-// }
