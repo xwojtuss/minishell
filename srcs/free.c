@@ -6,7 +6,7 @@
 /*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:26:07 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 12:26:21 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/19 09:19:29 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	safely_exit(int exit_code, t_shell *shell, char **array, char *input)
 		free_array(array);
 	if (input)
 		free(input);
+	if (shell && shell->history)
+		free_history(shell);
 	if (exit_code != NOT_SET)
 		exit(exit_code);
 }
