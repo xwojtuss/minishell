@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:35:58 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 12:36:00 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/19 11:44:01 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	check_empty_pipes(char *input, t_shell *shell)
 			if ((j < 0 || input[j] == '|' || input[j] == '<')
 				&& !is_in_quotes(input, j))
 			{
-				ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
-					STDERR_FILENO);
+				ft_putstr_fd("minishell: syntax error near", STDERR_FILENO);
+				ft_putstr_fd(" unexpected token `|'\n", STDERR_FILENO);
 				set_last_exit_code(shell->var, 2);
 				add_history((const char *)input);
 				return (0);

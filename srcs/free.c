@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:26:07 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/19 09:19:29 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/19 11:35:29 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	close_files(t_cmd *cmd)
 		cmd = tmp;
 	}
 	unlink("./.minishell_empty_file");
+	unlink("./.minishell_empty_file_two");
 }
 
 /*

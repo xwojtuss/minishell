@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:34:33 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/19 00:24:01 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/19 11:41:39 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,7 @@ int	prelimenary_checks(char **input, t_shell *shell)
 {
 	shell->cmd = NULL;
 	if (*input == NULL)
-	{
-		rl_clear_history();
-		free_var(shell->var);
-		//free_history(shell);
-		exit(EXIT_SUCCESS);
-	}
+		safely_exit(EXIT_SUCCESS, shell, NULL, NULL);
 	if (!**input)
 		return (free(*input), 0);
 	if (!check_empty_pipes(*input, shell))
@@ -45,8 +40,8 @@ int	prelimenary_checks(char **input, t_shell *shell)
 	*input = check_pipes(input);
 	if (!*input)
 		throw_error_exit(NULL, NULL, NULL, shell->var);
-	if (shell->history->last_cmd == NULL
-		|| ft_strcmp(shell->history->last_cmd, *input) != 0)
+	if (shell->history->last_cmd == NULL || ft_strcmp(shell->history->last_cmd,
+			*input) != 0)
 	{
 		add_history((const char *)*input);
 		update_last_command(shell->history, *input);
@@ -106,7 +101,7 @@ void	wait_for_input(char **envp)
 		throw_error_exit(NULL, NULL, NULL, shell.var);
 	while (1)
 	{
-		cwd = getcwd(NULL, 0);			
+		cwd = getcwd(NULL, 0);
 		if (!cwd)
 			throw_error_exit(NULL, NULL, NULL, shell.var);
 		prompt = construct_prompt(cwd, shell.var);

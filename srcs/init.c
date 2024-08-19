@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:29:59 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 12:33:23 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/19 11:41:34 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 redirect will happen right before we fork,
 	we will open and close the file before and after the fork
 
-if the stdout of a previous command is a file then we execute 
+if the stdout of a previous command is a file then we execute
 the next command without piping the output of the previous command
 */
 int	redirect(char *str, char *file, t_cmd *cmd, t_shell *shell)
@@ -26,7 +26,7 @@ int	redirect(char *str, char *file, t_cmd *cmd, t_shell *shell)
 	if (file == NULL)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",
-						STDERR_FILENO);
+			STDERR_FILENO);
 		set_last_exit_code(shell->var, 2);
 		return (0);
 	}
@@ -108,7 +108,7 @@ t_cmd	*read_stdin_delim(char *delim)
 		else if (ret == 0)
 			return (free_cmd(new), NULL);
 	}
-	if (new && new->argv && new->argv[1] && ft_strlen(new->argv[1]) > 0)
+	if (new &&new->argv &&new->argv[1] && ft_strlen(new->argv[1]) > 0)
 		new->argv[1][ft_strlen(new->argv[1]) - 1] = '\0';
 	new->argv[2] = NULL;
 	return (new);
