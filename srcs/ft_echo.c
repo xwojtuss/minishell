@@ -6,7 +6,7 @@
 /*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:58:10 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/18 12:27:06 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/20 16:35:24 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ int	ft_echo(int argc, char **argv)
 		while (argv[i][j] == 'n')
 			j++;
 		if (argv[i++][j] == '\0')
+		{
 			new_line = 0;
+			i++;
+		}
 		else
 			break ;
 	}
