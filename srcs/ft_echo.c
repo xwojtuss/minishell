@@ -6,7 +6,7 @@
 /*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:58:10 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/20 16:35:24 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/20 22:05:24 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,14 @@ int	ft_echo(int argc, char **argv)
 	int	i;
 	int	new_line;
 
-	(void)argc;
 	i = 1;
 	new_line = 1;
-	while (argv[1] && ft_strncmp(argv[i], "-n", 2) == 0)
+	while (i < argc && ft_strncmp(argv[i], "-n", 2) == 0)
 	{
 		j = 2;
 		while (argv[i][j] == 'n')
 			j++;
-		if (argv[i++][j] == '\0')
+		if (argv[i][j] == '\0')
 		{
 			new_line = 0;
 			i++;
