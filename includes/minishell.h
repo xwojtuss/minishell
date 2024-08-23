@@ -6,7 +6,7 @@
 /*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:20:46 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 22:03:40 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/23 22:01:53 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,7 @@ void				set_name_and_hostname(char **prompt_array, t_var *var);
 void				set_path_prompt(char *cwd, char **prompt_array, t_var *var);
 char				*construct_prompt(char *cwd, t_var *var);
 void				wait_for_input(char **envp);
+void				process_user_input(t_shell *shell);
 
 // srcs/main.c
 

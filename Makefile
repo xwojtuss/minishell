@@ -9,7 +9,7 @@ NAME = minishell
 SRCS = main.c signals.c pipe.c debug.c alloc.c free.c errors.c init.c check_args.c input.c split.c \
 	redir.c files.c execute.c ft_unset.c ft_export.c ft_exit.c ft_echo.c ft_env.c ft_pwd.c ft_cd.c \
 	commands.c misc.c env_vars.c fd_management.c open_files.c path.c run_processes.c prompt.c split2.c \
-	history.c \
+	history.c get_relative_path.c \
 
 SRCS_FOLDER = ${addprefix srcs/,${SRCS}}
 
