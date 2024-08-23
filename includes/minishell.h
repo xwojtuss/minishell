@@ -6,7 +6,7 @@
 /*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:20:46 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/23 22:01:53 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/23 22:25:20 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ char				**create_array(char *input, t_var *var);
 // srcs/check_args.c
 
 bool				is_empty_or_pipe(char *str);
+bool				check_single_redirect(t_shell *shell, char **array, int i);
 bool				check_redirects(t_shell *shell, char **array);
 
 // srcs/commands.c
