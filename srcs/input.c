@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:34:33 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/19 11:41:39 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/23 22:11:10 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,53 +71,41 @@ void	handle_input(char *input, t_shell *shell)
 	free_cmd(shell->cmd);
 }
 
-char	*get_relative_path(char *cwd, t_var *var)
-{
-	char	*home;
-	char	*temp;
-
-	home = get_var_value(var, "HOME");
-	if (!home)
-		return (NULL);
-	if (!ft_strncmp(cwd, home, ft_strlen(home)))
-	{
-		temp = ft_strjoin("~", cwd + ft_strlen(home));
-		if (!temp)
-			return (NULL);
-		home = temp;
-	}
-	return (home);
-}
-
-void	wait_for_input(char **envp)
+void	process_user_input(t_shell *shell)
 {
 	char	*input;
 	char	*cwd;
 	char	*prompt;
+
+	while (1)
+	{
+		cwd = getcwd(NULL, 0);
+		if (!cwd)
+			throw_error_exit(NULL, NULL, NULL, shell->var);
+		prompt = construct_prompt(cwd, shell->var);
+		free(cwd);
+		if (!prompt)
+			throw_error_exit(NULL, NULL, NULL, shell->var);
+		input = readline(prompt);
+		free(prompt);
+		if (!input)
+		{
+			free_history(shell);
+			handle_eof(shell);
+		}
+		else
+			handle_input(input, shell);
+	}
+	free(prompt);
+}
+
+void	wait_for_input(char **envp)
+{
 	t_shell	shell;
 
 	history_init(&shell);
 	if (!init_env(envp, &shell))
 		throw_error_exit(NULL, NULL, NULL, shell.var);
-	while (1)
-	{
-		cwd = getcwd(NULL, 0);
-		if (!cwd)
-			throw_error_exit(NULL, NULL, NULL, shell.var);
-		prompt = construct_prompt(cwd, shell.var);
-		free(cwd);
-		if (!prompt)
-			throw_error_exit(NULL, NULL, NULL, shell.var);
-		input = readline(prompt);
-		free(prompt);
-		if (!input)
-		{
-			free_history(&shell);
-			handle_eof(&shell);
-		}
-		else
-			handle_input(input, &shell);
-	}
-	free(prompt);
+	process_user_input(&shell);
 	free_var((&shell)->var);
 }
