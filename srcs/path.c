@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:35:09 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 12:35:10 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/25 12:17:21 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,8 @@ static char	*get_rid_of_quotes(char *path)
 	i = 0;
 	while (*temp)
 	{
-		if (*temp == '\'' && quotes == NOT_SET)
-			quotes = '\'';
-		else if (*temp == '\"' && quotes == NOT_SET)
-			quotes = '\"';
+		if ((*temp == '\'' || *temp == '\"') && quotes == NOT_SET)
+			quotes = *temp;
 		else if (*temp == quotes)
 			quotes = NOT_SET;
 		else
