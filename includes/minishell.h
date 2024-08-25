@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:20:46 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/23 22:25:20 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/25 16:24:43 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ typedef struct s_shell
 	t_cmd			*cmd;
 	t_var			*var;
 	t_history		*history;
-	//char			*last_command;
+	// char			*last_command;
 }					t_shell;
 
 // srcs/alloc.c
@@ -97,8 +97,9 @@ t_cmd				*alloc_cmd(int *i, int *command, char *read_path);
 // static void	check_for_spaces(char *input, int *length, int *i,
 // 		bool is_in_quotes);
 
-int					count_length(char *input, t_var *var);
-int					replace_var_loop(char *input, t_var *var, char *result);
+int					count_length(char *input, t_var *var, int *length);
+int					replace_var_loop(char *input, t_var *var, char *result,
+						int i);
 char				*replace_var(char *input, t_var *var);
 char				**create_array(char *input, t_var *var);
 
@@ -112,6 +113,14 @@ bool				check_redirects(t_shell *shell, char **array);
 
 t_cmd				*get_last_cmd(t_cmd *cmd);
 size_t				count_cmds(t_cmd *cmd);
+
+// srcs/create_array.c
+
+// srcs/create_array_2.c
+
+bool				do_copy_var(int quotes, char *input, int i);
+int					copy_variable(char *name, t_var *var, int *j, char *result);
+char				*replace_var(char *input, t_var *var);
 
 // srcs/debug.c
 
@@ -255,10 +264,10 @@ char				*get_absolute_path(char *path);
 // srcs/redir.c
 
 bool				is_redirect(char *str);
-int					redir_input(char *file, t_cmd *cmd, t_shell *shell);
-int					redir_output(char *file, t_cmd *cmd, t_shell *shell);
-int					redir_append(char *file, t_cmd *cmd, t_shell *shell);
-int					redir_delimiter(char *delim, t_cmd *cmd, t_shell *shell);
+int					redir_input(char *file, t_cmd *cmd);
+int					redir_output(char *file, t_cmd *cmd);
+int					redir_append(char *file, t_cmd *cmd);
+int					redir_delimiter(char *delim);
 
 // srcs/run_processes.c
 

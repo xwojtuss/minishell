@@ -6,241 +6,33 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:29:59 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/19 11:41:34 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/25 13:48:13 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-redirect will happen right before we fork,
-	we will open and close the file before and after the fork
-
-if the stdout of a previous command is a file then we execute
-the next command without piping the output of the previous command
-*/
-int	redirect(char *str, char *file, t_cmd *cmd, t_shell *shell)
+void	assign_curr(t_cmd **curr, t_shell *shell, t_cmd *new,
+		char **next_read_path)
 {
-	int	status;
-
-	if (file == NULL)
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",
-			STDERR_FILENO);
-		set_last_exit_code(shell->var, 2);
-		return (0);
-	}
-	if (ft_strcmp(str, ">"))
-		status = redir_input(file, cmd, shell);
-	else if (ft_strcmp(str, ">>"))
-		status = redir_append(file, cmd, shell);
-	else if (ft_strcmp(str, "<"))
-		status = redir_output(file, cmd, shell);
+	if (!*curr)
+		shell->cmd = new;
 	else
-		status = redir_delimiter(file, cmd, shell);
-	if (!status)
-		return (0);
-	return (1);
+		(*curr)->next = new;
+	if (new->next)
+		*curr = new->next;
+	else
+		*curr = new;
+	*next_read_path = NULL;
 }
 
-t_cmd	*create_new_cmd_echo(void)
+void	set_as_failure(t_shell *shell, t_cmd *new, char **next_read_path)
 {
-	t_cmd	*new;
-
-	new = alloc_cmd(NULL, NULL, NULL);
-	if (!new)
-		return (NULL);
-	new->argv = (char **)ft_calloc(3, sizeof(char *));
-	if (!(new->argv))
-		return (free_cmd(new), NULL);
-	new->argv[0] = ft_strdup("echo");
-	if (!new->argv[0])
-		return (free_cmd(new), NULL);
-	new->argv[1] = ft_strdup("");
-	if (!(new->argv[1]))
-		return (free_cmd(new), NULL);
-	new->argc = 2;
-	return (new);
-}
-
-int	read_stdin(t_cmd *new, char *delim)
-{
-	char	*stdin_line;
-	char	*temp;
-
-	stdin_line = get_next_line(0);
-	if (!stdin_line)
-	{
-		ft_putstr_fd("\nminishell: warning here-document at this line delimited by end-of-file (wanted '",
-			STDERR_FILENO);
-		ft_putstr_fd(delim, STDERR_FILENO);
-		ft_putstr_fd("')\n", STDERR_FILENO);
-		return (0);
-	}
-	if (ft_strlen(stdin_line) == 0)
-		return (free(stdin_line), 1);
-	if (!ft_strncmp(stdin_line, delim, ft_max(ft_strlen(delim),
-				ft_strlen(stdin_line) - 1)))
-		return (free(stdin_line), 2);
-	temp = new->argv[1];
-	new->argv[1] = ft_strjoin(temp, stdin_line);
-	free(temp);
-	free(stdin_line);
-	if (!(new->argv[1]))
-		return (0);
-	return (1);
-}
-
-t_cmd	*read_stdin_delim(char *delim)
-{
-	t_cmd	*new;
-	int		ret;
-
-	new = create_new_cmd_echo();
-	if (!new)
-		return (0);
-	while (true)
-	{
-		write(STDOUT_FILENO, "> ", 2);
-		ret = read_stdin(new, delim);
-		if (ret == 2)
-			break ;
-		else if (ret == 0)
-			return (free_cmd(new), NULL);
-	}
-	if (new &&new->argv &&new->argv[1] && ft_strlen(new->argv[1]) > 0)
-		new->argv[1][ft_strlen(new->argv[1]) - 1] = '\0';
-	new->argv[2] = NULL;
-	return (new);
-}
-
-int	set_redirect(char *str, t_cmd **cmd, char *file)
-{
-	t_cmd	*new;
-
-	if (!ft_strcmp(str, ">"))
-	{
-		if ((*cmd)->write_path)
-			free((*cmd)->write_path);
-		(*cmd)->write_mode = MODE_WRITE;
-		(*cmd)->write_path = get_absolute_path(file);
-		if ((*cmd)->write_path && does_file_exist((*cmd)->write_path)
-			&& check_file((*cmd)->write_path) & 8)
-		{
-			ft_putstr_fd(file, STDERR_FILENO);
-			ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
-			return (0);
-		}
-		if ((*cmd)->write_path)
-			close(open((*cmd)->write_path, O_WRONLY | O_CREAT, 0644));
-	}
-	else if (!ft_strcmp(str, ">>"))
-	{
-		if ((*cmd)->write_path)
-			free((*cmd)->write_path);
-		(*cmd)->write_mode = MODE_APPEND;
-		(*cmd)->write_path = get_absolute_path(file);
-		if ((*cmd)->write_path && does_file_exist((*cmd)->write_path)
-			&& check_file((*cmd)->write_path) & 8)
-		{
-			ft_putstr_fd(file, STDERR_FILENO);
-			ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
-			return (0);
-		}
-		if ((*cmd)->write_path)
-			close(open((*cmd)->write_path, O_WRONLY | O_CREAT, 0644));
-	}
-	else if (!ft_strcmp(str, "<"))
-	{
-		(*cmd)->read_path = get_absolute_path(file);
-		if (!does_file_exist((*cmd)->read_path))
-		{
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			ft_putstr_fd(file, STDERR_FILENO);
-			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-			return (0);
-		}
-	}
-	else if (!ft_strcmp(str, "<<"))
-	{
-		new = read_stdin_delim(file);
-		if (!new || !new->argv || !new->argv[0])
-			return (0);
-		new->next = *cmd;
-		*cmd = new;
-	}
-	return (1);
-}
-
-char	*copy_without_quotes(char *s)
-{
-	char	*result;
-	int		wait_for;
-	int		i;
-
-	result = (char *)ft_calloc(ft_strlen(s) + 1, sizeof(char));
-	if (!result)
-		return (NULL);
-	wait_for = NOT_SET;
-	i = 0;
-	while (*s)
-	{
-		if (*s == '\'' && wait_for == NOT_SET)
-			wait_for = '\'';
-		else if (*s == '\"' && wait_for == NOT_SET)
-			wait_for = '\"';
-		else if (*s == wait_for)
-			wait_for = NOT_SET;
-		else
-		{
-			result[i] = *s;
-			i++;
-		}
-		s++;
-	}
-	return (result);
-}
-
-int	assign_argv(char **array, t_cmd **new, int command)
-{
-	int	i;
-	int	j;
-
-	i = command;
-	j = 0;
-	while (array[i] && ft_strcmp(array[i], "|"))
-	{
-		if (is_redirect(array[i]))
-			i++;
-		else
-			(*new)->argc++;
-		if (array[i] && ft_strcmp(array[i], "|"))
-			i++;
-	}
-	(*new)->argv = (char **)ft_calloc((*new)->argc + 1, sizeof(char *));
-	if (!((*new)->argv))
-		return (0);
-	(*new)->argv[(*new)->argc] = NULL;
-	i = command;
-	while (array[i] && ft_strcmp(array[i], "|"))
-	{
-		if (is_redirect(array[i]))
-		{
-			if (!set_redirect(array[i], new, array[i + 1]))
-				return (0);
-			i++;
-		}
-		else
-		{
-			(*new)->argv[j] = copy_without_quotes(array[i]);
-			if (!((*new)->argv[j]))
-				return (0);
-			j++;
-		}
-		if (array[i] && ft_strcmp(array[i], "|"))
-			i++;
-	}
-	return (1);
+	set_last_exit_code(shell->var, EXIT_FAILURE);
+	free_cmd(new);
+	free_cmd(shell->cmd);
+	shell->cmd = NULL;
+	*next_read_path = "./.minishell_empty_file";
 }
 
 int	init_cmd(char **array, t_shell *shell)
@@ -260,25 +52,9 @@ int	init_cmd(char **array, t_shell *shell)
 		if (!new)
 			return (0);
 		if (assign_argv(array, &new, command))
-		{
-			if (!curr)
-				shell->cmd = new;
-			else
-				curr->next = new;
-			if (new->next)
-				curr = new->next;
-			else
-				curr = new;
-			next_read_path = NULL;
-		}
+			assign_curr(&curr, shell, new, &next_read_path);
 		else
-		{
-			set_last_exit_code(shell->var, EXIT_FAILURE);
-			free_cmd(new);
-			free_cmd(shell->cmd);
-			shell->cmd = NULL;
-			next_read_path = "./.minishell_empty_file";
-		}
+			set_as_failure(shell, new, &next_read_path);
 		while (array[i] && ft_strcmp(array[i], "|"))
 			i++;
 		if (array[i])
@@ -287,24 +63,12 @@ int	init_cmd(char **array, t_shell *shell)
 	return (1);
 }
 
-int	init_env(char **envp, t_shell *shell)
+int	copy_variables(char **envp, t_var **curr)
 {
 	t_var	*new;
-	t_var	*curr;
 	int		i;
 
 	i = 0;
-	curr = (t_var *)malloc(sizeof(t_var));
-	if (!curr)
-		return (0);
-	curr->name = ft_strdup("?");
-	if (!curr->name)
-		return (0);
-	curr->value = ft_strdup("0");
-	if (!curr->value)
-		return (0);
-	curr->next = NULL;
-	shell->var = curr;
 	while (envp[i])
 	{
 		new = (t_var *)malloc(sizeof(t_var));
@@ -317,9 +81,27 @@ int	init_env(char **envp, t_shell *shell)
 		if (!new->value)
 			return (0);
 		new->next = NULL;
-		curr->next = new;
-		curr = new;
+		(*curr)->next = new;
+		*curr = new;
 		i++;
 	}
 	return (1);
+}
+
+int	init_env(char **envp, t_shell *shell)
+{
+	t_var	*curr;
+
+	curr = (t_var *)malloc(sizeof(t_var));
+	if (!curr)
+		return (0);
+	curr->name = ft_strdup("?");
+	if (!curr->name)
+		return (0);
+	curr->value = ft_strdup("0");
+	if (!curr->value)
+		return (0);
+	curr->next = NULL;
+	shell->var = curr;
+	return (copy_variables(envp, &curr));
 }

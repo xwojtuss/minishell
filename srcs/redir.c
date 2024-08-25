@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:36:49 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 12:36:51 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/25 13:41:50 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,8 @@ bool	is_redirect(char *str)
 	return (false);
 }
 
-int	redir_input(char *file, t_cmd *cmd, t_shell *shell)
+int	redir_input(char *file, t_cmd *cmd)
 {
-	(void)file;
-	(void)cmd;
-	(void)shell;
 	cmd->read_fd = open(file, O_RDONLY);
 	if (cmd->read_fd == -1)
 	{
@@ -36,9 +33,8 @@ int	redir_input(char *file, t_cmd *cmd, t_shell *shell)
 	return (1);
 }
 
-int	redir_output(char *file, t_cmd *cmd, t_shell *shell)
+int	redir_output(char *file, t_cmd *cmd)
 {
-	(void)shell;
 	cmd->write_fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (cmd->write_fd == -1)
 	{
@@ -50,9 +46,8 @@ int	redir_output(char *file, t_cmd *cmd, t_shell *shell)
 	return (1);
 }
 
-int	redir_append(char *file, t_cmd *cmd, t_shell *shell)
+int	redir_append(char *file, t_cmd *cmd)
 {
-	(void)shell;
 	cmd->write_fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (cmd->write_fd == -1)
 	{
@@ -64,14 +59,11 @@ int	redir_append(char *file, t_cmd *cmd, t_shell *shell)
 	return (1);
 }
 
-int	redir_delimiter(char *delim, t_cmd *cmd, t_shell *shell)
+int	redir_delimiter(char *delim)
 {
 	char	buffer[BUFFER_SIZE + 1];
 	int		bytes;
 
-	(void)shell;
-	(void)cmd;
-	(void)shell;
 	while (true)
 	{
 		printf("> ");

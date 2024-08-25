@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:21:05 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 12:21:07 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/25 12:47:02 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	sig_kill(int signum)
 	rl_on_new_line();
 }
 
-// Funkcja obsługująca EOF (Ctrl+D)
 void	handle_eof(t_shell *shell)
 {
 	free_var(shell->var);
