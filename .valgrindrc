@@ -4,4 +4,4 @@
 --show-leak-kinds=all
 --error-limit=no
 --log-file=valgrind.log
---suppressions=readline.supp
+--suppressions=.readline.supp

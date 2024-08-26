@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:23:03 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/25 15:55:32 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/26 12:41:23 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	check_for_spaces(char *input, int *length, int *i,
 		(*length)++;
 	if (input[*i] == '<' || input[*i] == '>')
 		(*length) += 2;
-	(*length)++;
+	(*length) += 2;
 	(*i)++;
 }
 
@@ -68,7 +68,7 @@ int	count_length(char *input, t_var *var, int *length)
 			name = get_var_name(input, &i);
 			if (!name)
 				return (INT_MIN);
-			*length += ft_strlen(get_var_value(var, name));
+			*length += ft_strlen(get_var_value(var, name)) + 1;
 			free(name);
 		}
 		else

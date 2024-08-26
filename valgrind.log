@@ -1,129 +1,71 @@
-==2623264== Memcheck, a memory error detector
-==2623264== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2623264== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==2623264== Command: ./minishell
-==2623264== Parent PID: 1895544
-==2623264== 
-==2629361== Warning: invalid file descriptor -1 in syscall close()
-==2647616== 
-==2647616== HEAP SUMMARY:
-==2647616==     in use at exit: 208,336 bytes in 222 blocks
-==2647616==   total heap usage: 661 allocs, 439 frees, 250,296 bytes allocated
-==2647616== 
-==2647616== LEAK SUMMARY:
-==2647616==    definitely lost: 0 bytes in 0 blocks
-==2647616==    indirectly lost: 0 bytes in 0 blocks
-==2647616==      possibly lost: 0 bytes in 0 blocks
-==2647616==    still reachable: 0 bytes in 0 blocks
-==2647616==         suppressed: 208,336 bytes in 222 blocks
-==2647616== 
-==2647616== For lists of detected and suppressed errors, rerun with: -s
-==2647616== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==2647720== 
-==2647720== HEAP SUMMARY:
-==2647720==     in use at exit: 208,336 bytes in 222 blocks
-==2647720==   total heap usage: 661 allocs, 439 frees, 250,296 bytes allocated
-==2647720== 
-==2647720== LEAK SUMMARY:
-==2647720==    definitely lost: 0 bytes in 0 blocks
-==2647720==    indirectly lost: 0 bytes in 0 blocks
-==2647720==      possibly lost: 0 bytes in 0 blocks
-==2647720==    still reachable: 0 bytes in 0 blocks
-==2647720==         suppressed: 208,336 bytes in 222 blocks
-==2647720== 
-==2647720== For lists of detected and suppressed errors, rerun with: -s
-==2647720== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==2629361== Warning: invalid file descriptor -1 in syscall close()
-==3002052== 
-==3002052== HEAP SUMMARY:
-==3002052==     in use at exit: 208,819 bytes in 230 blocks
-==3002052==   total heap usage: 721 allocs, 491 frees, 268,445 bytes allocated
-==3002052== 
-==3002052== LEAK SUMMARY:
-==3002052==    definitely lost: 0 bytes in 0 blocks
-==3002052==    indirectly lost: 0 bytes in 0 blocks
-==3002052==      possibly lost: 0 bytes in 0 blocks
-==3002052==    still reachable: 0 bytes in 0 blocks
-==3002052==         suppressed: 208,819 bytes in 230 blocks
-==3002052== 
-==3002052== For lists of detected and suppressed errors, rerun with: -s
-==3002052== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==3002147== 
-==3002147== HEAP SUMMARY:
-==3002147==     in use at exit: 208,819 bytes in 230 blocks
-==3002147==   total heap usage: 721 allocs, 491 frees, 268,445 bytes allocated
-==3002147== 
-==3002147== LEAK SUMMARY:
-==3002147==    definitely lost: 0 bytes in 0 blocks
-==3002147==    indirectly lost: 0 bytes in 0 blocks
-==3002147==      possibly lost: 0 bytes in 0 blocks
-==3002147==    still reachable: 0 bytes in 0 blocks
-==3002147==         suppressed: 208,819 bytes in 230 blocks
-==3002147== 
-==3002147== For lists of detected and suppressed errors, rerun with: -s
-==3002147== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==3178370== 
-==3178370== HEAP SUMMARY:
-==3178370==     in use at exit: 208,790 bytes in 228 blocks
-==3178370==   total heap usage: 781 allocs, 553 frees, 290,692 bytes allocated
-==3178370== 
-==3178370== LEAK SUMMARY:
-==3178370==    definitely lost: 0 bytes in 0 blocks
-==3178370==    indirectly lost: 0 bytes in 0 blocks
-==3178370==      possibly lost: 0 bytes in 0 blocks
-==3178370==    still reachable: 0 bytes in 0 blocks
-==3178370==         suppressed: 208,790 bytes in 228 blocks
-==3178370== 
-==3178370== For lists of detected and suppressed errors, rerun with: -s
-==3178370== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==3254918== 
-==3254918== HEAP SUMMARY:
-==3254918==     in use at exit: 208,790 bytes in 228 blocks
-==3254918==   total heap usage: 804 allocs, 576 frees, 295,666 bytes allocated
-==3254918== 
-==3254918== LEAK SUMMARY:
-==3254918==    definitely lost: 0 bytes in 0 blocks
-==3254918==    indirectly lost: 0 bytes in 0 blocks
-==3254918==      possibly lost: 0 bytes in 0 blocks
-==3254918==    still reachable: 0 bytes in 0 blocks
-==3254918==         suppressed: 208,790 bytes in 228 blocks
-==3254918== 
-==3254918== For lists of detected and suppressed errors, rerun with: -s
-==3254918== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==3363099== 
-==3363099== HEAP SUMMARY:
-==3363099==     in use at exit: 208,790 bytes in 228 blocks
-==3363099==   total heap usage: 850 allocs, 622 frees, 301,018 bytes allocated
-==3363099== 
-==3363099== LEAK SUMMARY:
-==3363099==    definitely lost: 0 bytes in 0 blocks
-==3363099==    indirectly lost: 0 bytes in 0 blocks
-==3363099==      possibly lost: 0 bytes in 0 blocks
-==3363099==    still reachable: 0 bytes in 0 blocks
-==3363099==         suppressed: 208,790 bytes in 228 blocks
-==3363099== 
-==3363099== For lists of detected and suppressed errors, rerun with: -s
-==3363099== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==2629361== 
-==2629361== HEAP SUMMARY:
-==2629361==     in use at exit: 209,322 bytes in 255 blocks
-==2629361==   total heap usage: 913 allocs, 658 frees, 319,718 bytes allocated
-==2629361== 
-==2629361== LEAK SUMMARY:
-==2629361==    definitely lost: 0 bytes in 0 blocks
-==2629361==    indirectly lost: 0 bytes in 0 blocks
-==2629361==      possibly lost: 0 bytes in 0 blocks
-==2629361==    still reachable: 0 bytes in 0 blocks
-==2629361==         suppressed: 209,322 bytes in 255 blocks
-==2629361== 
-==2629361== For lists of detected and suppressed errors, rerun with: -s
-==2629361== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==2623264== 
-==2623264== HEAP SUMMARY:
-==2623264==     in use at exit: 0 bytes in 0 blocks
-==2623264==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
-==2623264== 
-==2623264== All heap blocks were freed -- no leaks are possible
-==2623264== 
-==2623264== For lists of detected and suppressed errors, rerun with: -s
-==2623264== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==127654== Memcheck, a memory error detector
+==127654== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==127654== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==127654== Command: ./minishell
+==127654== Parent PID: 84406
+==127654== 
+==127704== 
+==127704== HEAP SUMMARY:
+==127704==     in use at exit: 208,332 bytes in 222 blocks
+==127704==   total heap usage: 650 allocs, 428 frees, 237,727 bytes allocated
+==127704== 
+==127704== LEAK SUMMARY:
+==127704==    definitely lost: 0 bytes in 0 blocks
+==127704==    indirectly lost: 0 bytes in 0 blocks
+==127704==      possibly lost: 0 bytes in 0 blocks
+==127704==    still reachable: 0 bytes in 0 blocks
+==127704==         suppressed: 208,332 bytes in 222 blocks
+==127704== 
+==127704== For lists of detected and suppressed errors, rerun with: -s
+==127704== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==127889== 
+==127889== HEAP SUMMARY:
+==127889==     in use at exit: 208,357 bytes in 224 blocks
+==127889==   total heap usage: 685 allocs, 461 frees, 242,698 bytes allocated
+==127889== 
+==127889== LEAK SUMMARY:
+==127889==    definitely lost: 0 bytes in 0 blocks
+==127889==    indirectly lost: 0 bytes in 0 blocks
+==127889==      possibly lost: 0 bytes in 0 blocks
+==127889==    still reachable: 0 bytes in 0 blocks
+==127889==         suppressed: 208,357 bytes in 224 blocks
+==127889== 
+==127889== For lists of detected and suppressed errors, rerun with: -s
+==127889== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==128049== 
+==128049== HEAP SUMMARY:
+==128049==     in use at exit: 208,614 bytes in 227 blocks
+==128049==   total heap usage: 728 allocs, 501 frees, 248,063 bytes allocated
+==128049== 
+==128049== LEAK SUMMARY:
+==128049==    definitely lost: 0 bytes in 0 blocks
+==128049==    indirectly lost: 0 bytes in 0 blocks
+==128049==      possibly lost: 0 bytes in 0 blocks
+==128049==    still reachable: 0 bytes in 0 blocks
+==128049==         suppressed: 208,614 bytes in 227 blocks
+==128049== 
+==128049== For lists of detected and suppressed errors, rerun with: -s
+==128049== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==127680== 
+==127680== HEAP SUMMARY:
+==127680==     in use at exit: 208,728 bytes in 234 blocks
+==127680==   total heap usage: 737 allocs, 503 frees, 252,591 bytes allocated
+==127680== 
+==127680== LEAK SUMMARY:
+==127680==    definitely lost: 0 bytes in 0 blocks
+==127680==    indirectly lost: 0 bytes in 0 blocks
+==127680==      possibly lost: 0 bytes in 0 blocks
+==127680==    still reachable: 0 bytes in 0 blocks
+==127680==         suppressed: 208,728 bytes in 234 blocks
+==127680== 
+==127680== For lists of detected and suppressed errors, rerun with: -s
+==127680== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==127654== 
+==127654== HEAP SUMMARY:
+==127654==     in use at exit: 0 bytes in 0 blocks
+==127654==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==127654== 
+==127654== All heap blocks were freed -- no leaks are possible
+==127654== 
+==127654== For lists of detected and suppressed errors, rerun with: -s
+==127654== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
