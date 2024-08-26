@@ -1,4 +1,4 @@
-COMPILER = clang # TO CHANGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+COMPILER = cc # TO CHANGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 CFLAGS = -Wall -Wextra -Werror
 LIBFT_FOLDER = libs/libft
 INCLUDES = -Iincludes -I${LIBFT_FOLDER}

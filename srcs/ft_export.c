@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:28:15 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 12:28:17 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/26 12:23:27 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	update_var(t_shell *shell, char *name, char *line)
 		value = ft_strchr(line, '=') + 1;
 	else
 		value = NULL;
-	if (get_var_value(shell->var, name))
+	if (get_var_struct(shell->var, name))
 	{
 		free(get_var_struct(shell->var, name)->value);
 		get_var_struct(shell->var, name)->value = ft_strdup(value);
