@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:46:58 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/19 11:41:20 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/27 10:55:48 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	ft_cd(int argc, char **argv, t_shell *shell)
 		return (ft_putstr_fd("minishell: cd: too many arguments\n",
 				STDERR_FILENO), EXIT_FAILURE);
 	path = get_absolute_path(argv[1]);
+	printf("%s\n", path);
 	if (chdir(path) != 0)
 	{
 		free(path);

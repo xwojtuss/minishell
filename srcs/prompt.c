@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:36:15 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 12:36:35 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/27 11:12:59 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ void	set_path_prompt(char *cwd, char **prompt_array, t_var *var)
 	prompt_array[7] = ":";
 	prompt_array[8] = BLUE_COLOR;
 	prompt_array[9] = BOLD_TEXT;
-	prompt_array[10] = ft_fallback_string(get_relative_path(cwd, var),
-			cwd);
+	prompt_array[10] = ft_fallback_string(get_relative_path(cwd, var), cwd);
 	prompt_array[11] = DEFAULT_COLOR;
 	prompt_array[12] = NORMAL_TEXT;
 	prompt_array[13] = "$ ";
@@ -48,9 +47,8 @@ char	*construct_prompt(char *cwd, t_var *var)
 	set_name_and_hostname(prompt_array, var);
 	set_path_prompt(cwd, prompt_array, var);
 	prompt = ft_strjoin_array(prompt_array);
-	if (ft_strcmp(prompt_array[10], cwd) != 0)
+	if (ft_strcmp(prompt_array[10], cwd))
 		free(prompt_array[10]);
-	(void)cwd;
 	free(prompt_array);
 	return (prompt);
 }
