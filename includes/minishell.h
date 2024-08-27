@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:20:46 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/25 16:24:43 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/08/27 11:21:13 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 # define MINISHELL_H
 # define EXIT_SIGINT 130
 
-# define RED_COLOR "\033[0;31m"
-# define GREEN_COLOR "\033[0;32m"
-# define YELLOW_COLOR "\033[0;33m"
-# define BLUE_COLOR "\033[0;34m"
-# define MAGENTA_COLOR "\033[0;35m"
-# define DEFAULT_COLOR "\033[0m"
-# define BOLD_TEXT "\033[1m"
-# define NORMAL_TEXT "\033[0m"
+# define RED_COLOR "\001\033[0;31m\002"
+# define GREEN_COLOR "\001\033[0;32m\002"
+# define YELLOW_COLOR "\001\033[0;33m\002"
+# define BLUE_COLOR "\001\033[0;34m\002"
+# define MAGENTA_COLOR "\001\033[0;35m\002"
+# define DEFAULT_COLOR "\001\033[0m\002"
+# define BOLD_TEXT "\001\033[1m\002"
+# define NORMAL_TEXT "\001\033[0m\002"
 
 # define NOT_SET -42
 
@@ -232,8 +232,6 @@ char				*check_pipes(char **input);
 int					prelimenary_checks(char **input, t_shell *shell);
 void				handle_input(char *input, t_shell *shell);
 char				*get_relative_path(char *cwd, t_var *var);
-void				set_name_and_hostname(char **prompt_array, t_var *var);
-void				set_path_prompt(char *cwd, char **prompt_array, t_var *var);
 char				*construct_prompt(char *cwd, t_var *var);
 void				wait_for_input(char **envp);
 void				process_user_input(t_shell *shell);

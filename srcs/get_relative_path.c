@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_relative_path.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 22:08:08 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/23 22:12:34 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/08/27 11:14:05 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ char	*get_relative_path(char *cwd, t_var *var)
 		temp = ft_strjoin("~", cwd + ft_strlen(home));
 		if (!temp)
 			return (NULL);
-		home = temp;
+		return (temp);
 	}
-	return (home);
+	else
+		return (cwd);
+	return (cwd);
 }
