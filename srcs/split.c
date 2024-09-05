@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:37:18 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 12:37:19 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/09/05 14:51:52 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static char	*check_count_quotes(int *quote, char *s, int *count)
 {
-	while (*s && *s != ' ' && *s != '\'' && *s != '\"')
+	while (*s && !ft_iswhite(*s) && *s != '\'' && *s != '\"')
 		s++;
-	if (*s == ' ' && *quote == NOT_SET)
+	if (ft_iswhite(*s) && *s && *quote == NOT_SET)
 	{
 		(*count)++;
-		while (*s == ' ')
+		while (ft_iswhite(*s) && *s)
 			s++;
 	}
 	else if (*s == '\'' || *s == '\"')
@@ -44,7 +44,7 @@ static int	count_words(char const *s)
 	int		count;
 	int		quote;
 
-	while (*s == ' ')
+	while (ft_iswhite(*s) && *s)
 		s++;
 	if (*s == '\0')
 		return (0);
@@ -77,12 +77,12 @@ static int	copy_data(const char *str, char ***result, char *buffer,
 	while (*str)
 	{
 		check_quotes(&wait_for, *str);
-		if (*str == ' ' && wait_for == NOT_SET && buf_index > 0)
+		if (ft_iswhite(*str) && *str && wait_for == NOT_SET && buf_index > 0)
 		{
 			if (!copy_word(buffer, &buf_index, &result, &size))
 				return (0);
 		}
-		else if (*str && !(*str == ' ' && wait_for == NOT_SET))
+		else if (*str && !(ft_iswhite(*str) && *str && wait_for == NOT_SET))
 			buffer[buf_index++] = *str;
 		str++;
 	}

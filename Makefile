@@ -1,4 +1,4 @@
-COMPILER = cc # TO CHANGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+COMPILER = cc
 CFLAGS = -Wall -Wextra -Werror
 LIBFT_FOLDER = libs/libft
 INCLUDES = -Iincludes -I${LIBFT_FOLDER}
@@ -38,3 +38,5 @@ fclean: clean
 	make -C ${LIBFT_FOLDER} fclean
 
 re: fclean all
+
+.PHONY: all clean fclean re
