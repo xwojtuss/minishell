@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:35:09 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/27 11:10:03 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:14:15 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static char	*remove_dots(char *final, char *path)
 	char	temp[PATH_MAX];
 	char	*last_slash;
 
-	printf("before removing dots: %s, %s\n", final, path);
 	ft_bzero(temp, PATH_MAX);
 	rest = path;
 	last_slash = NULL;
@@ -57,9 +56,7 @@ static char	*remove_dots(char *final, char *path)
 		else
 			double_dot(temp, token, &last_slash);
 	}
-	printf("almost after removing dots: %s, %s\n", final, path);
 	ft_strlcpy(final, temp, PATH_MAX);
-	printf("after removing dots: %s, %s\n", final, path);
 	return (final);
 }
 
@@ -112,7 +109,7 @@ char	*get_absolute_path(char *path)
 	final = (char *)ft_calloc(PATH_MAX, sizeof(char));
 	if (!final)
 		return (free(temp), free(result), NULL);
-	remove_dots(final, result);
+	final = remove_dots(final, result);
 	free(result);
 	free(temp);
 	return (final);

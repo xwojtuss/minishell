@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:34:33 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/27 10:48:48 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:23:09 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	process_user_input(t_shell *shell)
 		free(cwd);
 		if (!prompt)
 			throw_error_exit(NULL, NULL, NULL, shell->var);
-		
 		input = readline(prompt);
 		free(prompt);
 		if (!input)
