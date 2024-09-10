@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_processes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:37:00 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 12:37:01 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/09/09 14:48:00 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	child_routine(t_shell *shell, t_cmd *cmd, int pipe_fd[2],
 
 void	parent_routine(t_cmd *cmd, int pipe_fd[2], int *prev_read_fd)
 {
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (*prev_read_fd != NOT_SET)
 		close(*prev_read_fd);
 	if (cmd->next)
@@ -73,4 +75,5 @@ void	wait_for_processes(t_shell *shell, pid_t last_pid)
 			set_last_exit_code(shell->var, WEXITSTATUS(status));
 		i--;
 	}
+	init_signals();
 }

@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:20:02 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/26 12:40:37 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/09/09 15:16:37 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 bool	do_copy_var(int quotes, char *input, int i)
 {
 	return ((input[i] == '$' && quotes != '\'' && input[i + 1] != ' '
-			&& input[i + 1] != '\"' && input[i + 1] != '\0'));
+			&& input[i + 1] != '\"' && input[i + 1] != '+'
+			&& input[i + 1] != ':'
+			&& input[i + 1] != '/' && input[i + 1] != '='
+			&& input[i + 1] != '.'
+			&& input[i + 1] != ',' && input[i + 1] != '\0'));
 }
 
 int	copy_variable(char *name, t_var *var, int *j, char *result)

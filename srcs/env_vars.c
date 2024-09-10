@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkaleta <bkaleta@student.42warsaw.pl>      +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:24:46 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/18 12:24:57 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/09/09 15:16:11 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ char	*get_var_value(t_var *var, char *name)
 char	*get_var_name(char *input, int *i)
 {
 	char	*name;
+	char	*chrptr;
 
 	if (!input || !i)
 		return (NULL);
@@ -95,8 +96,8 @@ char	*get_var_name(char *input, int *i)
 		(*i)++;
 		return (ft_strdup("?"));
 	}
-	name = ft_strndup(input + *i, ft_strchrs_mf(input + *i, " \"\'") - (input
-				+ *i));
+	chrptr = input + *i;
+	name = ft_strndup(chrptr, ft_strchrs_mf(chrptr, " \"\'/:.,=+") - chrptr);
 	if (!name)
 		return (NULL);
 	*i += ft_strlen(name);
