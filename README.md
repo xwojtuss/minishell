@@ -12,7 +12,10 @@ These instructions will help you get a copy of the project up and running.
 
 ### Dependencies
 
-You will need the readline library (libreadline-dev and libreadline)
+- you will need the readline library (libreadline-dev and libreadline)
+- tinfo library (libtinfo-dev)
+- cc
+- make
 
 ### Installing
 
