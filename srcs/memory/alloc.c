@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:23:03 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/08/26 12:41:23 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:54:10 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_cmd	*alloc_cmd(int *i, int *command, char *read_path)
 static void	check_for_spaces(char *input, int *length, int *i,
 		bool is_in_quotes)
 {
-	if (i > 0 && input[*i] == '|' && input[*i - 1] != ' ' && !is_in_quotes)
+	if (*i > 0 && input[*i] == '|' && input[*i - 1] != ' ' && !is_in_quotes)
 		(*length)++;
 	if (input[*i] == '|' && input[*i + 1] != ' ' && input[*i + 1] != '\0'
 		&& !is_in_quotes)
